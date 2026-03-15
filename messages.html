@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - ALFRED PRODUCTS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body style="background: var(--bg-light);">
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                   <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a>
+                </div>
+                <div class="header-actions">
+                    <a href="login.html" class="action-item">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <span>Sign In</span>
+                    </a>
+                    <a href="messages.html" class="action-item active">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <span>Messages</span>
+                    </a>
+                    <a href="orders.html" class="action-item">
+                        <ion-icon name="cart-outline"></ion-icon>
+                        <span>Orders</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="messages-container">
+            <div class="chat-list">
+                <div class="chat-item active">
+                    <h4 style="font-size: 14px;">Apparel Direct Co.</h4>
+                    <p style="font-size: 12px; color: var(--text-muted);">Yes, we can provide samples...</p>
+                    <span style="font-size: 10px; color: #999;">2h ago</span>
+                </div>
+                <div class="chat-item">
+                    <h4 style="font-size: 14px;">TechSource Global</h4>
+                    <p style="font-size: 12px; color: var(--text-muted);">The tracking number is...</p>
+                    <span style="font-size: 10px; color: #999;">Yesterday</span>
+                </div>
+                <div class="chat-item">
+                    <h4 style="font-size: 14px;">Logistics Support</h4>
+                    <p style="font-size: 12px; color: var(--text-muted);">Your cargo has reached...</p>
+                    <span style="font-size: 10px; color: #999;">3 days ago</span>
+                </div>
+            </div>
+            
+            <div class="chat-window">
+                <div class="chat-header">
+                    Apparel Direct Co.
+                </div>
+                <div class="chat-history">
+                    <div class="message message-in">
+                        Hello, I'm interested in your oversized cotton t-shirts. What is the MOQ for custom logos?
+                    </div>
+                    <div class="message message-out">
+                        Hi! Our standard MOQ for custom logos is 80 pieces per color.
+                    </div>
+                    <div class="message message-in">
+                        Yes, we can provide samples. It will take about 5-7 days for shipping.
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Write a message...">
+                    <button class="btn btn-primary" style="padding: 10px 25px; border-radius: 20px;">Send</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

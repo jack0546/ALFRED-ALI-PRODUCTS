@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Services - ALFRED PRODUCTS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                   <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a>
+                </div>
+                <div class="header-actions">
+                    <a href="orders.html" class="action-item">
+                        <ion-icon name="bus-outline"></ion-icon>
+                        <span>Track Cargo</span>
+                    </a>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="categories.html">All Categories</a></li>
+                    <li><a href="featured.html">Featured Products</a></li>
+                    <li><a href="trade.html">Trade Assurance</a></li>
+                    <li><a href="logistics.html" class="active">Logistics Services</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 40px 0;">
+        <h2 style="margin-bottom: 40px;">Global Logistics Solutions</h2>
+        
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px;">
+            <div>
+                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200" alt="Logistics" style="width: 100%; border-radius: 12px; margin-bottom: 30px;">
+                <h3>Ocean & Air Freight</h3>
+                <p style="margin-top: 15px; color: var(--text-muted); line-height: 1.6;">We offer reliable shipping solutions from China to any destination worldwide. Whether you need LCL (Less than Container Load) or FCL (Full Container Load), our network of verified carriers ensures your goods arrive safely and on time.</p>
+                
+                <div class="banner-card" style="padding: 30px; margin-bottom: 40px; border-left: 5px solid var(--primary-color);">
+                    <h3 style="margin-bottom: 20px;">Track Your Shipment</h3>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" placeholder="Enter Container or Tracking Number" style="flex: 1; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; outline: none;">
+                        <button class="btn btn-primary" onclick="window.location.href='orders.html'">Track</button>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="order-card" style="flex-direction: column; align-items: flex-start;">
+                        <ion-icon name="airplane-outline" style="font-size: 30px; color: var(--primary-color);"></ion-icon>
+                        <h4 style="margin-top: 10px;">Air Express</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">Fastest delivery (3-7 days)</p>
+                    </div>
+                    <div class="order-card" style="flex-direction: column; align-items: flex-start;">
+                        <ion-icon name="boat-outline" style="font-size: 30px; color: var(--primary-color);"></ion-icon>
+                        <h4 style="margin-top: 10px;">Sea Freight</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">Cost-effective (20-40 days)</p>
+                    </div>
+                </div>
+            </div>
+
+            <aside>
+                <div class="banner-card" style="padding: 30px; background: #333; color: white;">
+                    <h3 style="margin-bottom: 20px;">Freight Quote</h3>
+                    <form>
+                        <div class="form-group">
+                            <label style="color: #ccc;">Origin</label>
+                            <input type="text" placeholder="City, Country" style="background: rgba(255,255,255,0.1); border: none; color: white;">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #ccc;">Destination</label>
+                            <input type="text" placeholder="City, Country" style="background: rgba(255,255,255,0.1); border: none; color: white;">
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 10px;">Check Rates</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </main>
+</body>
+</html>

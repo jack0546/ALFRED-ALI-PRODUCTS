@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - ALFRED PRODUCTS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a>
+                </div>
+                <div class="header-actions">
+                    <a href="login.html" class="action-item">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <span>Sign In</span>
+                    </a>
+                    <a href="register.html" class="action-item">
+                        <ion-icon name="person-add-outline"></ion-icon>
+                        <span>Join Free</span>
+                    </a>
+                    <a href="messages.html" class="action-item">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <span>Messages</span>
+                    </a>
+                    <a href="orders.html" class="action-item">
+                        <ion-icon name="cart-outline"></ion-icon>
+                        <span>Orders</span>
+                    </a>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="categories.html">All Categories</a></li>
+                    <li><a href="featured.html">Featured Products</a></li>
+                    <li><a href="trade.html">Trade Assurance</a></li>
+                    <li><a href="logistics.html">Logistics Services</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="product-detail-container">
+            <div class="gallery">
+                <div class="thumbnails">
+                    <div class="thumb active" onclick="changeImage('hero')">
+                        <img src="hero.png" alt="Thumb 1">
+                    </div>
+                    <div class="thumb" onclick="changeImage('thumb1')">
+                        <img src="thumb1.png" alt="Thumb 2">
+                    </div>
+                </div>
+                <div class="main-image">
+                    <img id="mainImg" src="hero.png" alt="Product Image">
+                </div>
+            </div>
+
+            <div class="product-info-panel">
+                <h1 id="productTitle">Premium Oversized Cotton T-Shirt - Custom Logo Wholesale</h1>
+                <p class="product-price" id="productPrice">$4.50 - $6.80</p>
+                <p class="product-moq">Min. Order: 50 Pieces</p>
+                
+                <div class="specs" style="margin-top: 20px;">
+                    <p><strong>Material:</strong> 100% Organic Cotton</p>
+                    <p><strong>Weight:</strong> 240 GSM</p>
+                    <p><strong>Available Colors:</strong> 12 Colors</p>
+                </div>
+
+                <div class="product-actions">
+                    <button class="btn btn-primary">Contact Supplier</button>
+                    <button class="btn btn-outline">Chat Now</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="product-tabs">
+            <div class="tabs-nav">
+                <div class="tab-link active" onclick="openTab(event, 'details')">Product Details</div>
+                <div class="tab-link" onclick="openTab(event, 'images')">Additional Images</div>
+                <div class="tab-link" onclick="openTab(event, 'factory')">Company Profile</div>
+            </div>
+
+            <div id="details" class="tab-content active">
+                <h3>Product Specifications</h3>
+                <p style="margin-top: 15px;">Our premium oversized t-shirts are made from high-grade 100% organic cotton, ensuring maximum comfort and durability. Perfect for luxury streetwear brands and corporate merchandise.</p>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 10px 0; color: var(--text-muted);">Season</td>
+                        <td style="padding: 10px 0;">All seasons</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 10px 0; color: var(--text-muted);">Technics</td>
+                        <td style="padding: 10px 0;">Printed, Embroidered</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 10px 0; color: var(--text-muted);">Feature</td>
+                        <td style="padding: 10px 0;">Anti-pilling, Breathable</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="images" class="tab-content">
+                <h3>High Resolution Views</h3>
+                <div class="detail-images" style="margin-top: 20px;">
+                    <img src="hero.png" alt="Detail 1">
+                    <img src="factory.png" alt="Detail 2">
+                </div>
+            </div>
+
+            <div id="factory" class="tab-content">
+                <h3>Our Manufacturing Facility</h3>
+                <p style="margin-top: 15px;">Located in the heart of the textile hub, our factory boasts over 20 years of experience in high-end apparel production.</p>
+                <img src="factory.png" alt="Factory" style="width: 100%; margin-top: 20px; border-radius: 8px;">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety & Security</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Get App</h4>
+                <ul>
+                    <li><a href="#">App Store</a></li>
+                    <li><a href="#">Google Play</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - ALFRED PRODUCTS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body style="background: var(--bg-light);">
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                   <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for help topics...">
+                    <button>Search</button>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="categories.html">All Categories</a></li>
+                    <li><a href="featured.html">Featured Products</a></li>
+                    <li><a href="trade.html">Trade Assurance</a></li>
+                    <li><a href="logistics.html">Logistics Services</a></li>
+                    <li><a href="help.html" class="active">Help Center</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 60px 0;">
+        <h1 style="text-align: center; margin-bottom: 50px;">How can we help you today?</h1>
+        
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 60px;">
+            <div class="banner-card" style="padding: 30px; text-align: center;">
+                <ion-icon name="help-circle-outline" style="font-size: 40px; color: var(--primary-color);"></ion-icon>
+                <h4 style="margin-top: 15px;">Ordering</h4>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px;">Learn how to place and manage orders effectively.</p>
+            </div>
+            <div class="banner-card" style="padding: 30px; text-align: center;">
+                <ion-icon name="card-outline" style="font-size: 40px; color: var(--primary-color);"></ion-icon>
+                <h4 style="margin-top: 15px;">Payments</h4>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px;">Understand payment methods and security.</p>
+            </div>
+            <div class="banner-card" style="padding: 30px; text-align: center;">
+                <ion-icon name="shield-outline" style="font-size: 40px; color: var(--primary-color);"></ion-icon>
+                <h4 style="margin-top: 15px;">Security</h4>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px;">Keep your account and transactions safe.</p>
+            </div>
+        </div>
+
+        <div style="background: var(--white); border-radius: 12px; padding: 40px; border: 1px solid var(--border-color);">
+            <h3 style="margin-bottom: 30px;">Frequently Asked Questions</h3>
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <details style="padding: 15px; border-bottom: 1px solid #eee;">
+                    <summary style="font-weight: 600; cursor: pointer;">How do I track my order?</summary>
+                    <p style="padding-top: 10px; color: var(--text-muted); font-size: 14px;">You can track your order in the "Orders" section of your account. Once the supplier ships the goods, a tracking number will be provided.</p>
+                </details>
+                <details style="padding: 15px; border-bottom: 1px solid #eee;">
+                    <summary style="font-weight: 600; cursor: pointer;">What is Trade Assurance?</summary>
+                    <p style="padding-top: 10px; color: var(--text-muted); font-size: 14px;">Trade Assurance is a free service that protects your orders from payment to delivery. It ensures quality and on-time shipment.</p>
+                </details>
+                <details style="padding: 15px;">
+                    <summary style="font-weight: 600; cursor: pointer;">How do I contact a supplier?</summary>
+                    <p style="padding-top: 10px; color: var(--text-muted); font-size: 14px;">Simply click the "Contact Supplier" button on any product detail page to start a conversation through our messaging system.</p>
+                </details>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

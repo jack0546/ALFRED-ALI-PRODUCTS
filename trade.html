@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Assurance - ALFRED PRODUCTS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body style="background: #fcfcfc;">
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                   <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a>
+                </div>
+                <div class="header-actions">
+                    <a href="login.html" class="action-item">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <span>Sign In</span>
+                    </a>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="categories.html">All Categories</a></li>
+                    <li><a href="featured.html">Featured Products</a></li>
+                    <li><a href="trade.html" class="active">Trade Assurance</a></li>
+                    <li><a href="logistics.html">Logistics Services</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 60px 0;">
+        <div style="display: flex; align-items: center; gap: 40px; margin-bottom: 60px;">
+            <div style="flex: 1;">
+                <h1 style="font-size: 42px; color: #1a1a1a; margin-bottom: 20px;">Protect Your Orders from Payment to Delivery</h1>
+                <p style="font-size: 18px; color: var(--text-muted); line-height: 1.6;">Trade Assurance is a free service that creates trust between business buyers and suppliers. We provide a set of protections to ensure suppliers honor important details of your contract.</p>
+                <button class="btn btn-primary" style="margin-top: 30px; padding: 15px 40px;">Learn More</button>
+            </div>
+            <div style="flex: 1; text-align: center;">
+                <ion-icon name="shield-checkmark-outline" style="font-size: 200px; color: var(--primary-color); opacity: 0.8;"></ion-icon>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+            <div class="banner-card" style="padding: 40px; border-top: 4px solid var(--primary-color);">
+                <h3 style="margin-bottom: 15px;">Payment Security</h3>
+                <p style="font-size: 14px; color: var(--text-muted);">Your payment is held in escrow and released only after you confirm delivery.</p>
+            </div>
+            <div class="banner-card" style="padding: 40px; border-top: 4px solid var(--primary-color);">
+                <h3 style="margin-bottom: 15px;">Shipping Protection</h3>
+                <p style="font-size: 14px; color: var(--text-muted);">Ensure your products are shipped on time, or get your money back.</p>
+            </div>
+            <div class="banner-card" style="padding: 40px; border-top: 4px solid var(--primary-color);">
+                <h3 style="margin-bottom: 15px;">Product Quality</h3>
+                <p style="font-size: 14px; color: var(--text-muted);">Products must meet the quality standards specified in your contract.</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
