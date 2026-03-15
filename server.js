@@ -92,7 +92,7 @@ for (let i = 1; i <= 400; i++) {
         id: i,
         category: catKeys,
         title: `Wholesale ${keyword} - High Quality Premium ${i}`,
-        price: `$${(Math.random() * 50 + 2).toFixed(2)} - $${(Math.random() * 100 + 52).toFixed(2)}`,
+        price: `GHS ${(Math.random() * 50 + 2).toFixed(2)} - GHS ${(Math.random() * 100 + 52).toFixed(2)}`,
         moq: `${Math.floor(Math.random() * 200 + 10)} ${cat.moqSuffix}`,
         image: `${imgBase}?auto=format&fit=crop&q=80&w=400`
     });
