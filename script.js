@@ -169,6 +169,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Cart System Logic
+function addToCart(productId) {
+    const product = catalog.find(p => p.id === productId);
+    if (!product) return;
+
+    let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+    const existingItem = cart.find(item => item.id === productId);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            image: product.fallbackImage, // Use fallback for cart consistency
+            quantity: 1
+        });
+    }
+
+    localStorage.setItem('alfredCart', JSON.stringify(cart));
+    updateCartBadge();
+    
+    // Feedback notification
+    const btn = document.querySelector('#addCartBtn');
+    if (btn) {
+        const originalText = btn.innerText;
+        btn.innerText = 'Added to Cart!';
+        btn.style.background = '#28a745';
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.background = '';
+        }, 2000);
+    }
+}
+
+function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+    const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+    const badge = document.getElementById('cartCount');
+    if (badge) badge.innerText = count;
+}
+
+// Initial calls
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartBadge();
+});
+
 // Paystack Payment Integration
 function payWithPaystack() {
     const params = new URLSearchParams(window.location.search);
@@ -235,4 +283,13 @@ function changeImage(type) {
         mainImg.src = 'thumb1.png';
         thumbs[1].classList.add('active');
     }
+}
+
+// Register Service Worker for PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('Service Worker registered'))
+            .catch(err => console.log('Service Worker registration failed', err));
+    });
 }
