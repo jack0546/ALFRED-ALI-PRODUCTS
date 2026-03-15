@@ -1,0 +1,21 @@
+{
+  "name": "ALFRED PRODUCTS - Global Marketplace",
+  "short_name": "Alfred",
+  "description": "Premium wholesale marketplace for global trade.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF6600",
+  "icons": [
+    {
+      "src": "1.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "1.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
