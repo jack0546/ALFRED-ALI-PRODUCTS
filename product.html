@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
 <body>
     <header>
@@ -76,9 +77,9 @@
                     <p><strong>Available Colors:</strong> 12 Colors</p>
                 </div>
 
-                <div class="product-actions">
-                    <button class="btn btn-primary">Contact Supplier</button>
-                    <button class="btn btn-outline">Chat Now</button>
+                <div class="product-actions" id="paymentActions">
+                    <button class="btn btn-primary" onclick="payWithPaystack()" style="background: #000; color: #fff; border: none;">Buy Now with Paystack</button>
+                    <button class="btn btn-outline">Contact Supplier</button>
                 </div>
             </div>
         </section>
