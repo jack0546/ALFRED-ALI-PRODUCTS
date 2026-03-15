@@ -293,3 +293,35 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('Service Worker registration failed', err));
     });
 }
+
+// Global Header User Sync
+function updateHeaderWithUser(user) {
+    const headerActions = document.querySelector('.header-actions');
+    if (!headerActions) return;
+
+    if (user) {
+        headerActions.innerHTML = `
+            <a href="orders.html" class="action-item">
+                <img src="${user.photoURL || 'https://via.placeholder.com/30'}" style="width: 24px; height: 24px; border-radius: 50%; margin-bottom: 2px;">
+                <span>${user.displayName.split(' ')[0]}</span>
+            </a>
+            <a href="messages.html" class="action-item">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>Messages</span>
+            </a>
+            <a href="cart.html" class="action-item">
+                <ion-icon name="cart-outline"></ion-icon>
+                <span id="cartCount">0</span>
+            </a>
+        `;
+        updateCartBadge();
+    }
+}
+
+// Initial initialization
+if (typeof auth !== 'undefined') {
+    auth.onAuthStateChanged(user => {
+        updateHeaderWithUser(user);
+    });
+}
+
