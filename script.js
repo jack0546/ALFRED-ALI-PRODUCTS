@@ -93,7 +93,7 @@ for (let i = 1; i <= 400; i++) {
         id: i,
         category: key,
         title: `Wholesale ${keyword} - High Quality Premium ${i}`,
-        price: `$${(Math.random() * 50 + 5).toFixed(2)} - $${(Math.random() * 100 + 60).toFixed(2)}`,
+        price: `GHS ${(Math.random() * 50 + 5).toFixed(2)} - GHS ${(Math.random() * 100 + 60).toFixed(2)}`,
         moq: `${Math.floor(Math.random() * 200 + 10)} ${cat.moqSuffix}`,
         localImage: localImg,
         fallbackImage: fallbackImg
@@ -224,14 +224,14 @@ function payWithPaystack() {
     const product = catalog.find(p => p.id === prodId) || catalog[0];
     
     // Convert price string to number (simplified)
-    const priceStr = product.price.split('-')[0].replace('$', '').trim();
+    const priceStr = product.price.split('-')[0].replace('GHS', '').trim();
     const amount = parseFloat(priceStr) * 100; // Paystack takes amount in kobo (NGN) or cents (USD)
 
     let handler = PaystackPop.setup({
         key: 'pk_live_6b9968065dc0bd4842c97ffa138e49127c862888',
         email: 'customer@example.com', // In a real app, get this from user profile
         amount: amount || 5000, 
-        currency: "USD",
+        currency: "GHS",
         ref: 'ALFRED_' + Math.floor((Math.random() * 1000000000) + 1),
         metadata: {
             custom_fields: [
