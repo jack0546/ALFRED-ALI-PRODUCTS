@@ -169,6 +169,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Paystack Payment Integration
+function payWithPaystack() {
+    const params = new URLSearchParams(window.location.search);
+    const prodId = parseInt(params.get('id'));
+    const product = catalog.find(p => p.id === prodId) || catalog[0];
+    
+    // Convert price string to number (simplified)
+    const priceStr = product.price.split('-')[0].replace('$', '').trim();
+    const amount = parseFloat(priceStr) * 100; // Paystack takes amount in kobo (NGN) or cents (USD)
+
+    let handler = PaystackPop.setup({
+        key: 'pk_live_6b9968065dc0bd4842c97ffa138e49127c862888',
+        email: 'customer@example.com', // In a real app, get this from user profile
+        amount: amount || 5000, 
+        currency: "USD",
+        ref: 'ALFRED_' + Math.floor((Math.random() * 1000000000) + 1),
+        metadata: {
+            custom_fields: [
+                {
+                    display_name: "Product Name",
+                    variable_name: "product_name",
+                    value: product.title
+                }
+            ]
+        },
+        callback: function(response){
+            alert('Payment Successful! Reference: ' + response.reference);
+            window.location.href = 'orders.html';
+        },
+        onClose: function(){
+            alert('Transaction was not completed.');
+        }
+    });
+
+    handler.openIframe();
+}
+
 // Tab Functionality
 function openTab(evt, tabName) {
     let i, tabcontent, tablinks;
