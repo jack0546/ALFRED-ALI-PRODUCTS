@@ -6,15 +6,12 @@
     <title>Apparel & Accessories - ALFRED PRODUCTS</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#FF6600">
+    <meta name="theme-color" content="#0abf53">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="1.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
@@ -22,48 +19,53 @@
 <body>
     <header>
         <div class="container">
-            <div class="header-top">
-                <div class="logo"><a href="index.html"><a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a></a></div>
-                <div class="header-actions">
-                    <a href="login.html" class="action-item"><ion-icon name="person-outline"></ion-icon><span>Sign In</span></a>
-                    <a href="messages.html" class="action-item"><ion-icon name="mail-outline"></ion-icon><span>Messages</span></a>
-                    <a href="orders.html" class="action-item"><ion-icon name="cart-outline"></ion-icon><span>Orders</span></a>
+            <div class="header-top" style="padding: 15px 0;">
+                <div class="logo">
+                   <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 44px;"></a>
                 </div>
+                <nav>
+                    <ul>
+                        <li><a href="categories.html"><ion-icon name="apps-outline"></ion-icon> All Categories</a></li>
+                        <li><a href="index.html">Home</a></li>
+                    </ul>
+                </nav>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="categories.html">All Categories</a></li>
-                    <li><a href="featured.html">Featured Products</a></li>
-                    <li><a href="trade.html">Trade Assurance</a></li>
-                    <li><a href="logistics.html">Logistics Services</a></li>
-                    <li><a href="help.html">Help Center</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
 
     <main class="container">
-        <div style="margin-top: 20px; border-radius: 12px; overflow: hidden; position: relative; height: 350px;">
-            <img src="images/banners/apparel.jpg" alt="Apparel Banner" style="width: 100%; height: 100%; object-fit: cover;">
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: center; padding: 60px; color: white;">
-                <h1 style="font-size: 48px; margin-bottom: 10px;">Apparel & Accessories</h1>
-                <p style="font-size: 20px;">Source the latest trends from verified fashion manufacturers.</p>
+        <!-- EDITABLE CATEGORY HEADER -->
+        <section class="category-hero" style="margin-top: 30px; border-radius: 12px; overflow: hidden; position: relative; height: 300px; background: #eee;">
+            <!-- 1. CHANGE CATEGORY BANNER HERE -->
+            <img src="images/banners/apparel_main.jpg" onerror="this.src='https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=1200'; this.onerror=null;" alt="Apparel & Accessories" style="width: 100%; height: 100%; object-fit: cover;">
+            
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; color: white;">
+                <!-- 2. CHANGE CATEGORY TITLE HERE -->
+                <h1 style="font-size: 36px; font-weight: 800; margin-bottom: 5px;">Apparel & Accessories</h1>
+                <!-- 3. CHANGE CATEGORY DESCRIPTION HERE -->
+                <p style="font-size: 16px; opacity: 0.9;">Directly source high-quality fashion and apparel from verified manufacturers.</p>
             </div>
-        </div>
+        </section>
 
-        <section class="products">
-            <h2 class="section-title">Wholesale Fashion</h2>
+        <section class="products" style="margin-top: 50px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 style="font-size: 20px; font-weight: 800;">Wholesale Product Listings</h2>
+                <div style="font-size: 14px; color: var(--text-muted);">
+                    <a href="categories.html" style="color: var(--primary-color); text-decoration: none;">View all markets →</a>
+                </div>
+            </div>
             <div class="product-grid" id="productGrid">
-                <!-- script.js will load products -->
+                <!-- script.js will load apparel by cat=apparel -->
             </div>
         </section>
     </main>
+
+    <footer style="margin-top: 100px;">
+        <div class="container" style="text-align: center; border-top: 1px solid #eee; padding: 40px 0;">
+            <p style="color: grey; font-size: 13px;">&copy; 2026 ALFRED PRODUCTS. Global Trade Starts Here.</p>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
