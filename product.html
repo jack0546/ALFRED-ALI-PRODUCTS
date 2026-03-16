@@ -15,7 +15,7 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
@@ -25,7 +25,7 @@
         <div class="container">
             <div class="header-top">
                 <div class="logo">
-                    <a href="index.html"><a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a></a>
+                    <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a>
                 </div>
                 <div class="header-actions">
                     <a href="login.html" class="action-item">
@@ -85,10 +85,65 @@
                     <p><strong>Available Colors:</strong> 12 Colors</p>
                 </div>
 
-                <div class="product-actions" id="paymentActions">
-                    <button class="btn btn-primary" onclick="payWithPaystack()" style="background: #000; color: #fff; border: none;">Buy Now</button>
-                    <button id="addCartBtn" class="btn btn-outline" onclick="addToCart(parseInt(new URLSearchParams(window.location.search).get('id')))">Add to Cart</button>
-                    <button class="btn btn-outline">Contact Supplier</button>
+                <!-- Delivery Form Section -->
+                <div class="delivery-form-container" style="margin-top: 30px; padding: 20px; background: #f9f9f9; border-radius: 12px; border: 1px solid #eee;">
+                    <h3 style="margin-bottom: 20px; font-size: 18px; color: var(--text-color);">Delivery Information</h3>
+                    <form id="deliveryForm">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                            <div class="form-group">
+                                <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Full Name</label>
+                                <input type="text" id="fullName" required placeholder="Full Name" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                            </div>
+                            <div class="form-group">
+                                <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Phone Number</label>
+                                <input type="tel" id="phoneNumber" required placeholder="0500000000" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">WhatsApp Number (Optional)</label>
+                            <input type="tel" id="whatsappNumber" placeholder="WhatsApp Number" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                            <div class="form-group">
+                                <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Region</label>
+                                <select id="region" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; background: white;">
+                                    <option value="">Select Region</option>
+                                    <option value="Greater Accra">Greater Accra</option>
+                                    <option value="Ashanti">Ashanti</option>
+                                    <option value="Central">Central</option>
+                                    <option value="Eastern">Eastern</option>
+                                    <option value="Western">Western</option>
+                                    <option value="Volta">Volta</option>
+                                    <option value="Northern">Northern</option>
+                                    <option value="Upper East">Upper East</option>
+                                    <option value="Upper West">Upper West</option>
+                                    <option value="Bono">Bono</option>
+                                    <option value="Bono East">Bono East</option>
+                                    <option value="Ahafo">Ahafo</option>
+                                    <option value="Savannah">Savannah</option>
+                                    <option value="North East">North East</option>
+                                    <option value="Oti">Oti</option>
+                                    <option value="Western North">Western North</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">City / Town</label>
+                                <input type="text" id="city" required placeholder="Accra" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Delivery Address / Nearest Landmark</label>
+                            <textarea id="address" required placeholder="Main Street, near the bank" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; height: 80px; resize: none;"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="product-actions" id="paymentActions" style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="validateAndPay()" style="background: #000; color: #fff; border: none; width: 100%; height: 50px;">Complete Purchase</button>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button id="addCartBtn" class="btn btn-outline" style="flex: 1;" onclick="addToCart(parseInt(new URLSearchParams(window.location.search).get('id')))">Add to Cart</button>
+                        <button class="btn btn-outline" style="flex: 1;">Contact Supplier</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -157,8 +212,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
