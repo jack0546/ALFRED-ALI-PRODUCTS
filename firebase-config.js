@@ -59,6 +59,7 @@ function saveOrderToFirestore(orderDetails) {
         items: orderDetails.items,
         total: orderDetails.total,
         reference: orderDetails.reference,
+        delivery: orderDetails.delivery || {},
         status: "Paid",
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
     })
