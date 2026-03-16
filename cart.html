@@ -25,7 +25,7 @@
         <div class="container">
             <div class="header-top">
                 <div class="logo">
-                   <a href="index.html"><a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a></a>
+                   <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a>
                 </div>
                 <div class="header-actions">
                     <a href="index.html" class="action-item">
@@ -49,11 +49,49 @@
         </div>
 
         <div id="cartSummary" style="margin-top: 40px; background: white; padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); display: none;">
+            
+            <!-- Delivery Form inside Cart -->
+            <div class="delivery-form-container" style="margin-bottom: 30px; padding: 20px; background: #f9f9f9; border-radius: 12px; border: 1px solid #eee;">
+                <h3 style="margin-bottom: 20px; font-size: 18px; color: var(--text-color);">Delivery Information</h3>
+                <form id="deliveryForm">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <input type="text" id="fullName" required placeholder="Full Name" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                        <input type="tel" id="phoneNumber" required placeholder="Phone Number" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <input type="tel" id="whatsappNumber" placeholder="WhatsApp Number (Optional)" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <select id="region" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; background: white;">
+                            <option value="">Select Region</option>
+                            <option value="Greater Accra">Greater Accra</option>
+                            <option value="Ashanti">Ashanti</option>
+                            <option value="Central">Central</option>
+                            <option value="Eastern">Eastern</option>
+                            <option value="Western">Western</option>
+                            <option value="Volta">Volta</option>
+                            <option value="Northern">Northern</option>
+                            <option value="Upper East">Upper East</option>
+                            <option value="Upper West">Upper West</option>
+                            <option value="Bono">Bono</option>
+                            <option value="Bono East">Bono East</option>
+                            <option value="Ahafo">Ahafo</option>
+                            <option value="Savannah">Savannah</option>
+                            <option value="North East">North East</option>
+                            <option value="Oti">Oti</option>
+                            <option value="Western North">Western North</option>
+                        </select>
+                        <input type="text" id="city" required placeholder="City / Town" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+                    <textarea id="address" required placeholder="Delivery Address / Nearest Landmark" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; height: 80px; resize: none;"></textarea>
+                </form>
+            </div>
+
             <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 18px; font-weight: 700;">
                 <span>Total Amount:</span>
                 <span id="cartTotalText">GHS 0.00</span>
             </div>
-            <button class="btn btn-primary" onclick="checkoutWithPaystack()" style="width: 100%; border-radius: 8px;">Proceed to Checkout</button>
+            <button class="btn btn-primary" onclick="validateCartAndPay()" style="width: 100%; border-radius: 8px; height: 50px; font-size: 16px;">Proceed to Payment</button>
         </div>
 
         <div id="emptyCartMessage" style="text-align: center; padding: 80px 0; display: none;">
@@ -139,9 +177,30 @@
             updateCartBadge();
         }
 
+        function validateCartAndPay() {
+            const form = document.getElementById('deliveryForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const deliveryInfo = {
+                fullName: document.getElementById('fullName').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                whatsappNumber: document.getElementById('whatsappNumber').value || 'N/A',
+                region: document.getElementById('region').value,
+                city: document.getElementById('city').value,
+                address: document.getElementById('address').value
+            };
+
+            localStorage.setItem('tempDeliveryInfo', JSON.stringify(deliveryInfo));
+            checkoutWithPaystack();
+        }
+
         function checkoutWithPaystack() {
             const total = localStorage.getItem('cartTotal');
             const amount = parseFloat(total) * 100;
+            const deliveryInfo = JSON.parse(localStorage.getItem('tempDeliveryInfo'));
 
             let handler = PaystackPop.setup({
                 key: 'pk_live_6b9968065dc0bd4842c97ffa138e49127c862888',
@@ -149,18 +208,27 @@
                 amount: amount,
                 currency: "GHS",
                 ref: 'ORD_' + Math.floor((Math.random() * 1e9) + 1),
+                metadata: {
+                    custom_fields: [
+                        { display_name: "Customer", value: deliveryInfo.fullName },
+                        { display_name: "Phone", value: deliveryInfo.phoneNumber },
+                        { display_name: "Address", value: `${deliveryInfo.address}, ${deliveryInfo.city}` }
+                    ]
+                },
                 callback: function(res) {
                     alert('Payment Successful! Reference: ' + res.reference);
                     
-                    // NEW: Save order to Firebase Firestore
                     const cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
                     saveOrderToFirestore({
                         items: cart,
                         total: total,
-                        reference: res.reference
+                        reference: res.reference,
+                        delivery: deliveryInfo,
+                        status: 'pending'
                     });
 
                     localStorage.removeItem('alfredCart');
+                    localStorage.removeItem('tempDeliveryInfo');
                     window.location.href = 'orders.html';
                 }
             });
@@ -169,6 +237,3 @@
     </script>
 </body>
 </html>
-
-
-
