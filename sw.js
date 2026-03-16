@@ -9,10 +9,15 @@ const assetsToCache = [
 ];
 
 self.addEventListener('install', event => {
+  self.skipWaiting(); // Force update immediately
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(assetsToCache))
   );
+});
+
+self.addEventListener('activate', event => {
+    event.waitUntil(clients.claim()); // Take control of pages immediately
 });
 
 self.addEventListener('fetch', event => {
