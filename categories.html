@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +26,7 @@
             gap: 30px;
             margin-top: 30px;
         }
+
         .category-nav {
             position: sticky;
             top: 100px;
@@ -35,6 +37,7 @@
             padding: 20px;
             border: 1px solid var(--border-color);
         }
+
         .category-nav h3 {
             font-size: 16px;
             margin-bottom: 20px;
@@ -42,12 +45,15 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+
         .category-nav ul {
             list-style: none;
         }
+
         .category-nav li {
             padding: 8px 0;
         }
+
         .category-nav a {
             text-decoration: none;
             color: var(--text-color);
@@ -56,14 +62,17 @@
             transition: 0.3s;
             display: block;
         }
+
         .category-nav a:hover {
             color: var(--primary-color);
             padding-left: 5px;
         }
+
         .category-section {
             margin-bottom: 60px;
             scroll-margin-top: 100px;
         }
+
         .category-header {
             display: flex;
             justify-content: space-between;
@@ -72,22 +81,26 @@
             padding-bottom: 12px;
             border-bottom: 2px solid var(--primary-color);
         }
+
         .category-header h3 {
             font-size: 24px;
             font-weight: 800;
             color: var(--text-color);
         }
+
         .category-header .view-all {
             font-size: 14px;
             color: var(--primary-color);
             text-decoration: none;
             font-weight: 700;
         }
+
         .sub-category-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 20px;
         }
+
         .sub-category-card {
             background: white;
             border-radius: 12px;
@@ -100,26 +113,31 @@
             display: flex;
             flex-direction: column;
         }
+
         .sub-category-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             border-color: var(--primary-color);
         }
+
         .sub-category-img {
             height: 140px;
             overflow: hidden;
             background: #f7f7f7;
             position: relative;
         }
+
         .sub-category-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s;
         }
+
         .sub-category-card:hover .sub-category-img img {
             transform: scale(1.1);
         }
+
         .sub-category-name {
             font-size: 13px;
             font-weight: 600;
@@ -131,22 +149,25 @@
             justify-content: center;
             line-height: 1.4;
         }
+
         @media (max-width: 900px) {
             .category-explorer {
                 grid-template-columns: 1fr;
             }
+
             .category-nav {
                 display: none;
             }
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="container">
             <div class="header-top">
                 <div class="logo">
-                   <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a>
+                    <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a>
                 </div>
                 <div class="search-bar">
                     <input type="text" placeholder="Search for products or categories...">
@@ -189,7 +210,8 @@
             </aside>
             <section id="categoryDisplay">
                 <div style="text-align: center; padding: 100px 0;">
-                    <ion-icon name="sync-outline" style="font-size: 48px; color: var(--primary-color); animation: spin 2s linear infinite;"></ion-icon>
+                    <ion-icon name="sync-outline"
+                        style="font-size: 48px; color: var(--primary-color); animation: spin 2s linear infinite;"></ion-icon>
                     <p style="margin-top: 15px; color: var(--text-muted);">Organizing categories...</p>
                 </div>
             </section>
@@ -216,15 +238,58 @@
     </footer>
 
     <style>
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 
     <script src="script.js"></script>
     <script>
+        // --- IMAGE MAPPING FOR CATEGORIES IN ALL MARKET ---
+        const categoryImagesAllMarket = {
+            bags: [
+                'images/categories/bags/BAG1.jpg', 'images/categories/bags/BAG2.jpg', 'images/categories/bags/BAG3.jpg', 'images/categories/bags/BAG4.jpg',
+                'images/categories/bags/BAG5.jpg', 'images/categories/bags/BAG6.jpg', 'images/categories/bags/BAG7.jpg', 'images/categories/bags/BAG8.jpg',
+                'images/categories/bags/BAG9.jpg', 'images/categories/bags/BAG10.jpg', 'images/categories/bags/BAG11.jpg', 'images/categories/bags/BAG12.jpg',
+                'images/categories/bags/BAG14.jpg', 'images/categories/bags/BAG15.jpg', 'images/categories/bags/BAG16.jpg', 'images/categories/bags/BAG17.jpg',
+                'images/categories/bags/BAG18.jpg', 'images/categories/bags/BAG19.jpg', 'images/categories/bags/BAG20.jpg', 'images/categories/bags/BAG21.jpg',
+                'images/categories/bags/BAG22.jpg', 'images/categories/bags/BAG23.jpg', 'images/categories/bags/BAG24.jpg', 'images/categories/bags/BAG25.jpg',
+                'images/categories/bags/BAG26.jpg', 'images/categories/bags/BAG29.jpg', 'images/categories/bags/BAG30.jpg',
+                'images/categories/bags/BAGS26.jpg', 'images/categories/bags/BAGS27.jpg', 'images/categories/bags/BAGS28.jpg'
+            ],
+            shoes: [
+                'images/categories/shoes/SHOE1.jpg', 'images/categories/shoes/SHOE2.jpg', 'images/categories/shoes/SHOE3.jpg', 'images/categories/shoes/SHOE 4.jpg',
+                'images/categories/shoes/SHOE5.jpg', 'images/categories/shoes/SHOE6.jpg', 'images/categories/shoes/SHOE7.jpg', 'images/categories/shoes/SHOE8.jpg',
+                'images/categories/shoes/SHOE9.jpg', 'images/categories/shoes/SHOE10.jpg', 'images/categories/shoes/SHOE11.jpg', 'images/categories/shoes/SHOE12.jpg',
+                'images/categories/shoes/SHOE13.jpg', 'images/categories/shoes/SHOE14.jpg', 'images/categories/shoes/SHOE15.jpg', 'images/categories/shoes/SHOE16.jpg',
+                'images/categories/shoes/SHOE17.jpg', 'images/categories/shoes/SHOE18.jpg', 'images/categories/shoes/SHOE19.jpg', 'images/categories/shoes/SHOE20.jpg',
+                'images/categories/shoes/SHOE21.jpg', 'images/categories/shoes/SHOE22.jpg', 'images/categories/shoes/SHOE23.jpg', 'images/categories/shoes/SHOE24.jpg',
+                'images/categories/shoes/SHOE25.jpg', 'images/categories/shoes/SHOE26.jpg', 'images/categories/shoes/SHOE27.jpg', 'images/categories/shoes/SHOE28.jpg',
+                'images/categories/shoes/SHOE29.jpg', 'images/categories/shoes/SHOE30.jpg', 'images/categories/shoes/SHOE31.jpg', 'images/categories/shoes/SHOE32.jpg',
+                'images/categories/shoes/SHOE33.jpg', 'images/categories/shoes/SHOE34.jpg', 'images/categories/shoes/SHOE35.jpg', 'images/categories/shoes/SHOE36.jpg',
+                'images/categories/shoes/SHOE37.jpg', 'images/categories/shoes/SHOE38.jpg', 'images/categories/shoes/SHOE39.jpg', 'images/categories/shoes/SHOE40.jpg',
+                'images/categories/shoes/SHOE340#.jpg'
+            ],
+            electronics: [
+                'images/categories/electronics/SMART1.jpg', 'images/categories/electronics/SMART2.jpg', 'images/categories/electronics/SMART3.jpg', 'images/categories/electronics/SMAR4.jpg',
+                'images/categories/electronics/SMART5.jpg', 'images/categories/electronics/SMART6.jpg', 'images/categories/electronics/SMART7.jpg', 'images/categories/electronics/SMART8.jpg',
+                'images/categories/electronics/SMART9.jpg'
+            ],
+            beauty: [
+                'images/categories/beauty/SPRAY1.jpg', 'images/categories/beauty/SPRAY2.jpg', 'images/categories/beauty/SPRAY3.jpg'
+            ]
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             const display = document.getElementById('categoryDisplay');
             const nav = document.getElementById('sidebarNav');
-            
+
             // Comprehensive Category Data structure based on user request
             const sectors = [
                 {
@@ -404,6 +469,7 @@
                 }
             ];
 
+            let globalImgIndex = 0;
             display.innerHTML = ''; // Clear loading spinner
 
             sectors.forEach(sector => {
@@ -416,17 +482,29 @@
                 const section = document.createElement('section');
                 section.id = sector.id;
                 section.className = 'category-section';
-                
+
                 let subItemsHTML = '';
+                let catImgIndex = 0;
+                const catImages = categoryImagesAllMarket[sector.id] || [];
+
                 sector.items.forEach(item => {
+                    globalImgIndex++;
                     const encodedItem = encodeURIComponent(item);
-                    // Use a more reliable image source based on keywords
-                    const imgSrc = `https://source.unsplash.com/featured/400x300?${encodedItem}`;
-                    
+                    const fileName = item.replace(/\s+/g, '_').toLowerCase();
+
+                    // Use mapped category images if available, otherwise use sequential naming
+                    const localSrc = catImages.length > 0
+                        ? catImages[catImgIndex % catImages.length]
+                        : `images/categories/${sector.id}/image${catImgIndex + 1}.jpg`;
+                    catImgIndex++;
+
+                    // Remote fallback path
+                    const stockSrc = `https://images.unsplash.com/featured/400x300?${encodedItem},${sector.id}&sig=${globalImgIndex}`;
+
                     subItemsHTML += `
-                        <a href="javascript:void(0)" class="sub-category-card">
+                        <a href="featured.html?search=${encodedItem}" class="sub-category-card">
                             <div class="sub-category-img">
-                                <img src="${imgSrc}" onerror="this.src='hero.png'; this.onerror=null;" alt="${item}">
+                                <img src="${localSrc}" loading="lazy" onerror="this.src='${stockSrc}'; this.onerror=null;" alt="${item}">
                             </div>
                             <span class="sub-category-name">${item}</span>
                         </a>
@@ -436,7 +514,7 @@
                 section.innerHTML = `
                     <div class="category-header">
                         <h3>${sector.name}</h3>
-                        <a href="javascript:void(0)" class="view-all">Browse all</a>
+                        <a href="featured.html?cat=${sector.id}" class="view-all">Browse all</a>
                     </div>
                     <div class="sub-category-grid">
                         ${subItemsHTML}
@@ -447,4 +525,5 @@
         });
     </script>
 </body>
+
 </html>
