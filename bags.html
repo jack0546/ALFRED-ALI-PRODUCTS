@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +16,15 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
+
 <body>
     <header>
         <div class="container">
             <div class="header-top" style="padding: 15px 0;">
                 <div class="logo">
-                   <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 44px;"></a>
+                    <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a>
                 </div>
                 <nav>
                     <ul>
@@ -35,15 +38,18 @@
 
     <main class="container">
         <!-- EDITABLE CATEGORY HEADER -->
-        <section class="category-hero" style="margin-top: 30px; border-radius: 12px; overflow: hidden; position: relative; height: 300px; background: #eee;">
+        <section class="category-hero"
+            style="margin-top: 30px; border-radius: 12px; overflow: hidden; position: relative; height: 300px; background: #eee;">
             <!-- 1. CHANGE CATEGORY BANNER HERE -->
-            <img src="images/banners/bags_main.jpg" onerror="this.src='https://images.unsplash.com/photo-1547949003-9792a18a2601?w=1200'; this.onerror=null;" alt="Bags & Accessories" style="width: 100%; height: 100%; object-fit: cover;">
-            
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; color: white;">
+            <img src="images/BAG1.jpg" alt="Bags & Accessories" style="width: 100%; height: 100%; object-fit: cover;">
+
+            <div
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; color: white;">
                 <!-- 2. CHANGE CATEGORY TITLE HERE -->
                 <h1 style="font-size: 36px; font-weight: 800; margin-bottom: 5px;">Luggage, Bags & Cases</h1>
                 <!-- 3. CHANGE CATEGORY DESCRIPTION HERE -->
-                <p style="font-size: 16px; opacity: 0.9;">Source the world's most durable and stylish bags from top manufacturers.</p>
+                <p style="font-size: 16px; opacity: 0.9;">Source the world's most durable and stylish bags from top
+                    manufacturers.</p>
             </div>
         </section>
 
@@ -51,9 +57,266 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                 <h2 style="font-size: 20px; font-weight: 800;">Wholesale Product Listings</h2>
                 <div style="font-size: 14px; color: var(--text-muted);">
-                    <a href="categories.html" style="color: var(--primary-color); text-decoration: none;">View all markets →</a>
+                    <a href="categories.html" style="color: var(--primary-color); text-decoration: none;">View all
+                        markets →</a>
                 </div>
             </div>
+
+            <!-- Bags Products Grid -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Designer Bag', 'Bags', 150.00, 'Genuine leather bag', 'images/BAG1.jpg')">
+                    <img src="images/BAG1.jpg" alt="Leather Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Designer Leather Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 150.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Travel Backpack', 'Bags', 85.00, 'Durable travel backpack', 'images/BAG2.jpg')">
+                    <img src="images/BAG2.jpg" alt="Backpack" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Travel Backpack</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 85.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Fashion Handbag', 'Bags', 95.00, 'Elegant handbag', 'images/BAG3.jpg')">
+                    <img src="images/BAG3.jpg" alt="Handbag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Fashion Handbag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 95.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Gym Bag', 'Bags', 55.00, 'Sports gym bag', 'images/BAG4.jpg')">
+                    <img src="images/BAG4.jpg" alt="Gym Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Gym Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 55.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="font-size: 20px; font-weight: 800; margin-top: 30px; margin-bottom: 20px;">More Bags</h2>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Laptop Bag', 'Bags', 45.00, 'Padded laptop bag', 'images/BAG5.jpg')">
+                    <img src="images/BAG5.jpg" alt="Laptop Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Laptop Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 45.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Wallet', 'Bags', 25.00, 'Leather wallet', 'images/BAG6.jpg')">
+                    <img src="images/BAG6.jpg" alt="Wallet" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Wallet</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 25.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Clutch Bag', 'Bags', 35.00, 'Evening clutch bag', 'images/BAG7.jpg')">
+                    <img src="images/BAG7.jpg" alt="Clutch Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Clutch Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 35.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm(' messenger Bag', 'Bags', 55.00, 'Classic messenger bag', 'images/BAG8.jpg')">
+                    <img src="images/BAG8.jpg" alt="Messenger Bag"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Messenger Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 55.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Duffle Bag', 'Bags', 65.00, 'Large duffle bag', 'images/BAG9.jpg')">
+                    <img src="images/BAG9.jpg" alt="Duffle Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Duffle Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 65.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Cosmetic Bag', 'Bags', 22.00, 'Makeup cosmetic bag', 'images/BAG10.jpg')">
+                    <img src="images/BAG10.jpg" alt="Cosmetic Bag"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Cosmetic Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Canvas Bag', 'Bags', 28.00, 'Durable canvas bag', 'images/BAG11.jpg')">
+                    <img src="images/BAG11.jpg" alt="Canvas Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Canvas Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Shopping Bag', 'Bags', 15.00, 'Reusable shopping bag', 'images/BAG12.jpg')">
+                    <img src="images/BAG12.jpg" alt="Shopping Bag"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Shopping Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 15.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Kids Backpack', 'Bags', 32.00, 'Colorful kids backpack', 'images/BAG14.jpg')">
+                    <img src="images/BAG14.jpg" alt="Kids Backpack"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Kids Backpack</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 32.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Briefcase', 'Bags', 75.00, 'Leather briefcase', 'images/BAG15.jpg')">
+                    <img src="images/BAG15.jpg" alt="Briefcase" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Briefcase</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 75.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Waist Bag', 'Bags', 18.00, 'Fashion waist bag', 'images/BAG16.jpg')">
+                    <img src="images/BAG16.jpg" alt="Waist Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Waist Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 18.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Cooler Bag', 'Bags', 35.00, 'Insulated cooler bag', 'images/BAG17.jpg')">
+                    <img src="images/BAG17.jpg" alt="Cooler Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Cooler Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 35.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('乐器 Bag', 'Bags', 28.00, 'Musical instrument bag', 'images/BAG18.jpg')">
+                    <img src="images/BAG18.jpg" alt="乐器 Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">乐器 Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Camera Bag', 'Bags', 45.00, 'Padded camera bag', 'images/BAG19.jpg')">
+                    <img src="images/BAG19.jpg" alt="Camera Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Camera Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 45.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Travel Bag', 'Bags', 68.00, 'Large travel bag', 'images/BAG20.jpg')">
+                    <img src="images/BAG20.jpg" alt="Travel Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Travel Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 68.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Hiking Backpack', 'Bags', 78.00, 'Outdoor hiking backpack', 'images/BAG21.jpg')">
+                    <img src="images/BAG21.jpg" alt="Hiking Backpack"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Hiking Backpack</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 78.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('School Bag', 'Bags', 32.00, 'School backpack', 'images/BAG22.jpg')">
+                    <img src="images/BAG22.jpg" alt="School Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">School Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 32.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Executive Bag', 'Bags', 85.00, 'Executive leather bag', 'images/BAG23.jpg')">
+                    <img src="images/BAG23.jpg" alt="Executive Bag"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Executive Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 85.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Evening Bag', 'Bags', 42.00, 'Elegant evening bag', 'images/BAG24.jpg')">
+                    <img src="images/BAG24.jpg" alt="Evening Bag"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Evening Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 42.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beach Bag', 'Bags', 25.00, 'Large beach bag', 'images/BAG25.jpg')">
+                    <img src="images/BAG25.jpg" alt="Beach Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Beach Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 25.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Baby Bag', 'Bags', 38.00, 'Diaper baby bag', 'images/BAG26.jpg')">
+                    <img src="images/BAG26.jpg" alt="Baby Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Baby Bag</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 38.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Fanny Pack', 'Bags', 18.00, 'Fashion fanny pack', 'images/BAG29.jpg')">
+                    <img src="images/BAG29.jpg" alt="Fanny Pack" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Fanny Pack</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 18.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Suitcase', 'Bags', 95.00, 'Hard shell suitcase', 'images/BAG30.jpg')">
+                    <img src="images/BAG30.jpg" alt="Suitcase" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Suitcase</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 95.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Luggage Set', 'Bags', 180.00, 'Complete luggage set', 'images/BAGS26.jpg')">
+                    <img src="images/BAGS26.jpg" alt="Luggage Set"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Luggage Set</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 180.00</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="product-grid" id="productGrid">
                 <!-- script.js will automatically load products for 'bags' category -->
             </div>
@@ -67,5 +330,18 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        function openDeliveryForm(title, category, price, desc, image) {
+            const params = new URLSearchParams({
+                title: title,
+                category: category,
+                price: price,
+                desc: desc,
+                image: image
+            });
+            window.location.href = 'product.html?' + params.toString();
+        }
+    </script>
 </body>
+
 </html>
