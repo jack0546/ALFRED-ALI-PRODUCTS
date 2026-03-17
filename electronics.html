@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,12 +17,13 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
 </head>
+
 <body>
     <header>
         <div class="container">
             <div class="header-top" style="padding: 15px 0;">
                 <div class="logo">
-                   <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 44px;"></a>
+                    <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a>
                 </div>
                 <nav>
                     <ul>
@@ -35,15 +37,20 @@
 
     <main class="container">
         <!-- EDITABLE CATEGORY HEADER -->
-        <section class="category-hero" style="margin-top: 30px; border-radius: 12px; overflow: hidden; position: relative; height: 300px; background: #eee;">
+        <section class="category-hero"
+            style="margin-top: 30px; border-radius: 12px; overflow: hidden; position: relative; height: 300px; background: #eee;">
             <!-- 1. CHANGE CATEGORY BANNER HERE -->
-            <img src="images/banners/electronics_main.jpg" onerror="this.src='https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1200'; this.onerror=null;" alt="Consumer Electronics" style="width: 100%; height: 100%; object-fit: cover;">
-            
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; color: white;">
+            <img src="images/banners/electronics_main.jpg"
+                onerror="this.src='https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1200'; this.onerror=null;"
+                alt="Consumer Electronics" style="width: 100%; height: 100%; object-fit: cover;">
+
+            <div
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; color: white;">
                 <!-- 2. CHANGE CATEGORY TITLE HERE -->
                 <h1 style="font-size: 36px; font-weight: 800; margin-bottom: 5px;">Consumer Electronics</h1>
                 <!-- 3. CHANGE CATEGORY DESCRIPTION HERE -->
-                <p style="font-size: 16px; opacity: 0.9;">Source top-rated gadgets and consumer tech from world-class factories.</p>
+                <p style="font-size: 16px; opacity: 0.9;">Source top-rated gadgets and consumer tech from world-class
+                    factories.</p>
             </div>
         </section>
 
@@ -51,7 +58,8 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                 <h2 style="font-size: 20px; font-weight: 800;">Wholesale Product Listings</h2>
                 <div style="font-size: 14px; color: var(--text-muted);">
-                    <a href="categories.html" style="color: var(--primary-color); text-decoration: none;">View all markets →</a>
+                    <a href="categories.html" style="color: var(--primary-color); text-decoration: none;">View all
+                        markets →</a>
                 </div>
             </div>
             <div class="product-grid" id="productGrid">
@@ -68,4 +76,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
