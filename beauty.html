@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +16,15 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
+
 <body>
     <header>
         <div class="container">
             <div class="header-top" style="padding: 15px 0;">
                 <div class="logo">
-                   <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 44px;"></a>
+                    <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a>
                 </div>
                 <nav>
                     <ul>
@@ -35,15 +38,19 @@
 
     <main class="container">
         <!-- EDITABLE CATEGORY HEADER -->
-        <section class="category-hero" style="margin-top: 30px; border-radius: 12px; overflow: hidden; position: relative; height: 300px; background: #eee;">
+        <section class="category-hero"
+            style="margin-top: 30px; border-radius: 12px; overflow: hidden; position: relative; height: 300px; background: #eee;">
             <!-- 1. CHANGE CATEGORY BANNER HERE -->
-            <img src="images/banners/beauty_main.jpg" onerror="this.src='https://images.unsplash.com/photo-1596462502278-27bfad450526?w=1200'; this.onerror=null;" alt="Beauty & Personal Care" style="width: 100%; height: 100%; object-fit: cover;">
-            
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; color: white;">
+            <img src="images/image1.jpg" alt="Beauty & Personal Care"
+                style="width: 100%; height: 100%; object-fit: cover;">
+
+            <div
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; color: white;">
                 <!-- 2. CHANGE CATEGORY TITLE HERE -->
                 <h1 style="font-size: 36px; font-weight: 800; margin-bottom: 5px;">Beauty & Personal Care</h1>
                 <!-- 3. CHANGE CATEGORY DESCRIPTION HERE -->
-                <p style="font-size: 16px; opacity: 0.9;">Source premium cosmetics and personal care products for your business.</p>
+                <p style="font-size: 16px; opacity: 0.9;">Source premium cosmetics and personal care products for your
+                    business.</p>
             </div>
         </section>
 
@@ -51,9 +58,229 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                 <h2 style="font-size: 20px; font-weight: 800;">Wholesale Product Listings</h2>
                 <div style="font-size: 14px; color: var(--text-muted);">
-                    <a href="categories.html" style="color: var(--primary-color); text-decoration: none;">View all markets →</a>
+                    <a href="categories.html" style="color: var(--primary-color); text-decoration: none;">View all
+                        markets →</a>
                 </div>
             </div>
+
+            <!-- Beauty Products Grid -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Skincare Set', 85.00, 'Complete skincare routine set', 'images/image1.jpg')">
+                    <img src="images/image1.jpg" alt="Skincare" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Skincare Set</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 85.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Makeup Kit', 120.00, 'Professional makeup kit', 'images/image2.jpg')">
+                    <img src="images/image2.jpg" alt="Makeup" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Makeup Kit</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 120.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Hair Care', 65.00, 'Premium hair care products', 'images/image3.jpg')">
+                    <img src="images/image3.jpg" alt="Hair Care" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Hair Care Products</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 65.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Perfume Set', 95.00, 'Luxury fragrance set', 'images/image4.jpg')">
+                    <img src="images/image4.jpg" alt="Perfume" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Perfume Set</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 95.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="font-size: 20px; font-weight: 800; margin-top: 30px; margin-bottom: 20px;">Skincare Products</h2>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Face Cream', 45.00, 'Moisturizing face cream', 'images/image5.jpg')">
+                    <img src="images/image5.jpg" alt="Face Cream"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Face Cream</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 45.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Sunscreen', 35.00, 'SPF 50 sunscreen', 'images/image6.jpg')">
+                    <img src="images/image6.jpg" alt="Sunscreen" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Sunscreen</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 35.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Lipstick Set', 28.00, 'Lipstick collection', 'images/image7.jpg')">
+                    <img src="images/image7.jpg" alt="Lipstick" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Lipstick Set</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Nail Polish', 18.00, 'nail polish set', 'images/image8.jpg')">
+                    <img src="images/image8.jpg" alt="Nail Polish"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Nail Polish Set</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 18.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Face Mask', 22.00, ' sheet masks pack', 'images/image9.jpg')">
+                    <img src="images/image9.jpg" alt="Face Mask" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Face Mask Pack</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Eye Cream', 38.00, 'Anti-aging eye cream', 'images/image10.jpg')">
+                    <img src="images/image10.jpg" alt="Eye Cream"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Eye Cream</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 38.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Body Lotion', 32.00, 'Moisturizing body lotion', 'images/image11.jpg')">
+                    <img src="images/image11.jpg" alt="Body Lotion"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Body Lotion</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 32.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Shampoo', 25.00, 'Premium shampoo', 'images/image12.jpg')">
+                    <img src="images/image12.jpg" alt="Shampoo" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Shampoo</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 25.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Conditioner', 22.00, 'Hair conditioner', 'images/image13.jpg')">
+                    <img src="images/image13.jpg" alt="Conditioner"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Conditioner</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Serum', 48.00, 'Vitamin C serum', 'images/test.jpg')">
+                    <img src="images/test.jpg" alt="Serum" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Vitamin C Serum</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 48.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Facial Cleanser', 28.00, 'Gentle facial cleanser', 'images/SPRAY1.jpg')">
+                    <img src="images/SPRAY1.jpg" alt="Cleanser" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Facial Cleanser</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Toner', 22.00, 'Skin toner', 'images/SPRAY2.jpg')">
+                    <img src="images/SPRAY2.jpg" alt="Toner" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Skin Toner</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Foundation', 35.00, 'Liquid foundation', 'images/SPRAY3.jpg')">
+                    <img src="images/SPRAY3.jpg" alt="Foundation"
+                        style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Foundation</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 35.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Mascara', 25.00, 'Volume mascara', 'images/BAG1.jpg')">
+                    <img src="images/BAG1.jpg" alt="Mascara" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Mascara</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 25.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Eyeliner', 18.00, 'Liquid eyeliner', 'images/BAG2.jpg')">
+                    <img src="images/BAG2.jpg" alt="Eyeliner" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Eyeliner</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 18.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Blush', 22.00, 'Powder blush', 'images/BAG3.jpg')">
+                    <img src="images/BAG3.jpg" alt="Blush" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Blush</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Compact Powder', 20.00, 'Compact powder', 'images/BAG4.jpg')">
+                    <img src="images/BAG4.jpg" alt="Powder" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Compact Powder</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 20.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Primer', 32.00, 'Face primer', 'images/BAG5.jpg')">
+                    <img src="images/BAG5.jpg" alt="Primer" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Face Primer</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 32.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Highlighter', 28.00, 'Face highlighter', 'images/BAG6.jpg')">
+                    <img src="images/BAG6.jpg" alt="Highlighter" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Highlighter</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Beauty', 'Contour Kit', 42.00, 'Contouring kit', 'images/BAG7.jpg')">
+                    <img src="images/BAG7.jpg" alt="Contour Kit" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Contour Kit</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 42.00</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="product-grid" id="productGrid">
                 <!-- script.js will load beauty by cat=beauty -->
             </div>
@@ -67,5 +294,49 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        let currentProduct = null;
+        function openDeliveryForm(title, category, price, desc, image) {
+            currentProduct = { title, category, price, desc, image };
+            document.getElementById('modalProductImg').src = image;
+            document.getElementById('modalProductTitle').textContent = title;
+            document.getElementById('modalProductPrice').textContent = 'GHS ' + price.toFixed(2);
+            document.getElementById('modalProductDesc').textContent = desc;
+            document.getElementById('deliveryModal').classList.add('active');
+        }
+        function closeDeliveryForm() {
+            document.getElementById('deliveryModal').classList.remove('active');
+        }
+        function processPayment() {
+            alert('Thank you! Your order has been placed.');
+            closeDeliveryForm();
+        }
+    </script>
+
+    <!-- Delivery Modal -->
+    <div id="deliveryModal"
+        style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1000; padding:20px;">
+        <div style="background:white; border-radius:16px; max-width:500px; margin:50px auto; padding:20px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                <h3>Complete Order</h3>
+                <button onclick="closeDeliveryForm()"
+                    style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+            </div>
+            <img id="modalProductImg" src="" style="width:100px; height:100px; object-fit:cover; border-radius:8px;">
+            <h4 id="modalProductTitle" style="margin:10px 0;"></h4>
+            <p id="modalProductPrice" style="font-size:20px; font-weight:bold; color:#0abf53;"></p>
+            <p id="modalProductDesc" style="font-size:12px; color:#666; margin:10px 0;"></p>
+            <input type="text" id="fullName" placeholder="Full Name"
+                style="width:100%; padding:10px; margin:10px 0; border:1px solid #ddd; border-radius:8px;">
+            <input type="tel" id="phoneNumber" placeholder="Phone Number"
+                style="width:100%; padding:10px; margin:10px 0; border:1px solid #ddd; border-radius:8px;">
+            <input type="text" id="address" placeholder="Delivery Address"
+                style="width:100%; padding:10px; margin:10px 0; border:1px solid #ddd; border-radius:8px;">
+            <button onclick="processPayment()"
+                style="width:100%; padding:15px; background:#0abf53; color:white; border:none; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer;">Pay
+                Now</button>
+        </div>
+    </div>
 </body>
+
 </html>
