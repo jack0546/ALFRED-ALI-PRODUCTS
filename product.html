@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,12 +21,13 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
 </head>
+
 <body>
     <header>
         <div class="container">
             <div class="header-top">
                 <div class="logo">
-                    <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a>
+                    <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a>
                 </div>
                 <div class="header-actions">
                     <a href="login.html" class="action-item">
@@ -78,7 +80,7 @@
                 <h1 id="productTitle">Premium Oversized Cotton T-Shirt - Custom Logo Wholesale</h1>
                 <p class="product-price" id="productPrice">GHS 45.00 - GHS 68.00</p>
                 <p class="product-moq">Min. Order: 50 Pieces</p>
-                
+
                 <div class="specs" style="margin-top: 20px;">
                     <p><strong>Material:</strong> 100% Organic Cotton</p>
                     <p><strong>Weight:</strong> 240 GSM</p>
@@ -86,27 +88,40 @@
                 </div>
 
                 <!-- Delivery Form Section -->
-                <div class="delivery-form-container" style="margin-top: 30px; padding: 20px; background: #f9f9f9; border-radius: 12px; border: 1px solid #eee;">
-                    <h3 style="margin-bottom: 20px; font-size: 18px; color: var(--text-color);">Delivery Information</h3>
+                <div class="delivery-form-container"
+                    style="margin-top: 30px; padding: 20px; background: #f9f9f9; border-radius: 12px; border: 1px solid #eee;">
+                    <h3 style="margin-bottom: 20px; font-size: 18px; color: var(--text-color);">Delivery Information
+                    </h3>
                     <form id="deliveryForm">
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                             <div class="form-group">
-                                <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Full Name</label>
-                                <input type="text" id="fullName" required placeholder="Full Name" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                                <label
+                                    style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Full
+                                    Name</label>
+                                <input type="text" id="fullName" required placeholder="Full Name"
+                                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
                             </div>
                             <div class="form-group">
-                                <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Phone Number</label>
-                                <input type="tel" id="phoneNumber" required placeholder="0500000000" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                                <label
+                                    style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Phone
+                                    Number</label>
+                                <input type="tel" id="phoneNumber" required placeholder="0500000000"
+                                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
                             </div>
                         </div>
                         <div style="margin-bottom: 15px;">
-                            <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">WhatsApp Number (Optional)</label>
-                            <input type="tel" id="whatsappNumber" placeholder="WhatsApp Number" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                            <label
+                                style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">WhatsApp
+                                Number (Optional)</label>
+                            <input type="tel" id="whatsappNumber" placeholder="WhatsApp Number"
+                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
                         </div>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                             <div class="form-group">
-                                <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Region</label>
-                                <select id="region" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; background: white;">
+                                <label
+                                    style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Region</label>
+                                <select id="region" required
+                                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; background: white;">
                                     <option value="">Select Region</option>
                                     <option value="Greater Accra">Greater Accra</option>
                                     <option value="Ashanti">Ashanti</option>
@@ -127,21 +142,31 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">City / Town</label>
-                                <input type="text" id="city" required placeholder="Accra" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                                <label
+                                    style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">City
+                                    / Town</label>
+                                <input type="text" id="city" required placeholder="Accra"
+                                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
                             </div>
                         </div>
                         <div style="margin-bottom: 15px;">
-                            <label style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Delivery Address / Nearest Landmark</label>
-                            <textarea id="address" required placeholder="Main Street, near the bank" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; height: 80px; resize: none;"></textarea>
+                            <label
+                                style="display: block; font-size: 12px; margin-bottom: 5px; font-weight: 600;">Delivery
+                                Address / Nearest Landmark</label>
+                            <textarea id="address" required placeholder="Main Street, near the bank"
+                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; height: 80px; resize: none;"></textarea>
                         </div>
                     </form>
                 </div>
 
                 <div class="product-actions" id="paymentActions" style="margin-top: 20px;">
-                    <button class="btn btn-primary" onclick="validateAndPay()" style="background: #000; color: #fff; border: none; width: 100%; height: 50px;">Complete Purchase</button>
+                    <button class="btn btn-primary" onclick="validateAndPay()"
+                        style="background: #000; color: #fff; border: none; width: 100%; height: 50px;">Complete
+                        Purchase</button>
                     <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <button id="addCartBtn" class="btn btn-outline" style="flex: 1;" onclick="addToCart(parseInt(new URLSearchParams(window.location.search).get('id')))">Add to Cart</button>
+                        <button id="addCartBtn" class="btn btn-outline" style="flex: 1;"
+                            onclick="handleAddToCart(parseInt(new URLSearchParams(window.location.search).get('id')))">Add
+                            to Cart</button>
                         <button class="btn btn-outline" style="flex: 1;">Contact Supplier</button>
                     </div>
                 </div>
@@ -157,7 +182,9 @@
 
             <div id="details" class="tab-content active">
                 <h3>Product Specifications</h3>
-                <p style="margin-top: 15px;">Our premium oversized t-shirts are made from high-grade 100% organic cotton, ensuring maximum comfort and durability. Perfect for luxury streetwear brands and corporate merchandise.</p>
+                <p style="margin-top: 15px;">Our premium oversized t-shirts are made from high-grade 100% organic
+                    cotton, ensuring maximum comfort and durability. Perfect for luxury streetwear brands and corporate
+                    merchandise.</p>
                 <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
                     <tr style="border-bottom: 1px solid var(--border-color);">
                         <td style="padding: 10px 0; color: var(--text-muted);">Season</td>
@@ -184,7 +211,8 @@
 
             <div id="factory" class="tab-content">
                 <h3>Our Manufacturing Facility</h3>
-                <p style="margin-top: 15px;">Located in the heart of the textile hub, our factory boasts over 20 years of experience in high-end apparel production.</p>
+                <p style="margin-top: 15px;">Located in the heart of the textile hub, our factory boasts over 20 years
+                    of experience in high-end apparel production.</p>
                 <img src="factory.png" alt="Factory" style="width: 100%; margin-top: 20px; border-radius: 8px;">
             </div>
         </section>
@@ -210,5 +238,39 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Check for product details in URL parameters
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const title = params.get('title');
+            const price = params.get('price');
+            const desc = params.get('desc');
+            const image = params.get('image');
+            const category = params.get('category');
+            
+            if (title) {
+                document.getElementById('productTitle').textContent = title;
+            }
+            if (price) {
+                document.getElementById('productPrice').textContent = 'GHS ' + parseFloat(price).toFixed(2);
+            }
+            if (desc) {
+                // Add description to the details tab
+                const detailsDiv = document.getElementById('details');
+                if (detailsDiv) {
+                    detailsDiv.innerHTML = '<h3>Product Description</h3><p style="margin-top: 15px;">' + desc + '</p>' + detailsDiv.innerHTML;
+                }
+            }
+            if (image) {
+                document.getElementById('mainImg').src = image;
+                // Also update thumbnails
+                const thumbs = document.querySelectorAll('.thumb img');
+                if (thumbs.length > 0) {
+                    thumbs[0].src = image;
+                }
+            }
+        }
+    </script>
 </body>
+
 </html>
