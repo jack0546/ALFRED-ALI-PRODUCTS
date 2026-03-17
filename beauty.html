@@ -17,6 +17,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
@@ -32,6 +33,9 @@
                         <li><a href="index.html">Home</a></li>
                     </ul>
                 </nav>
+                <div class="header-actions">
+                    <a href="#" onclick="viewCart(); return false;" style="background:#0abf53;color:white;padding:8px 15px;border-radius:5px;margin-right:10px;text-decoration:none;">Checkout</a>
+                </div>
             </div>
         </div>
     </header>
@@ -221,24 +225,24 @@
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Mascara', 25.00, 'Volume mascara', 'images/BAG1.jpg')">
-                    <img src="images/BAG1.jpg" alt="Mascara" style="width: 100%; height: 150px; object-fit: cover;">
+                    onclick="openDeliveryForm('Beauty', 'Mascara', 25.00, 'Volume mascara', 'images/SPRAY1.jpg')">
+                    <img src="images/SPRAY1.jpg" alt="Mascara" style="width: 100%; height: 150px; object-fit: cover;">
                     <div style="padding: 10px;">
                         <h4 style="font-size: 13px; margin-bottom: 5px;">Mascara</h4>
                         <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 25.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Eyeliner', 18.00, 'Liquid eyeliner', 'images/BAG2.jpg')">
-                    <img src="images/BAG2.jpg" alt="Eyeliner" style="width: 100%; height: 150px; object-fit: cover;">
+                    onclick="openDeliveryForm('Beauty', 'Eyeliner', 18.00, 'Liquid eyeliner', 'images/SPRAY2.jpg')">
+                    <img src="images/SPRAY2.jpg" alt="Eyeliner" style="width: 100%; height: 150px; object-fit: cover;">
                     <div style="padding: 10px;">
                         <h4 style="font-size: 13px; margin-bottom: 5px;">Eyeliner</h4>
                         <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 18.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Blush', 22.00, 'Powder blush', 'images/BAG3.jpg')">
-                    <img src="images/BAG3.jpg" alt="Blush" style="width: 100%; height: 150px; object-fit: cover;">
+                    onclick="openDeliveryForm('Beauty', 'Blush', 22.00, 'Powder blush', 'images/SPRAY3.jpg')">
+                    <img src="images/SPRAY3.jpg" alt="Blush" style="width: 100%; height: 150px; object-fit: cover;">
                     <div style="padding: 10px;">
                         <h4 style="font-size: 13px; margin-bottom: 5px;">Blush</h4>
                         <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
@@ -248,32 +252,32 @@
 
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Compact Powder', 20.00, 'Compact powder', 'images/BAG4.jpg')">
-                    <img src="images/BAG4.jpg" alt="Powder" style="width: 100%; height: 150px; object-fit: cover;">
+                    onclick="openDeliveryForm('Beauty', 'Compact Powder', 20.00, 'Compact powder', 'images/image1.jpg')">
+                    <img src="images/image1.jpg" alt="Powder" style="width: 100%; height: 150px; object-fit: cover;">
                     <div style="padding: 10px;">
                         <h4 style="font-size: 13px; margin-bottom: 5px;">Compact Powder</h4>
                         <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 20.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Primer', 32.00, 'Face primer', 'images/BAG5.jpg')">
-                    <img src="images/BAG5.jpg" alt="Primer" style="width: 100%; height: 150px; object-fit: cover;">
+                    onclick="openDeliveryForm('Beauty', 'Primer', 32.00, 'Face primer', 'images/image2.jpg')">
+                    <img src="images/image2.jpg" alt="Primer" style="width: 100%; height: 150px; object-fit: cover;">
                     <div style="padding: 10px;">
                         <h4 style="font-size: 13px; margin-bottom: 5px;">Face Primer</h4>
                         <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 32.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Highlighter', 28.00, 'Face highlighter', 'images/BAG6.jpg')">
-                    <img src="images/BAG6.jpg" alt="Highlighter" style="width: 100%; height: 150px; object-fit: cover;">
+                    onclick="openDeliveryForm('Beauty', 'Highlighter', 28.00, 'Face highlighter', 'images/image3.jpg')">
+                    <img src="images/image3.jpg" alt="Highlighter" style="width: 100%; height: 150px; object-fit: cover;">
                     <div style="padding: 10px;">
                         <h4 style="font-size: 13px; margin-bottom: 5px;">Highlighter</h4>
                         <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Contour Kit', 42.00, 'Contouring kit', 'images/BAG7.jpg')">
-                    <img src="images/BAG7.jpg" alt="Contour Kit" style="width: 100%; height: 150px; object-fit: cover;">
+                    onclick="openDeliveryForm('Beauty', 'Contour Kit', 42.00, 'Contouring kit', 'images/image4.jpg')">
+                    <img src="images/image4.jpg" alt="Contour Kit" style="width: 100%; height: 150px; object-fit: cover;">
                     <div style="padding: 10px;">
                         <h4 style="font-size: 13px; margin-bottom: 5px;">Contour Kit</h4>
                         <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 42.00</p>
@@ -294,47 +298,55 @@
     </footer>
 
     <script src="script.js"></script>
-    <script>
-        let currentProduct = null;
-        function openDeliveryForm(title, category, price, desc, image) {
-            currentProduct = { title, category, price, desc, image };
-            document.getElementById('modalProductImg').src = image;
-            document.getElementById('modalProductTitle').textContent = title;
-            document.getElementById('modalProductPrice').textContent = 'GHS ' + price.toFixed(2);
-            document.getElementById('modalProductDesc').textContent = desc;
-            document.getElementById('deliveryModal').classList.add('active');
-        }
-        function closeDeliveryForm() {
-            document.getElementById('deliveryModal').classList.remove('active');
-        }
-        function processPayment() {
-            alert('Thank you! Your order has been placed.');
-            closeDeliveryForm();
-        }
-    </script>
 
-    <!-- Delivery Modal -->
-    <div id="deliveryModal"
-        style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1000; padding:20px;">
-        <div style="background:white; border-radius:16px; max-width:500px; margin:50px auto; padding:20px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                <h3>Complete Order</h3>
-                <button onclick="closeDeliveryForm()"
-                    style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+    <!-- Cart Modal -->
+    <div id="cartModal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);">
+        <div style="background-color:#fefefe;margin:5% auto;padding:20px;border:1px solid #888;width:90%;max-width:600px;border-radius:10px;max-height:80vh;overflow-y:auto;">
+            <span onclick="closeCartModal()" style="float:right;font-size:28px;font-weight:bold;cursor:pointer;">&times;</span>
+            <h2>Your Cart</h2>
+            <div id="cartItems"></div>
+            <div style="margin-top:20px;border-top:2px solid #eee;padding-top:15px;">
+                <h3>Total: GHS <span id="cartTotal">0.00</span></h3>
+                <p style="color:#666;">Delivery Fee: GHS <span id="deliveryFee">0.00</span></p>
+                <p style="font-weight:bold;color:#0abf53;">Grand Total: GHS <span id="grandTotal">0.00</span></p>
             </div>
-            <img id="modalProductImg" src="" style="width:100px; height:100px; object-fit:cover; border-radius:8px;">
-            <h4 id="modalProductTitle" style="margin:10px 0;"></h4>
-            <p id="modalProductPrice" style="font-size:20px; font-weight:bold; color:#0abf53;"></p>
-            <p id="modalProductDesc" style="font-size:12px; color:#666; margin:10px 0;"></p>
-            <input type="text" id="fullName" placeholder="Full Name"
-                style="width:100%; padding:10px; margin:10px 0; border:1px solid #ddd; border-radius:8px;">
-            <input type="tel" id="phoneNumber" placeholder="Phone Number"
-                style="width:100%; padding:10px; margin:10px 0; border:1px solid #ddd; border-radius:8px;">
-            <input type="text" id="address" placeholder="Delivery Address"
-                style="width:100%; padding:10px; margin:10px 0; border:1px solid #ddd; border-radius:8px;">
-            <button onclick="processPayment()"
-                style="width:100%; padding:15px; background:#0abf53; color:white; border:none; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer;">Pay
-                Now</button>
+            <button onclick="checkoutCart()" style="width:100%;padding:15px;background:#0abf53;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;margin-top:15px;">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Delivery Form Modal -->
+    <div id="deliveryModal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);">
+        <div style="background-color:#fefefe;margin:5% auto;padding:25px;border:1px solid #888;width:90%;max-width:500px;border-radius:10px;">
+            <span onclick="closeDeliveryModal()" style="float:right;font-size:28px;font-weight:bold;cursor:pointer;">&times;</span>
+            <h2>Delivery Information</h2>
+            <form id="deliveryForm" onsubmit="handleFormSubmit(event)">
+                <input type="hidden" id="productCategory">
+                <input type="hidden" id="productTitle">
+                <input type="hidden" id="productPrice">
+                <input type="hidden" id="productDescription">
+                <input type="hidden" id="productImage">
+                <div style="margin-bottom:15px;">
+                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Full Name</label>
+                    <input type="text" id="fullName" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Phone Number</label>
+                    <input type="tel" id="phoneNumber" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Delivery Address</label>
+                    <textarea id="deliveryAddress" required rows="3" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;"></textarea>
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Quantity</label>
+                    <input type="number" id="quantity" value="1" min="1" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Product</label>
+                    <div id="modalProductInfo" style="background:#f9f9f9;padding:10px;border-radius:5px;"></div>
+                </div>
+                <button type="submit" style="width:100%;padding:15px;background:#0abf53;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;">Make Payment</button>
+            </form>
         </div>
     </div>
 </body>
