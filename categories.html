@@ -19,12 +19,163 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
     <style>
         .category-explorer {
             display: grid;
             grid-template-columns: 250px 1fr;
             gap: 30px;
             margin-top: 30px;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            color: var(--text-color);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-product-info {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-product-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .modal-product-details h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .modal-product-details .price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0abf53;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0abf53;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .payment-btn {
+            width: 100%;
+            padding: 15px;
+            background: #0abf53;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .payment-btn:hover {
+            background: #08a648;
         }
 
         .category-nav {
@@ -167,7 +318,7 @@
         <div class="container">
             <div class="header-top">
                 <div class="logo">
-                    <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"></a>
+                    <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a>
                 </div>
                 <div class="search-bar">
                     <input type="text" placeholder="Search for products or categories...">
@@ -252,38 +403,75 @@
     <script src="script.js"></script>
     <script>
         // --- IMAGE MAPPING FOR CATEGORIES IN ALL MARKET ---
+        // Updated with ALL available local images - mapped to ALL categories to prevent blanks
         const categoryImagesAllMarket = {
             bags: [
-                'images/categories/bags/BAG1.jpg', 'images/categories/bags/BAG2.jpg', 'images/categories/bags/BAG3.jpg', 'images/categories/bags/BAG4.jpg',
-                'images/categories/bags/BAG5.jpg', 'images/categories/bags/BAG6.jpg', 'images/categories/bags/BAG7.jpg', 'images/categories/bags/BAG8.jpg',
-                'images/categories/bags/BAG9.jpg', 'images/categories/bags/BAG10.jpg', 'images/categories/bags/BAG11.jpg', 'images/categories/bags/BAG12.jpg',
-                'images/categories/bags/BAG14.jpg', 'images/categories/bags/BAG15.jpg', 'images/categories/bags/BAG16.jpg', 'images/categories/bags/BAG17.jpg',
-                'images/categories/bags/BAG18.jpg', 'images/categories/bags/BAG19.jpg', 'images/categories/bags/BAG20.jpg', 'images/categories/bags/BAG21.jpg',
-                'images/categories/bags/BAG22.jpg', 'images/categories/bags/BAG23.jpg', 'images/categories/bags/BAG24.jpg', 'images/categories/bags/BAG25.jpg',
-                'images/categories/bags/BAG26.jpg', 'images/categories/bags/BAG29.jpg', 'images/categories/bags/BAG30.jpg',
-                'images/categories/bags/BAGS26.jpg', 'images/categories/bags/BAGS27.jpg', 'images/categories/bags/BAGS28.jpg'
+                'images/BAG1.jpg', 'images/BAG2.jpg', 'images/BAG3.jpg', 'images/BAG4.jpg',
+                'images/BAG5.jpg', 'images/BAG6.jpg', 'images/BAG7.jpg', 'images/BAG8.jpg',
+                'images/BAG9.jpg', 'images/BAG10.jpg', 'images/BAG11.jpg', 'images/BAG12.jpg',
+                'images/BAG14.jpg', 'images/BAG15.jpg', 'images/BAG16.jpg', 'images/BAG17.jpg',
+                'images/BAG18.jpg', 'images/BAG19.jpg', 'images/BAG20.jpg', 'images/BAG21.jpg',
+                'images/BAG22.jpg', 'images/BAG23.jpg', 'images/BAG24.jpg', 'images/BAG25.jpg',
+                'images/BAG26.jpg', 'images/BAG29.jpg', 'images/BAG30.jpg',
+                'images/BAGS26.jpg', 'images/BAGS27.jpg', 'images/BAGS28.jpg'
             ],
             shoes: [
-                'images/categories/shoes/SHOE1.jpg', 'images/categories/shoes/SHOE2.jpg', 'images/categories/shoes/SHOE3.jpg', 'images/categories/shoes/SHOE 4.jpg',
-                'images/categories/shoes/SHOE5.jpg', 'images/categories/shoes/SHOE6.jpg', 'images/categories/shoes/SHOE7.jpg', 'images/categories/shoes/SHOE8.jpg',
-                'images/categories/shoes/SHOE9.jpg', 'images/categories/shoes/SHOE10.jpg', 'images/categories/shoes/SHOE11.jpg', 'images/categories/shoes/SHOE12.jpg',
-                'images/categories/shoes/SHOE13.jpg', 'images/categories/shoes/SHOE14.jpg', 'images/categories/shoes/SHOE15.jpg', 'images/categories/shoes/SHOE16.jpg',
-                'images/categories/shoes/SHOE17.jpg', 'images/categories/shoes/SHOE18.jpg', 'images/categories/shoes/SHOE19.jpg', 'images/categories/shoes/SHOE20.jpg',
-                'images/categories/shoes/SHOE21.jpg', 'images/categories/shoes/SHOE22.jpg', 'images/categories/shoes/SHOE23.jpg', 'images/categories/shoes/SHOE24.jpg',
-                'images/categories/shoes/SHOE25.jpg', 'images/categories/shoes/SHOE26.jpg', 'images/categories/shoes/SHOE27.jpg', 'images/categories/shoes/SHOE28.jpg',
-                'images/categories/shoes/SHOE29.jpg', 'images/categories/shoes/SHOE30.jpg', 'images/categories/shoes/SHOE31.jpg', 'images/categories/shoes/SHOE32.jpg',
-                'images/categories/shoes/SHOE33.jpg', 'images/categories/shoes/SHOE34.jpg', 'images/categories/shoes/SHOE35.jpg', 'images/categories/shoes/SHOE36.jpg',
-                'images/categories/shoes/SHOE37.jpg', 'images/categories/shoes/SHOE38.jpg', 'images/categories/shoes/SHOE39.jpg', 'images/categories/shoes/SHOE40.jpg',
-                'images/categories/shoes/SHOE340#.jpg'
+                'images/SHOE1.jpg', 'images/SHOE2.jpg', 'images/SHOE3.jpg', 'images/SHOE 4.jpg',
+                'images/SHOE5.jpg', 'images/SHOE6.jpg', 'images/SHOE7.jpg', 'images/SHOE8.jpg',
+                'images/SHOE9.jpg', 'images/SHOE10.jpg', 'images/SHOE11.jpg', 'images/SHOE12.jpg',
+                'images/SHOE13.jpg', 'images/SHOE14.jpg', 'images/SHOE15.jpg', 'images/SHOE16.jpg',
+                'images/SHOE17.jpg', 'images/SHOE18.jpg', 'images/SHOE19.jpg', 'images/SHOE20.jpg',
+                'images/SHOE21.jpg', 'images/SHOE22.jpg', 'images/SHOE23.jpg', 'images/SHOE24.jpg',
+                'images/SHOE25.jpg', 'images/SHOE26.jpg', 'images/SHOE27.jpg', 'images/SHOE28.jpg',
+                'images/SHOE29.jpg', 'images/SHOE30.jpg', 'images/SHOE31.jpg', 'images/SHOE32.jpg',
+                'images/SHOE33.jpg', 'images/SHOE34.jpg', 'images/SHOE35.jpg', 'images/SHOE36.jpg',
+                'images/SHOE37.jpg', 'images/SHOE38.jpg', 'images/SHOE39.jpg', 'images/SHOE40.jpg',
+                'images/SHOE340#.jpg'
             ],
             electronics: [
-                'images/categories/electronics/SMART1.jpg', 'images/categories/electronics/SMART2.jpg', 'images/categories/electronics/SMART3.jpg', 'images/categories/electronics/SMAR4.jpg',
-                'images/categories/electronics/SMART5.jpg', 'images/categories/electronics/SMART6.jpg', 'images/categories/electronics/SMART7.jpg', 'images/categories/electronics/SMART8.jpg',
-                'images/categories/electronics/SMART9.jpg'
+                'images/SMART1.jpg', 'images/SMART2.jpg', 'images/SMART3.jpg', 'images/SMAR4.jpg',
+                'images/SMART5.jpg', 'images/SMART6.jpg', 'images/SMART7.jpg', 'images/SMART8.jpg',
+                'images/SMART9.jpg'
             ],
             beauty: [
-                'images/categories/beauty/SPRAY1.jpg', 'images/categories/beauty/SPRAY2.jpg', 'images/categories/beauty/SPRAY3.jpg'
-            ]
+                'images/SPRAY1.jpg', 'images/SPRAY2.jpg', 'images/SPRAY3.jpg'
+            ],
+            home: [
+                'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg',
+                'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg',
+                'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg',
+                'images/image13.jpg', 'images/test.jpg'
+            ],
+            gifts: [
+                'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg',
+                'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg',
+                'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg',
+                'images/image13.jpg', 'images/test.jpg'
+            ],
+            // Reuse images for categories without specific images
+            sports: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            toys: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            apparel: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            outdoor: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            jewelry: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            printing: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            personal: ['images/SPRAY1.jpg', 'images/SPRAY2.jpg', 'images/SPRAY3.jpg', 'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg'],
+            health: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            pet: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            school: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            industrial: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            commercial: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            construction: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            furniture: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            lighting: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            appliances: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            automotive: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            renewable: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            electrical: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            safety: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            handling: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            testing: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
+            power: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg']
         };
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -495,19 +683,19 @@
                     // Use mapped category images if available, otherwise use sequential naming
                     const localSrc = catImages.length > 0
                         ? catImages[catImgIndex % catImages.length]
-                        : `images/categories/${sector.id}/image${catImgIndex + 1}.jpg`;
+                        : `images/image${catImgIndex + 1}.jpg`;
                     catImgIndex++;
 
                     // Remote fallback path
                     const stockSrc = `https://images.unsplash.com/featured/400x300?${encodedItem},${sector.id}&sig=${globalImgIndex}`;
 
                     subItemsHTML += `
-                        <a href="featured.html?search=${encodedItem}" class="sub-category-card">
+                        <div class="sub-category-card" onclick="openDeliveryForm('${item}', '${sector.name}', ${Math.floor(Math.random() * 200) + 20}, 'High-quality ${item.toLowerCase()} from verified suppliers', '${localSrc}')" style="cursor: pointer;">
                             <div class="sub-category-img">
                                 <img src="${localSrc}" loading="lazy" onerror="this.src='${stockSrc}'; this.onerror=null;" alt="${item}">
                             </div>
                             <span class="sub-category-name">${item}</span>
-                        </a>
+                        </div>
                     `;
                 });
 
@@ -522,6 +710,177 @@
                 `;
                 display.appendChild(section);
             });
+        });
+    </script>
+
+    <!-- Delivery Form Modal -->
+    <div class="modal-overlay" id="deliveryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Complete Your Order</h3>
+                <button class="modal-close" onclick="closeDeliveryForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-product-info">
+                    <img src="" alt="Product" class="modal-product-img" id="modalProductImg">
+                    <div class="modal-product-details">
+                        <h4 id="modalProductTitle">Product Title</h4>
+                        <div class="price" id="modalProductPrice">GHS 0.00</div>
+                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 5px;" id="modalProductDesc">
+                            Description</p>
+                    </div>
+                </div>
+                <form id="deliveryForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="fullName" required placeholder="Your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" id="phoneNumber" required placeholder="0500000000">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp Number (Optional)</label>
+                        <input type="tel" id="whatsappNumber" placeholder="WhatsApp number">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Region *</label>
+                            <select id="region" required>
+                                <option value="">Select Region</option>
+                                <option value="Greater Accra">Greater Accra</option>
+                                <option value="Ashanti">Ashanti</option>
+                                <option value="Central">Central</option>
+                                <option value="Eastern">Eastern</option>
+                                <option value="Western">Western</option>
+                                <option value="Volta">Volta</option>
+                                <option value="Northern">Northern</option>
+                                <option value="Upper East">Upper East</option>
+                                <option value="Upper West">Upper West</option>
+                                <option value="Bono">Bono</option>
+                                <option value="Bono East">Bono East</option>
+                                <option value="Ahafo">Ahafo</option>
+                                <option value="Savannah">Savannah</option>
+                                <option value="North East">North East</option>
+                                <option value="Oti">Oti</option>
+                                <option value="Western North">Western North</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>City/Town *</label>
+                            <input type="text" id="city" required placeholder="Accra">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Address *</label>
+                        <textarea id="address" required placeholder="Street name, landmark" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" id="quantity" value="1" min="1" style="width: 100px;">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="payment-btn" onclick="processPayment()">Pay Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Current product for payment
+        let currentProduct = null;
+
+        // Open delivery form modal
+        function openDeliveryForm(title, category, price, desc, image) {
+            currentProduct = { title, category, price, desc, image };
+
+            document.getElementById('modalProductImg').src = image;
+            document.getElementById('modalProductTitle').textContent = title + ' - ' + category;
+            document.getElementById('modalProductPrice').textContent = 'GHS ' + price.toFixed(2);
+            document.getElementById('modalProductDesc').textContent = desc;
+
+            document.getElementById('deliveryModal').classList.add('active');
+        }
+
+        // Close delivery form modal
+        function closeDeliveryForm() {
+            document.getElementById('deliveryModal').classList.remove('active');
+            currentProduct = null;
+        }
+
+        // Process payment with Paystack
+        function processPayment() {
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phoneNumber').value;
+            const region = document.getElementById('region').value;
+            const city = document.getElementById('city').value;
+            const address = document.getElementById('address').value;
+            const quantity = document.getElementById('quantity').value;
+
+            // Validate form
+            if (!fullName || !phone || !region || !city || !address) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            if (!currentProduct) {
+                alert('No product selected');
+                return;
+            }
+
+            const totalAmount = currentProduct.price * quantity;
+
+            // Paystack payment integration
+            const paystack = new PaystackPop();
+            paystack.newTransaction({
+                key: 'pk_test_1234567890abcdefghijklmnopqrstuvwxyz',
+                amount: totalAmount * 100,
+                email: 'customer@email.com',
+                currency: 'GHS',
+                callback: function (response) {
+                    alert('Payment successful! Transaction reference: ' + response.reference);
+                    saveOrderToFirestore(fullName, phone, region, city, address, quantity);
+                    closeDeliveryForm();
+                },
+                onClose: function () {
+                    alert('Payment cancelled');
+                }
+            });
+        }
+
+        // Save order to Firestore
+        function saveOrderToFirestore(fullName, phone, region, city, address, quantity) {
+            if (typeof firebase !== 'undefined' && firebase.firestore) {
+                const db = firebase.firestore();
+                db.collection('orders').add({
+                    productTitle: currentProduct.title,
+                    category: currentProduct.category,
+                    productPrice: currentProduct.price,
+                    quantity: parseInt(quantity),
+                    totalPrice: currentProduct.price * quantity,
+                    customerName: fullName,
+                    phone: phone,
+                    region: region,
+                    city: city,
+                    address: address,
+                    status: 'pending',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    console.log('Order saved successfully');
+                }).catch((error) => {
+                    console.error('Error saving order: ', error);
+                });
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('deliveryModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeDeliveryForm();
+            }
         });
     </script>
 </body>
