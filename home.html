@@ -25,8 +25,7 @@
     <header>
         <div class="container">
             <div class="header-top">
-                <div class="logo"><a href="index.html"><a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo"
-                                style="height: 28px;"></a></a></div>
+                <div class="logo"><a href="categories.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a></div>
                 <div class="header-actions">
                     <a href="login.html" class="action-item"><ion-icon name="person-outline"></ion-icon><span>Sign
                             In</span></a>
@@ -127,6 +126,56 @@
             </div>
         </div>
     </div>
+
+    <!-- Install App Button -->
+    <div id="installAppBanner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #FF6600 0%, #ff8533 100%); padding: 15px 20px; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); z-index: 10000; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <img src="1.png" alt="ALFRED" style="width: 40px; height: 40px; border-radius: 8px; background: white; padding: 5px;">
+            <div style="color: white;">
+                <div style="font-weight: bold; font-size: 16px;">Install ALFRED App</div>
+                <div style="font-size: 12px; opacity: 0.9;">Add to home screen for quick access</div>
+            </div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button onclick="dismissInstall()" style="padding: 10px 20px; background: rgba(255,255,255,0.2); color: white; border: 1px solid white; border-radius: 8px; cursor: pointer; font-weight: 600;">Not now</button>
+            <button onclick="installApp()" style="padding: 10px 20px; background: white; color: #FF6600; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Install</button>
+        </div>
+    </div>
+
+    <script>
+        let deferredPrompt;
+        const installBanner = document.getElementById('installAppBanner');
+        
+        if (!localStorage.getItem('installDismissed')) {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                installBanner.style.display = 'flex';
+            });
+        }
+        
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the A2HS prompt');
+                    }
+                    deferredPrompt = null;
+                    installBanner.style.display = 'none';
+                });
+            }
+        }
+        
+        function dismissInstall() {
+            installBanner.style.display = 'none';
+            localStorage.setItem('installDismissed', 'true');
+        }
+        
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            installBanner.style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>
