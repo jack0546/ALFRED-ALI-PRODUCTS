@@ -10,6 +10,30 @@
     <meta name="theme-color" content="#FF6600">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="1.png">
+    <style>
+        #installAppBtn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #0b6d34 0%, #ff8533 100%);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-right: 10px;
+        }
+        #installAppBtn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(11, 109, 52, 0.4);
+        }
+        #installAppBtn:active {
+            transform: scale(0.98);
+        }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -28,8 +52,12 @@
         <div class="container">
             <div class="header-top">
                 <div class="logo"><a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a></div>
-                <div class="header-actions">
-                    <a href="login.html" class="action-item"><ion-icon name="person-outline"></ion-icon><span>Sign In</span></a>
+                <div class="header-actions" id="headerActions">
+                    <button id="installAppBtn" onclick="installApp()" style="display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0b6d34 0%, #ff8533 100%); color: white; border: none; padding: 8px 20px; border-radius: 25px; font-weight: 600; cursor: pointer; font-size: 14px; transition: transform 0.2s; margin-right: 10px;">
+                        <ion-icon name="download-outline"></ion-icon>
+                        <span>Install App</span>
+                    </button>
+                    <a href="login.html" class="action-item" id="loginLink"><ion-icon name="person-outline"></ion-icon><span>Sign In</span></a>
                     <a href="messages.html" class="action-item"><ion-icon name="mail-outline"></ion-icon><span>Messages</span></a>
                     <a href="orders.html" class="action-item"><ion-icon name="cart-outline"></ion-icon><span>Orders</span></a>
                 </div>
@@ -270,27 +298,10 @@
             alert('Product added to cart!');
         }
     </script>
-    <!-- Install App Banner for New Users -->
-    <div id="installBanner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #0b6d34 0%, #ff8533 100%); padding: 15px 20px; z-index: 9999; box-shadow: 0 -4px 20px rgba(0,0,0,0.15);">
-        <div style="display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto;">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <img src="1.png" alt="ALFRED" style="width: 40px; height: 40px; border-radius: 8px; background: white; padding: 5px;">
-                <div>
-                    <h4 style="color: white; margin: 0; font-size: 16px;">Install ALFRED PRODUCTS App</h4>
-                    <p style="color: rgba(255,255,255,0.9); margin: 5px 0 0 0; font-size: 13px;">Get the full experience - Install now for easy access!</p>
-                </div>
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button id="installBtn" style="background: white; color: #FF6600; border: none; padding: 10px 25px; border-radius: 25px; font-weight: 600; cursor: pointer; font-size: 14px; transition: transform 0.2s;">Install App</button>
-                <button onclick="dismissInstallBanner()" style="background: transparent; color: white; border: 2px solid white; padding: 8px 20px; border-radius: 25px; cursor: pointer; font-size: 14px;">Not now</button>
-            </div>
-        </div>
-    </div>
 
     <script>
         let deferredPrompt;
-        const installBanner = document.getElementById('installBanner');
-        const installBtn = document.getElementById('installBtn');
+        const installAppBtn = document.getElementById('installAppBtn');
         
         // Register Service Worker for PWA
         if ('serviceWorker' in navigator) {
@@ -305,26 +316,17 @@
             });
         }
         
-        // Check if user has dismissed the banner before
-        const installDismissed = localStorage.getItem('installDismissed');
-        
         // Listen for the beforeinstallprompt event
         window.addEventListener('beforeinstallprompt', (e) => {
             // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();
             // Stash the event so it can be triggered later
             deferredPrompt = e;
-            
-            // Show our custom install banner if not dismissed before
-            if (!installDismissed) {
-                setTimeout(() => {
-                    installBanner.style.display = 'block';
-                }, 3000); // Show after 3 seconds for new users
-            }
+            // Button is already visible, no need to change display
         });
         
-        // Handle install button click
-        installBtn.addEventListener('click', async () => {
+        // Install app function - called when button is clicked
+        async function installApp() {
             if (deferredPrompt) {
                 // Show the install prompt
                 deferredPrompt.prompt();
@@ -335,25 +337,105 @@
                 // Clear the deferred prompt
                 deferredPrompt = null;
                 
-                // Hide the banner
-                installBanner.style.display = 'none';
-                
                 console.log('Install prompt outcome:', outcome);
+            } else {
+                // If no deferred prompt, provide manual instructions
+                alert('To install ALFRED PRODUCTS App:\n\n📱 On Mobile:\n• Tap the menu (⋮) or share button\n• Select "Add to Home Screen" or "Install App"\n\n💻 On Desktop:\n• Look for the install icon in the address bar\n• Or use Ctrl+Shift+D (Chrome)');
             }
-        });
-        
-        // Dismiss the install banner
-        function dismissInstallBanner() {
-            installBanner.style.display = 'none';
-            // Remember that user dismissed the banner
-            localStorage.setItem('installDismissed', 'true');
         }
         
         // Listen for successful app installation
         window.addEventListener('appinstalled', (evt) => {
-            installBanner.style.display = 'none';
+            // App installed - change button to show it's installed
+            installAppBtn.innerHTML = '<ion-icon name="checkmark-circle"></ion-icon><span>App Installed</span>';
+            installAppBtn.style.background = '#0abf53';
+            installAppBtn.disabled = true;
+            installAppBtn.style.cursor = 'default';
             console.log('App installed successfully');
         });
+        
+        // Handle User Authentication Display
+        function updateUserUI(user) {
+            const headerActions = document.getElementById('headerActions');
+            if (user) {
+                // User is logged in - show user info
+                const userPhoto = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || user.email) + '&background=FF6600&color=fff';
+                const userName = user.displayName || user.email.split('@')[0];
+                
+                headerActions.innerHTML = `
+                    <button id="installAppBtn" onclick="installApp()" style="display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0b6d34 0%, #ff8533 100%); color: white; border: none; padding: 8px 20px; border-radius: 25px; font-weight: 600; cursor: pointer; font-size: 14px; transition: transform 0.2s; margin-right: 10px;">
+                        <ion-icon name="download-outline"></ion-icon>
+                        <span>Install App</span>
+                    </button>
+                    <div style="display: flex; align-items: center; gap: 10px; padding: 5px 15px; border-radius: 25px; background: #f5f5f5; cursor: pointer; position: relative;" onclick="toggleUserMenu()" id="userMenuContainer">
+                        <img src="${userPhoto}" alt="${userName}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
+                        <span style="font-size: 14px; font-weight: 500; color: #333;">${userName}</span>
+                        <ion-icon name="chevron-down-outline" style="font-size: 16px; color: #666;"></ion-icon>
+                    </div>
+                    <div id="userDropdown" style="display: none; position: absolute; top: 100%; right: 0; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 200px; z-index: 1000; padding: 10px 0; margin-top: 10px;">
+                        <a href="home.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: #333; font-size: 14px;">
+                            <ion-icon name="person-outline"></ion-icon> My Profile
+                        </a>
+                        <a href="orders.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: #333; font-size: 14px;">
+                            <ion-icon name="cart-outline"></ion-icon> My Orders
+                        </a>
+                        <a href="messages.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: #333; font-size: 14px;">
+                            <ion-icon name="mail-outline"></ion-icon> Messages
+                        </a>
+                        <div style="border-top: 1px solid #eee; margin: 5px 0;"></div>
+                        <a href="#" onclick="signOutUser(); return false;" style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: #ff4444; font-size: 14px;">
+                            <ion-icon name="log-out-outline"></ion-icon> Sign Out
+                        </a>
+                    </div>
+                    <a href="messages.html" class="action-item"><ion-icon name="mail-outline"></ion-icon><span>Messages</span></a>
+                    <a href="orders.html" class="action-item"><ion-icon name="cart-outline"></ion-icon><span>Orders</span></a>
+                `;
+            } else {
+                // User is not logged in - show sign in button
+                headerActions.innerHTML = `
+                    <button id="installAppBtn" onclick="installApp()" style="display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0b6d34 0%, #ff8533 100%); color: white; border: none; padding: 8px 20px; border-radius: 25px; font-weight: 600; cursor: pointer; font-size: 14px; transition: transform 0.2s; margin-right: 10px;">
+                        <ion-icon name="download-outline"></ion-icon>
+                        <span>Install App</span>
+                    </button>
+                    <a href="login.html" class="action-item"><ion-icon name="person-outline"></ion-icon><span>Sign In</span></a>
+                    <a href="messages.html" class="action-item"><ion-icon name="mail-outline"></ion-icon><span>Messages</span></a>
+                    <a href="orders.html" class="action-item"><ion-icon name="cart-outline"></ion-icon><span>Orders</span></a>
+                `;
+            }
+        }
+        
+        // Toggle user dropdown menu
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const userMenu = document.getElementById('userMenuContainer');
+            const dropdown = document.getElementById('userDropdown');
+            if (userMenu && !userMenu.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+        
+        // Sign out function
+        function signOutUser() {
+            if (typeof firebase !== 'undefined' && firebase.auth()) {
+                firebase.auth().signOut().then(() => {
+                    window.location.href = 'index.html';
+                }).catch((error) => {
+                    console.error('Sign out error:', error);
+                });
+            }
+        }
+        
+        // Check auth state on page load
+        if (typeof firebase !== 'undefined' && firebase.auth()) {
+            firebase.auth().onAuthStateChanged((user) => {
+                updateUserUI(user);
+            });
+        }
     </script>
 </body>
 
