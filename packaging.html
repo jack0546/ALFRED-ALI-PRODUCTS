@@ -20,144 +20,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
-    <style>
-        /* Modal Styles */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 16px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            margin: 0;
-            font-size: 20px;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: #666;
-            line-height: 1;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .product-info {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 8px;
-        }
-
-        .product-info img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .product-info-details h4 {
-            margin: 0 0 5px 0;
-            font-size: 16px;
-        }
-
-        .product-info-details p {
-            margin: 0;
-            color: #0abf53;
-            font-weight: bold;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #FF6600;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: #0abf53;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .submit-btn:hover {
-            background: #089e47;
-        }
-    </style>
+    <script src="script.js"></script>
 </head>
 
 <body>
@@ -174,10 +37,7 @@
             <nav>
                 <ul>
                     <li><a href="categories.html">All Categories</a></li>
-                    <li><a href="featured.html">Featured Products</a></li>
-                    <li><a href="trade.html">Trade Assurance</a></li>
-                    <li><a href="logistics.html">Logistics Services</a></li>
-                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="packaging.html" class="active">Packaging</a></li>
                 </ul>
             </nav>
         </div>
@@ -185,161 +45,156 @@
 
     <main class="container">
         <div style="margin-top: 20px; border-radius: 12px; overflow: hidden; position: relative; height: 350px;">
-            <img src="images/banners/home.jpg" alt="Packaging Banner" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="images/banners/apparel.jpg" alt="Packaging Banner" style="width: 100%; height: 100%; object-fit: cover;">
             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: center; padding: 60px; color: white;">
                 <h1 style="font-size: 48px; margin-bottom: 10px;">Packaging & Printing</h1>
-                <p style="font-size: 20px;">Custom packaging solutions for your business</p>
+                <p style="font-size: 20px;">Premium packaging solutions for your business</p>
             </div>
         </div>
 
         <section class="products">
             <h2 class="section-title">Packaging Products</h2>
-            <div class="product-grid" id="productGrid">
-                <!-- Products will be loaded here by script.js -->
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;" onclick="openDeliveryForm('Packaging', 'Cardboard Boxes', 45.00, 'High quality cardboard boxes for shipping', 'images/banners/apparel.jpg')">
+                    <img src="images/banners/apparel.jpg" alt="Cardboard Boxes" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Cardboard Boxes</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 45.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Packaging', 'Cardboard Boxes', 45.00, 'High quality cardboard boxes', 'images/banners/apparel.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;" onclick="openDeliveryForm('Packaging', 'Gift Boxes', 35.00, 'Elegant gift boxes for retail', 'images/banners/apparel.jpg')">
+                    <img src="images/banners/apparel.jpg" alt="Gift Boxes" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Gift Boxes</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 35.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Packaging', 'Gift Boxes', 35.00, 'Elegant gift boxes', 'images/banners/apparel.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;" onclick="openDeliveryForm('Packaging', 'Bubble Wrap Roll', 28.00, 'Protective bubble wrap for fragile items', 'images/banners/apparel.jpg')">
+                    <img src="images/banners/apparel.jpg" alt="Bubble Wrap" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Bubble Wrap Roll</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Packaging', 'Bubble Wrap Roll', 28.00, 'Protective bubble wrap', 'images/banners/apparel.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;" onclick="openDeliveryForm('Packaging', 'Packing Tape', 12.00, 'Heavy duty packing tape', 'images/banners/apparel.jpg')">
+                    <img src="images/banners/apparel.jpg" alt="Packing Tape" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Packing Tape</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 12.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Packaging', 'Packing Tape', 12.00, 'Heavy duty packing tape', 'images/banners/apparel.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;" onclick="openDeliveryForm('Packaging', 'Poly Mailers', 22.00, ' waterproof poly mailers', 'images/banners/apparel.jpg')">
+                    <img src="images/banners/apparel.jpg" alt="Poly Mailers" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Poly Mailers (100pcs)</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Packaging', 'Poly Mailers', 22.00, 'Waterproof poly mailers', 'images/banners/apparel.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;" onclick="openDeliveryForm('Packaging', 'Custom Labels', 18.00, 'Custom printed labels', 'images/banners/apparel.jpg')">
+                    <img src="images/banners/apparel.jpg" alt="Custom Labels" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Custom Labels (500pcs)</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 18.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Packaging', 'Custom Labels', 18.00, 'Custom printed labels', 'images/banners/apparel.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;" onclick="openDeliveryForm('Packaging', 'Paper Bags', 38.00, 'Kraft paper shopping bags', 'images/banners/apparel.jpg')">
+                    <img src="images/banners/apparel.jpg" alt="Paper Bags" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Kraft Paper Bags (50pcs)</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 38.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Packaging', 'Paper Bags', 38.00, 'Kraft paper shopping bags', 'images/banners/apparel.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    </div>
+                </div>
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;" onclick="openDeliveryForm('Packaging', 'Stretch Film', 32.00, 'Industrial stretch wrap film', 'images/banners/apparel.jpg')">
+                    <img src="images/banners/apparel.jpg" alt="Stretch Film" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 10px;">
+                        <h4 style="font-size: 13px; margin-bottom: 5px;">Stretch Film Roll</h4>
+                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 32.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Packaging', 'Stretch Film', 32.00, 'Industrial stretch wrap film', 'images/banners/apparel.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <!-- Delivery Form Modal -->
-    <div id="deliveryModal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);">
-        <div style="background-color:#fefefe;margin:5% auto;padding:25px;border:1px solid #888;width:90%;max-width:500px;border-radius:10px;">
-            <span onclick="closeDeliveryModal()" style="float:right;font-size:28px;font-weight:bold;cursor:pointer;">&times;</span>
-            <h2>Delivery Information</h2>
-            <form id="deliveryForm" onsubmit="handleFormSubmit(event)">
-                <input type="hidden" id="productCategory">
-                <input type="hidden" id="productTitle">
-                <input type="hidden" id="productPrice">
-                <input type="hidden" id="productDescription">
-                <input type="hidden" id="productImage">
-                <div style="margin-bottom:15px;">
-                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Full Name</label>
-                    <input type="text" id="fullName" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
+    <div class="modal-overlay" id="deliveryModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; border-radius: 16px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto;">
+            <div style="padding: 20px; border-bottom: 1px solid #e5e5e5; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 18px; color: #1a1a1a;">Complete Your Order</h3>
+                <button onclick="closeDeliveryForm()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #8e8e8e;">&times;</button>
+            </div>
+            <div style="padding: 20px;">
+                <div style="display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #e5e5e5;">
+                    <img id="modalProductImg" src="" alt="Product" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                    <div>
+                        <h4 id="modalProductTitle" style="font-size: 14px; margin-bottom: 5px;">Product Title</h4>
+                        <div id="modalProductPrice" style="font-size: 18px; font-weight: 700; color: #0abf53;">GHS 0.00</div>
+                        <p id="modalProductDesc" style="font-size: 12px; color: #8e8e8e; margin-top: 5px;">Description</p>
+                    </div>
                 </div>
-                <div style="margin-bottom:15px;">
-                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Phone Number</label>
-                    <input type="tel" id="phoneNumber" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
-                </div>
-                <div style="margin-bottom:15px;">
-                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Delivery Address</label>
-                    <textarea id="deliveryAddress" required rows="3" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;"></textarea>
-                </div>
-                <div style="margin-bottom:15px;">
-                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Quantity</label>
-                    <input type="number" id="quantity" value="1" min="1" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
-                </div>
-                <div style="margin-bottom:15px;">
-                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Product</label>
-                    <div id="modalProductInfo" style="background:#f9f9f9;padding:10px;border-radius:5px;"></div>
-                </div>
-                <button type="submit" style="width:100%;padding:15px;background:#0abf53;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;">Make Payment</button>
-            </form>
+                <form>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">Full Name *</label>
+                        <input type="text" id="fullName" required placeholder="Your full name" style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">Phone Number *</label>
+                        <input type="tel" id="phoneNumber" required placeholder="0500000000" style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">Delivery Address *</label>
+                        <input type="text" id="address" required placeholder="Your delivery address" style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                    </div>
+                    <button type="button" onclick="alert('Order placed successfully!'); closeDeliveryForm();" style="width: 100%; padding: 15px; background: #0abf53; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;">Place Order</button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
     <script>
-        // Current product for payment
         let currentProduct = null;
         
         function openDeliveryForm(category, title, price, desc, image) {
             currentProduct = { category, title, price, desc, image };
-            
             const modal = document.getElementById('deliveryModal');
             if (modal) {
                 document.getElementById('modalProductImg').src = image;
                 document.getElementById('modalProductTitle').textContent = title + ' - ' + category;
                 document.getElementById('modalProductPrice').textContent = 'GHS ' + parseFloat(price).toFixed(2);
-            }
-            
-            // Set hidden form values
-            document.getElementById('productCategory').value = category;
-            document.getElementById('productTitle').value = title;
-            document.getElementById('productPrice').value = price;
-            document.getElementById('productDescription').value = desc;
-            document.getElementById('productImage').value = image;
-            
-            const modalProductInfo = document.getElementById('modalProductInfo');
-            if (modalProductInfo) {
-                modalProductInfo.innerHTML = `
-                    <img src="${image}" style="width:60px;height:60px;object-fit:cover;border-radius:4px;float:left;margin-right:10px;">
-                    <div>
-                        <strong>${title}</strong><br>
-                        <span style="color:#0abf53;">GHS ${parseFloat(price).toFixed(2)}</span>
-                    </div>
-                `;
-            }
-            
-            const modalEl = document.getElementById('deliveryModal');
-            if (modalEl) {
-                modalEl.style.display = 'block';
+                document.getElementById('modalProductDesc').textContent = desc;
+                modal.style.display = 'flex';
             }
         }
-
-        function closeDeliveryModal() {
-            const modalEl = document.getElementById('deliveryModal');
-            if (modalEl) {
-                modalEl.style.display = 'none';
+        
+        function closeDeliveryForm() {
+            const modal = document.getElementById('deliveryModal');
+            if (modal) {
+                modal.style.display = 'none';
             }
+            currentProduct = null;
         }
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modalEl = document.getElementById('deliveryModal');
-            if (event.target == modalEl) {
-                modalEl.style.display = 'none';
-            }
-        }
-
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            
-            const fullName = document.getElementById('fullName').value;
-            const phone = document.getElementById('phoneNumber').value;
-            const address = document.getElementById('deliveryAddress').value;
-            const quantity = parseInt(document.getElementById('quantity').value);
-            const price = parseFloat(document.getElementById('productPrice').value);
-            const total = price * quantity;
-            
-            // Store order in localStorage
-            const order = {
-                id: Date.now(),
-                product: currentProduct,
-                customer: { fullName, phone, address },
-                quantity,
-                total,
-                date: new Date().toISOString(),
-                status: 'pending'
-            };
-            
-            const orders = JSON.parse(localStorage.getItem('alfred_orders') || '[]');
-            orders.push(order);
-            localStorage.setItem('alfred_orders', JSON.stringify(orders));
-            
-            // Initialize Paystack payment
-            if (typeof PaystackPop !== 'undefined') {
-                const handler = PaystackPop.setup({
-                    key: 'pk_test_1234567890', // Replace with actual key
-                    email: 'customer@example.com',
-                    amount: total * 100, // Convert to kobo
-                    currency: 'GHS',
-                    ref: 'ALF_' + Date.now(),
-                    callback: function(response) {
-                        alert('Payment successful! Reference: ' + response.reference);
-                        closeDeliveryModal();
-                        document.getElementById('deliveryForm').reset();
-                    },
-                    onClose: function() {
-                        alert('Payment window closed');
-                    }
-                });
-                handler.openIframe();
-            } else {
-                alert('Order placed successfully! Order ID: ' + order.id);
-                closeDeliveryModal();
-                document.getElementById('deliveryForm').reset();
-            }
+        function addProductToCart(category, title, price, desc, image) {
+            alert('Product added to cart!');
         }
     </script>
+
+    <footer>
+        <div class="container" style="text-align: center; color: #999; padding: 40px 0; border-top: 1px solid var(--border-color);">
+            <p>&copy; 2015-2026 Alfred Products.com. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 
 </html>
