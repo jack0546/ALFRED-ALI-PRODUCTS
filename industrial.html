@@ -21,6 +21,36 @@
 </head>
 
 <body>
+    <!-- Floating Menu Button -->
+    <div class="floating-menu-container">
+        <button class="floating-menu-btn" onclick="toggleFloatingMenu()">
+            <ion-icon name="menu-outline"></ion-icon>
+        </button>
+        <div class="floating-menu-dropdown" id="floatingMenu">
+            <a href="login.html" class="floating-menu-item">
+                <ion-icon name="person-outline"></ion-icon>
+                <span>Sign In</span>
+            </a>
+            <a href="messages.html" class="floating-menu-item">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>Messages</span>
+            </a>
+            <div class="floating-menu-item floating-orders-btn" onclick="toggleOrdersSection()">
+                <ion-icon name="cart-outline"></ion-icon>
+                <span>Orders</span>
+                <ion-icon name="chevron-down-outline" class="orders-chevron"></ion-icon>
+            </div>
+            <div class="floating-orders-section" id="floatingOrdersSection">
+                <div id="floatingOrdersList">
+                    <div style="padding: 15px; text-align: center; color: #999; font-size: 13px;">
+                        <ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>
+                        No Order
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="container">
             <div class="header-top" style="padding: 15px 0;">
@@ -442,6 +472,64 @@
             </form>
         </div>
     </div>
+    
+    <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        // Floating Menu Functions
+        function toggleFloatingMenu() {
+            const menu = document.getElementById('floatingMenu');
+            menu.classList.toggle('active');
+        }
+        
+        function toggleOrdersSection() {
+            const section = document.getElementById('floatingOrdersSection');
+            const chevron = section.previousElementSibling.querySelector('.orders-chevron');
+            section.classList.toggle('active');
+            chevron.classList.toggle('rotated');
+            
+            if (typeof firebase !== 'undefined' && firebase.auth()) {
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (user) {
+                        loadFloatingOrders(user.uid);
+                    }
+                });
+            }
+        }
+        
+        function loadFloatingOrders(uid) {
+            const container = document.getElementById('floatingOrdersList');
+            if (typeof db !== 'undefined') {
+                db.collection("orders").where("userId", "==", uid).orderBy("timestamp", "desc").limit(5).get()
+                    .then((querySnapshot) => {
+                        if (querySnapshot.empty) {
+                            container.innerHTML = '<div style="padding: 15px; text-align: center; color: #999; font-size: 13px;"><ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>No Order</div>';
+                            return;
+                        }
+                        let ordersHTML = '';
+                        querySnapshot.forEach((doc) => {
+                            const order = doc.data();
+                            const firstItem = order.items[0];
+                            ordersHTML += '<a href="orders.html" class="floating-order-item"><img src="' + (firstItem.image || '1.png') + '" alt="Product" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;"><div style="flex: 1; overflow: hidden;"><p style="font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + firstItem.title + '</p><p style="font-size: 11px; color: #999;">' + order.items.length + ' item(s) • GHS ' + parseFloat(order.total).toFixed(2) + '</p></div></a>';
+                        });
+                        container.innerHTML = ordersHTML;
+                    })
+                    .catch((error) => {
+                        container.innerHTML = '<div style="padding: 15px; text-align: center; color: #999; font-size: 13px;"><ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>No Order</div>';
+                    });
+            } else {
+                container.innerHTML = '<div style="padding: 15px; text-align: center; color: #999; font-size: 13px;"><ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>No Order</div>';
+            }
+        }
+        
+        document.addEventListener('click', function(e) {
+            const menuContainer = document.querySelector('.floating-menu-container');
+            const menu = document.getElementById('floatingMenu');
+            if (menuContainer && !menuContainer.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 
 </html>
