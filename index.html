@@ -48,15 +48,42 @@
 </head>
 
 <body>
+    <!-- Floating Menu Button -->
+    <div class="floating-menu-container">
+        <button class="floating-menu-btn" onclick="toggleFloatingMenu()">
+            <ion-icon name="menu-outline"></ion-icon>
+        </button>
+        <div class="floating-menu-dropdown" id="floatingMenu">
+            <a href="login.html" class="floating-menu-item">
+                <ion-icon name="person-outline"></ion-icon>
+                <span>Sign In</span>
+            </a>
+            <a href="messages.html" class="floating-menu-item">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>Messages</span>
+            </a>
+            <div class="floating-menu-item floating-orders-btn" onclick="toggleOrdersSection()">
+                <ion-icon name="cart-outline"></ion-icon>
+                <span>Orders</span>
+                <ion-icon name="chevron-down-outline" class="orders-chevron"></ion-icon>
+            </div>
+            <div class="floating-orders-section" id="floatingOrdersSection">
+                <div id="floatingOrdersList">
+                    <div style="padding: 15px; text-align: center; color: #999; font-size: 13px;">
+                        <ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>
+                        No Order
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="container">
             <div class="header-top">
                 <div class="logo"><a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a></div>
                 <div class="header-actions" id="headerActions">
-                    <button id="installAppBtn" onclick="installApp()" style="display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0b6d34 0%, #ff8533 100%); color: white; border: none; padding: 8px 20px; border-radius: 25px; font-weight: 600; cursor: pointer; font-size: 14px; transition: transform 0.2s; margin-right: 10px;">
-                        <ion-icon name="download-outline"></ion-icon>
-                        <span>Install App</span>
-                    </button>
+                    <a href="cart.html" class="action-item" id="cartLink"><ion-icon name="cart-outline"></ion-icon><span>Cart</span></a>
                     <a href="login.html" class="action-item" id="loginLink"><ion-icon name="person-outline"></ion-icon><span>Sign In</span></a>
                     <a href="messages.html" class="action-item"><ion-icon name="mail-outline"></ion-icon><span>Messages</span></a>
                     <a href="orders.html" class="action-item"><ion-icon name="cart-outline"></ion-icon><span>Orders</span></a>
@@ -75,6 +102,15 @@
     </header>
 
     <main class="container">
+        <!-- Search Bar -->
+        <div style="margin-top: 20px; margin-bottom: 10px;">
+            <div style="display: flex; gap: 10px; position: relative;">
+                <input type="text" id="searchInput" placeholder="Search products, categories, suppliers..." style="flex: 1; padding: 14px 20px; border: 2px solid #e5e5e5; border-radius: 30px; font-size: 15px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='#0abf53'" onblur="this.style.borderColor='#e5e5e5'">
+                <button onclick="performSearch()" style="padding: 14px 25px; background: #0abf53; color: white; border: none; border-radius: 30px; font-weight: 600; cursor: pointer; white-space: nowrap;"><ion-icon name="search-outline"></ion-icon> Search</button>
+            </div>
+            <div id="searchResults" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); max-height: 400px; overflow-y: auto; z-index: 1000; margin-top: 5px; border: 1px solid #e5e5e5;"></div>
+        </div>
+
         <div style="margin-top: 20px; border-radius: 12px; overflow: hidden; position: relative; height: 450px; background: linear-gradient(135deg, #0b6d34 0%, #ff8533 100%);">
             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 60px; color: white; z-index: 1;">
                 <h1 style="font-size: 56px; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">ALFRED PRODUCTS</h1>
@@ -201,6 +237,25 @@
             </div>
         </section>
 
+        <!-- Cart Summary Section -->
+        <section id="cartSummaryContainer" style="display: none; padding: 30px 0;">
+            <div style="background: white; border-radius: 12px; padding: 25px; border: 1px solid #e5e5e5; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+                <h3 style="margin: 0 0 20px 0; font-size: 18px;">Shopping Cart</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <span id="cartItemCount" style="color: #666;">0 item(s)</span>
+                    <span id="cartTotalAmount" style="font-size: 24px; font-weight: 700; color: #0abf53;">GHS 0.00</span>
+                </div>
+                <button onclick="openCheckout()" style="width: 100%; padding: 15px; background: linear-gradient(135deg, #0abf53 0%, #089e4a 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;">
+                    <ion-icon name="card-outline"></ion-icon> Proceed to Checkout
+                </button>
+            </div>
+        </section>
+
+        <div id="emptyCartMsg" style="text-align: center; padding: 40px 0; color: #999;">
+            <ion-icon name="cart-outline" style="font-size: 50px;"></ion-icon>
+            <p>Your cart is empty. Add some products!</p>
+        </div>
+
         <section style="padding: 60px 0; background: #f9f9f9; margin: 40px -20px; padding-left: 20px; padding-right: 20px;">
             <div class="container">
                 <h2 class="section-title">Why Choose ALFRED PRODUCTS</h2>
@@ -232,15 +287,86 @@
 
     <footer>
         <div class="container" style="text-align: center; color: #999; padding: 40px 0; border-top: 1px solid var(--border-color);">
+            <!-- Install App Button at Bottom -->
+            <div style="margin-bottom: 30px;">
+                <button id="installAppBtnBottom" onclick="installApp()" style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #0b6d34 0%, #ff8533 100%); color: white; border: none; padding: 14px 35px; border-radius: 30px; font-weight: 600; cursor: pointer; font-size: 16px; transition: transform 0.2s, box-shadow 0.2s;">
+                    <ion-icon name="download-outline" style="font-size: 20px;"></ion-icon>
+                    <span>Install App for Better Experience</span>
+                </button>
+            </div>
             <p>&copy; 2015-2026 Alfred Products.com. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Delivery Form Modal -->
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkoutModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; border-radius: 16px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;">
+            <div style="padding: 20px; border-bottom: 1px solid #e5e5e5; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 18px; color: #1a1a1a;">Checkout</h3>
+                <button onclick="closeCheckout()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #8e8e8e;">&times;</button>
+            </div>
+            <div style="padding: 20px;">
+                <!-- Cart Items -->
+                <div style="margin-bottom: 20px; max-height: 200px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px;">
+                    <div id="checkoutCartItems" style="padding: 10px;">
+                        <!-- Cart items will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- Total -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f9f9f9; border-radius: 8px; margin-bottom: 20px;">
+                    <span style="font-weight: 600;">Total:</span>
+                    <span id="checkoutTotalAmount" style="font-size: 20px; font-weight: 700; color: #0abf53;">GHS 0.00</span>
+                </div>
+                
+                <!-- Delivery Form -->
+                <form id="checkoutDeliveryForm">
+                    <h4 style="margin: 0 0 15px 0; font-size: 14px; color: #333;">Delivery Information</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                        <input type="text" id="checkoutFullName" required placeholder="Full Name" style="width: 100%; padding: 10px; border: 1px solid #e5e5e5; border-radius: 6px; font-size: 14px;">
+                        <input type="tel" id="checkoutPhone" required placeholder="Phone Number" style="width: 100%; padding: 10px; border: 1px solid #e5e5e5; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <input type="tel" id="checkoutWhatsapp" placeholder="WhatsApp Number (Optional)" style="width: 100%; padding: 10px; border: 1px solid #e5e5e5; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                        <select id="checkoutRegion" required style="width: 100%; padding: 10px; border: 1px solid #e5e5e5; border-radius: 6px; font-size: 14px; background: white;">
+                            <option value="">Select Region</option>
+                            <option value="Greater Accra">Greater Accra</option>
+                            <option value="Ashanti">Ashanti</option>
+                            <option value="Central">Central</option>
+                            <option value="Eastern">Eastern</option>
+                            <option value="Western">Western</option>
+                            <option value="Volta">Volta</option>
+                            <option value="Northern">Northern</option>
+                            <option value="Upper East">Upper East</option>
+                            <option value="Upper West">Upper West</option>
+                            <option value="Bono">Bono</option>
+                            <option value="Bono East">Bono East</option>
+                            <option value="Ahafo">Ahafo</option>
+                            <option value="Savannah">Savannah</option>
+                            <option value="North East">North East</option>
+                            <option value="Oti">Oti</option>
+                            <option value="Western North">Western North</option>
+                        </select>
+                        <input type="text" id="checkoutCity" required placeholder="City / Town" style="width: 100%; padding: 10px; border: 1px solid #e5e5e5; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <textarea id="checkoutAddress" required placeholder="Delivery Address / Nearest Landmark" style="width: 100%; padding: 10px; border: 1px solid #e5e5e5; border-radius: 6px; font-size: 14px; height: 60px; resize: none;"></textarea>
+                    </div>
+                    <button type="button" onclick="processCheckout()" style="width: 100%; padding: 15px; background: #0abf53; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;">
+                        <ion-icon name="lock-closed-outline"></ion-icon> Pay Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Modal (for product details) -->
     <div class="modal-overlay" id="deliveryModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
         <div style="background: white; border-radius: 16px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto;">
             <div style="padding: 20px; border-bottom: 1px solid #e5e5e5; display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-size: 18px; color: #1a1a1a;">Complete Your Order</h3>
+                <h3 style="font-size: 18px; color: #1a1a1a;">Product Details</h3>
                 <button onclick="closeDeliveryForm()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #8e8e8e;">&times;</button>
             </div>
             <div style="padding: 20px;">
@@ -252,21 +378,9 @@
                         <p id="modalProductDesc" style="font-size: 12px; color: #8e8e8e; margin-top: 5px;">Description</p>
                     </div>
                 </div>
-                <form>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">Full Name *</label>
-                        <input type="text" id="fullName" required placeholder="Your full name" style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">Phone Number *</label>
-                        <input type="tel" id="phoneNumber" required placeholder="0500000000" style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">Delivery Address *</label>
-                        <input type="text" id="address" required placeholder="Your delivery address" style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
-                    </div>
-                    <button type="button" onclick="alert('Order placed successfully!'); closeDeliveryForm();" style="width: 100%; padding: 15px; background: #0abf53; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;">Place Order</button>
-                </form>
+                <button onclick="addCurrentProductToCart()" style="width: 100%; padding: 15px; background: #0abf53; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;">
+                    <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                </button>
             </div>
         </div>
     </div>
@@ -293,15 +407,179 @@
             }
             currentProduct = null;
         }
+        
+        function addCurrentProductToCart() {
+            if (currentProduct) {
+                addProductToCart(currentProduct.category, currentProduct.title, currentProduct.price, currentProduct.desc, currentProduct.image);
+                closeDeliveryForm();
+            }
+        }
 
         function addProductToCart(category, title, price, desc, image) {
+            // Add product to cart in localStorage
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            const priceStr = 'GHS ' + parseFloat(price).toFixed(2);
+            cart.push({ category, title, price: priceStr, description: desc, image, quantity: 1 });
+            localStorage.setItem('alfredCart', JSON.stringify(cart));
+            updateCartBadge();
+            updateCartSummary();
             alert('Product added to cart!');
         }
+        
+        // Update cart summary display
+        function updateCartSummary() {
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            const summaryContainer = document.getElementById('cartSummaryContainer');
+            const emptyMsg = document.getElementById('emptyCartMsg');
+            
+            if (cart.length === 0) {
+                if (summaryContainer) summaryContainer.style.display = 'none';
+                if (emptyMsg) emptyMsg.style.display = 'block';
+                return;
+            }
+            
+            if (summaryContainer) summaryContainer.style.display = 'block';
+            if (emptyMsg) emptyMsg.style.display = 'none';
+            
+            let total = 0;
+            cart.forEach(item => {
+                const price = parseFloat(item.price.replace('GHS', '').replace(/,/g, '').trim());
+                total += price * item.quantity;
+            });
+            
+            document.getElementById('cartItemCount').textContent = cart.length + ' item(s)';
+            document.getElementById('cartTotalAmount').textContent = 'GHS ' + total.toFixed(2);
+        }
+        
+        // Open checkout modal
+        function openCheckout() {
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            // Populate cart items in checkout
+            const cartItemsContainer = document.getElementById('checkoutCartItems');
+            let total = 0;
+            cartItemsContainer.innerHTML = '';
+            
+            cart.forEach((item, index) => {
+                const price = parseFloat(item.price.replace('GHS', '').replace(/,/g, '').trim());
+                total += price * item.quantity;
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.style.cssText = 'display: flex; align-items: center; gap: 10px; padding: 10px; border-bottom: 1px solid #eee;';
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                    <div style="flex: 1;">
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">${item.title}</p>
+                        <p style="margin: 0; font-size: 12px; color: #666;">${item.price} x ${item.quantity}</p>
+                    </div>
+                    <p style="margin: 0; font-weight: 700; color: #0abf53;">GHS ${(price * item.quantity).toFixed(2)}</p>
+                `;
+                cartItemsContainer.appendChild(itemDiv);
+            });
+            
+            document.getElementById('checkoutTotalAmount').textContent = 'GHS ' + total.toFixed(2);
+            localStorage.setItem('cartTotal', total.toFixed(2));
+            
+            document.getElementById('checkoutModal').style.display = 'flex';
+        }
+        
+        function closeCheckout() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+        
+        // Process checkout with Paystack
+        function processCheckout() {
+            const form = document.getElementById('checkoutDeliveryForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            const deliveryInfo = {
+                fullName: document.getElementById('checkoutFullName').value,
+                phoneNumber: document.getElementById('checkoutPhone').value,
+                whatsappNumber: document.getElementById('checkoutWhatsapp').value || 'N/A',
+                region: document.getElementById('checkoutRegion').value,
+                city: document.getElementById('checkoutCity').value,
+                address: document.getElementById('checkoutAddress').value
+            };
+            
+            localStorage.setItem('tempDeliveryInfo', JSON.stringify(deliveryInfo));
+            checkoutWithPaystack();
+        }
+        
+        function checkoutWithPaystack() {
+            const total = localStorage.getItem('cartTotal');
+            const amount = parseFloat(total) * 100;
+            const deliveryInfo = JSON.parse(localStorage.getItem('tempDeliveryInfo'));
+            
+            let handler = PaystackPop.setup({
+                key: 'pk_live_6b9968065dc0bd4842c97ffa138e49127c862888',
+                email: (typeof auth !== 'undefined' && auth.currentUser ? auth.currentUser.email : 'customer@alfredproducts.com'),
+                amount: amount,
+                currency: "GHS",
+                ref: 'ORD_' + Math.floor((Math.random() * 1e9) + 1),
+                metadata: {
+                    custom_fields: [
+                        { display_name: "Customer", value: deliveryInfo.fullName },
+                        { display_name: "Phone", value: deliveryInfo.phoneNumber },
+                        { display_name: "Address", value: `${deliveryInfo.address}, ${deliveryInfo.city}` }
+                    ]
+                },
+                callback: function(res) {
+                    alert('Payment Successful! Reference: ' + res.reference);
+                    
+                    const cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+                    saveOrderToFirestore({
+                        items: cart,
+                        total: total,
+                        reference: res.reference,
+                        delivery: deliveryInfo,
+                        status: 'pending'
+                    });
+                    
+                    localStorage.removeItem('alfredCart');
+                    localStorage.removeItem('tempDeliveryInfo');
+                    updateCartBadge();
+                    updateCartSummary();
+                    closeCheckout();
+                    window.location.href = 'orders.html';
+                }
+            });
+            handler.openIframe();
+        }
+        
+        // Save order to Firestore
+        function saveOrderToFirestore(orderData) {
+            if (typeof db !== 'undefined') {
+                db.collection('orders').add({
+                    ...orderData,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    console.log('Order saved successfully');
+                }).catch(err => {
+                    console.error('Error saving order:', err);
+                });
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartSummary();
+            if (typeof updateCartBadge === 'function') {
+                updateCartBadge();
+            }
+        });
     </script>
 
     <script>
         let deferredPrompt;
         const installAppBtn = document.getElementById('installAppBtn');
+        const installAppBtnBottom = document.getElementById('installAppBtnBottom');
         
         // Register Service Worker for PWA
         if ('serviceWorker' in navigator) {
@@ -347,10 +625,13 @@
         // Listen for successful app installation
         window.addEventListener('appinstalled', (evt) => {
             // App installed - change button to show it's installed
-            installAppBtn.innerHTML = '<ion-icon name="checkmark-circle"></ion-icon><span>App Installed</span>';
-            installAppBtn.style.background = '#0abf53';
-            installAppBtn.disabled = true;
-            installAppBtn.style.cursor = 'default';
+            const btn = installAppBtnBottom || installAppBtn;
+            if (btn) {
+                btn.innerHTML = '<ion-icon name="checkmark-circle"></ion-icon><span>App Installed</span>';
+                btn.style.background = '#0abf53';
+                btn.disabled = true;
+                btn.style.cursor = 'default';
+            }
             console.log('App installed successfully');
         });
         
@@ -363,10 +644,7 @@
                 const userName = user.displayName || user.email.split('@')[0];
                 
                 headerActions.innerHTML = `
-                    <button id="installAppBtn" onclick="installApp()" style="display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0b6d34 0%, #ff8533 100%); color: white; border: none; padding: 8px 20px; border-radius: 25px; font-weight: 600; cursor: pointer; font-size: 14px; transition: transform 0.2s; margin-right: 10px;">
-                        <ion-icon name="download-outline"></ion-icon>
-                        <span>Install App</span>
-                    </button>
+                    <a href="cart.html" class="action-item" id="cartLink"><ion-icon name="cart-outline"></ion-icon><span>Cart</span></a>
                     <div style="display: flex; align-items: center; gap: 10px; padding: 5px 15px; border-radius: 25px; background: #f5f5f5; cursor: pointer; position: relative;" onclick="toggleUserMenu()" id="userMenuContainer">
                         <img src="${userPhoto}" alt="${userName}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
                         <span style="font-size: 14px; font-weight: 500; color: #333;">${userName}</span>
@@ -393,10 +671,7 @@
             } else {
                 // User is not logged in - show sign in button
                 headerActions.innerHTML = `
-                    <button id="installAppBtn" onclick="installApp()" style="display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0b6d34 0%, #ff8533 100%); color: white; border: none; padding: 8px 20px; border-radius: 25px; font-weight: 600; cursor: pointer; font-size: 14px; transition: transform 0.2s; margin-right: 10px;">
-                        <ion-icon name="download-outline"></ion-icon>
-                        <span>Install App</span>
-                    </button>
+                    <a href="cart.html" class="action-item" id="cartLink"><ion-icon name="cart-outline"></ion-icon><span>Cart</span></a>
                     <a href="login.html" class="action-item"><ion-icon name="person-outline"></ion-icon><span>Sign In</span></a>
                     <a href="messages.html" class="action-item"><ion-icon name="mail-outline"></ion-icon><span>Messages</span></a>
                     <a href="orders.html" class="action-item"><ion-icon name="cart-outline"></ion-icon><span>Orders</span></a>
@@ -436,6 +711,133 @@
                 updateUserUI(user);
             });
         }
+        
+        // Search function
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (!query) {
+                alert('Please enter a search term');
+                return;
+            }
+            
+            // Search in categories - redirect to categories page
+            const categoryPages = {
+                'apparel': 'apparel.html',
+                'bag': 'bags.html',
+                'bags': 'bags.html',
+                'luggage': 'bags.html',
+                'shoe': 'shoes.html',
+                'shoes': 'shoes.html',
+                'beauty': 'beauty.html',
+                'personal care': 'beauty.html',
+                'electronics': 'electronics.html',
+                'phone': 'electronics.html',
+                'industrial': 'industrial.html',
+                'sports': 'sports.html',
+                'packaging': 'packaging.html',
+                'supplier': 'suppliers.html',
+                'featured': 'featured.html'
+            };
+            
+            for (const [key, page] of Object.entries(categoryPages)) {
+                if (query.includes(key)) {
+                    window.location.href = page;
+                    return;
+                }
+            }
+            
+            // Default to categories page
+            window.location.href = 'categories.html?search=' + encodeURIComponent(query);
+        }
+        
+        // Allow Enter key to search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        // Floating Menu Functions
+        function toggleFloatingMenu() {
+            const menu = document.getElementById('floatingMenu');
+            menu.classList.toggle('active');
+        }
+        
+        function toggleOrdersSection() {
+            const section = document.getElementById('floatingOrdersSection');
+            const chevron = section.previousElementSibling.querySelector('.orders-chevron');
+            section.classList.toggle('active');
+            chevron.classList.toggle('rotated');
+            
+            // Load orders if logged in
+            if (typeof firebase !== 'undefined' && firebase.auth()) {
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (user) {
+                        loadFloatingOrders(user.uid);
+                    }
+                });
+            }
+        }
+        
+        function loadFloatingOrders(uid) {
+            const container = document.getElementById('floatingOrdersList');
+            if (typeof db !== 'undefined') {
+                db.collection("orders").where("userId", "==", uid).orderBy("timestamp", "desc").limit(5).get()
+                    .then((querySnapshot) => {
+                        if (querySnapshot.empty) {
+                            container.innerHTML = `
+                                <div style="padding: 15px; text-align: center; color: #999; font-size: 13px;">
+                                    <ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>
+                                    No Order
+                                </div>
+                            `;
+                            return;
+                        }
+                        
+                        let ordersHTML = '';
+                        querySnapshot.forEach((doc) => {
+                            const order = doc.data();
+                            const date = order.timestamp ? order.timestamp.toDate().toLocaleDateString() : 'Just now';
+                            const firstItem = order.items[0];
+                            ordersHTML += `
+                                <a href="orders.html" class="floating-order-item">
+                                    <img src="${firstItem.image || '1.png'}" alt="Product" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">
+                                    <div style="flex: 1; overflow: hidden;">
+                                        <p style="font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${firstItem.title}</p>
+                                        <p style="font-size: 11px; color: #999;">${order.items.length} item(s) • GHS ${parseFloat(order.total).toFixed(2)}</p>
+                                    </div>
+                                </a>
+                            `;
+                        });
+                        container.innerHTML = ordersHTML;
+                    })
+                    .catch((error) => {
+                        console.error("Error loading orders: ", error);
+                        container.innerHTML = `
+                            <div style="padding: 15px; text-align: center; color: #999; font-size: 13px;">
+                                <ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>
+                                No Order
+                            </div>
+                        `;
+                    });
+            } else {
+                container.innerHTML = `
+                    <div style="padding: 15px; text-align: center; color: #999; font-size: 13px;">
+                        <ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>
+                        No Order
+                    </div>
+                `;
+            }
+        }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const menuContainer = document.querySelector('.floating-menu-container');
+            const menu = document.getElementById('floatingMenu');
+            if (menuContainer && !menuContainer.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
     </script>
 </body>
 
