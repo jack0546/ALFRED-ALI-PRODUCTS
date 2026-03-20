@@ -9,7 +9,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#FF6600">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="1.png">
+    <link rel="apple-touch-icon" href="new_logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
     <header>
         <div class="container">
             <div class="header-top">
-                <div class="logo"><a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a></div>
+                <div class="logo"><a href="index.html"><img src="new_logo.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a></div>
                 <div class="header-actions">
                     <a href="login.html" class="action-item"><ion-icon name="person-outline"></ion-icon><span>Sign In</span></a>
                     <a href="messages.html" class="action-item"><ion-icon name="mail-outline"></ion-icon><span>Messages</span></a>
@@ -165,16 +165,10 @@
     <script>
         let currentProduct = null;
         
-        function openDeliveryForm(category, title, price, desc, image) {
-            currentProduct = { category, title, price, desc, image };
-            const modal = document.getElementById('deliveryModal');
-            if (modal) {
-                document.getElementById('modalProductImg').src = image;
-                document.getElementById('modalProductTitle').textContent = title + ' - ' + category;
-                document.getElementById('modalProductPrice').textContent = 'GHS ' + parseFloat(price).toFixed(2);
-                document.getElementById('modalProductDesc').textContent = desc;
-                modal.style.display = 'flex';
-            }
+        function openDeliveryForm(category, title, price, desc, image){
+            let p = typeof price === 'string' ? parseFloat(price.replace(/[^0-9.]/g, '')) : price;
+            let d = typeof desc !== 'undefined' ? desc : '';
+            window.location.href = 'product.html?title=' + encodeURIComponent(title) + '&price=' + p + '&desc=' + encodeURIComponent(d) + '&image=' + encodeURIComponent(image) + '&category=' + encodeURIComponent(category);
         }
         
         function closeDeliveryForm() {
