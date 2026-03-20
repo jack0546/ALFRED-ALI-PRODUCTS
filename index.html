@@ -547,12 +547,13 @@
             handler.openIframe();
         }
         
-        // Save order to Firestore
         function saveOrderToFirestore(orderData) {
             if (typeof db !== 'undefined') {
+                const uid = (typeof auth !== 'undefined' && auth.currentUser) ? auth.currentUser.uid : 'guest';
                 db.collection('orders').add({
                     ...orderData,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    userId: uid,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 }).then(() => {
                     console.log('Order saved successfully');
                 }).catch(err => {
