@@ -3716,3 +3716,11 @@ select {
     color: var(--text-muted);
     font-size: var(--font-size-4xl);
 }
+
+/* Global Logo Enhancements */
+img[src*='new_logo.png'] {
+    height: 48px !important;
+    width: auto !important;
+    object-fit: contain;
+    vertical-align: middle;
+}
