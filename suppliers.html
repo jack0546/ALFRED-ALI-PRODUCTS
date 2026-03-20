@@ -25,7 +25,7 @@
     <div class="mobile-nav" id="mobileNav">
         <div class="mobile-nav-header">
             <div class="navbar-brand">
-                <img src="1.png" alt="ALFRED" style="height: 28px;">
+                <img src="new_logo.png" alt="ALFRED" style="height: 28px;">
                 <span class="brand-text">ALFRED</span>
             </div>
             <button class="mobile-nav-close" onclick="toggleMobileMenu()">
@@ -51,7 +51,7 @@
 
             <div class="navbar-brand">
                 <a href="index.html">
-                    <img src="1.png" alt="ALFRED">
+                    <img src="new_logo.png" alt="ALFRED">
                 </a>
             </div>
 
@@ -276,15 +276,10 @@
         let currentProduct = null;
 
         // Open delivery form modal
-        function openDeliveryForm(supplierName, productTitle, price, desc, image) {
-            currentProduct = { supplierName, productTitle, price, desc, image };
-            
-            document.getElementById('modalProductImg').src = image;
-            document.getElementById('modalProductTitle').textContent = supplierName + ' - ' + productTitle;
-            document.getElementById('modalProductPrice').textContent = price > 0 ? 'GHS ' + price.toFixed(2) : 'Contact for Price';
-            document.getElementById('modalProductDesc').textContent = desc;
-            
-            document.getElementById('deliveryModal').classList.add('active');
+        function openDeliveryForm(category, title, price, desc, image){
+            let p = typeof price === 'string' ? parseFloat(price.replace(/[^0-9.]/g, '')) : price;
+            let d = typeof desc !== 'undefined' ? desc : '';
+            window.location.href = 'product.html?title=' + encodeURIComponent(title) + '&price=' + p + '&desc=' + encodeURIComponent(d) + '&image=' + encodeURIComponent(image) + '&category=' + encodeURIComponent(category);
         }
 
         // Close delivery form modal
