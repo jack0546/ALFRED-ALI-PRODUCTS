@@ -5,7 +5,7 @@ const assetsToCache = [
   '/style.css',
   '/script.js',
   '/manifest.json',
-  '/1.png'
+  '/new_logo.png'
 ];
 
 self.addEventListener('install', event => {
