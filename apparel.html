@@ -9,7 +9,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0abf53">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="1.png">
+    <link rel="apple-touch-icon" href="new_logo.png">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -54,7 +54,7 @@
         <div class="container">
             <div class="header-top" style="padding: 15px 0;">
                 <div class="logo">
-                    <a href="index.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a>
+                    <a href="index.html"><img src="new_logo.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a>
                 </div>
                 <nav>
                     <ul>
@@ -454,7 +454,7 @@
                         querySnapshot.forEach((doc) => {
                             const order = doc.data();
                             const firstItem = order.items[0];
-                            ordersHTML += '<a href="orders.html" class="floating-order-item"><img src="' + (firstItem.image || '1.png') + '" alt="Product" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;"><div style="flex: 1; overflow: hidden;"><p style="font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + firstItem.title + '</p><p style="font-size: 11px; color: #999;">' + order.items.length + ' item(s) • GHS ' + parseFloat(order.total).toFixed(2) + '</p></div></a>';
+                            ordersHTML += '<a href="orders.html" class="floating-order-item"><img src="' + (firstItem.image || 'new_logo.png') + '" alt="Product" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;"><div style="flex: 1; overflow: hidden;"><p style="font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + firstItem.title + '</p><p style="font-size: 11px; color: #999;">' + order.items.length + ' item(s) • GHS ' + parseFloat(order.total).toFixed(2) + '</p></div></a>';
                         });
                         container.innerHTML = ordersHTML;
                     })
