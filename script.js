@@ -1770,7 +1770,7 @@ function saveOrderToFirestore(orderData) {
         db.collection('orders').add({
             ...orderData,
             userId: firebase.auth().currentUser.uid,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }).then(() => {
             console.log('Order saved to Firestore');
         }).catch((error) => {
