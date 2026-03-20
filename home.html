@@ -9,7 +9,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#FF6600">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="1.png">
+    <link rel="apple-touch-icon" href="new_logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
     <header>
         <div class="container">
             <div class="header-top">
-                <div class="logo"><a href="categories.html"><img src="1.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a></div>
+                <div class="logo"><a href="categories.html"><img src="new_logo.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a></div>
                 <div class="header-actions">
                     <a href="login.html" class="action-item"><ion-icon name="person-outline"></ion-icon><span>Sign
                             In</span></a>
@@ -69,17 +69,10 @@
         // Current product for payment
         let currentProduct = null;
         
-        function openDeliveryForm(category, title, price, desc, image) {
-            currentProduct = { category, title, price, desc, image };
-            
-            const modal = document.getElementById('deliveryModal');
-            if (modal) {
-                document.getElementById('modalProductImg').src = image;
-                document.getElementById('modalProductTitle').textContent = title + ' - ' + category;
-                document.getElementById('modalProductPrice').textContent = 'GHS ' + parseFloat(price).toFixed(2);
-                document.getElementById('modalProductDesc').textContent = desc;
-                modal.style.display = 'flex';
-            }
+        function openDeliveryForm(category, title, price, desc, image){
+            let p = typeof price === 'string' ? parseFloat(price.replace(/[^0-9.]/g, '')) : price;
+            let d = typeof desc !== 'undefined' ? desc : '';
+            window.location.href = 'product.html?title=' + encodeURIComponent(title) + '&price=' + p + '&desc=' + encodeURIComponent(d) + '&image=' + encodeURIComponent(image) + '&category=' + encodeURIComponent(category);
         }
         
         function closeDeliveryForm() {
@@ -130,7 +123,7 @@
     <!-- Install App Button -->
     <div id="installAppBanner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #FF6600 0%, #ff8533 100%); padding: 15px 20px; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); z-index: 10000; align-items: center; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 15px;">
-            <img src="1.png" alt="ALFRED" style="width: 40px; height: 40px; border-radius: 8px; background: white; padding: 5px;">
+            <img src="new_logo.png" alt="ALFRED" style="width: 40px; height: 40px; border-radius: 8px; background: white; padding: 5px;">
             <div style="color: white;">
                 <div style="font-weight: bold; font-size: 16px;">Install ALFRED App</div>
                 <div style="font-size: 12px; opacity: 0.9;">Add to home screen for quick access</div>
