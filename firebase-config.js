@@ -33,14 +33,23 @@ function signInWithGoogle() {
 }
 
 function saveUserToFirestore(user) {
+    // Check if user is admin
+    const isAdmin = user.email === 'narhsnazzisco@gmail.com';
+    
     db.collection("users").doc(user.uid).set({
         name: user.displayName,
         email: user.email,
         photo: user.photoURL,
+        isAdmin: isAdmin,
         lastLogin: firebase.firestore.FieldValue.serverTimestamp()
     }, { merge: true })
     .then(() => {
-        window.location.href = 'index.html';
+        // Redirect admin to admin dashboard, regular users to index
+        if (isAdmin) {
+            window.location.href = 'admin-dashboard/admin-dashboard.html';
+        } else {
+            window.location.href = 'index.html';
+        }
     });
 }
 
