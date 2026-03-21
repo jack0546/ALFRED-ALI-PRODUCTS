@@ -1781,33 +1781,68 @@ function changeImage(type) {
 
 // Save order to Firestore (works for ALL customers - logged in or not)
 function saveOrderToFirestore(orderData) {
-    if (typeof firebase !== 'undefined') {
+    console.log('saveOrderToFirestore called with:', orderData);
+    
+    if (typeof firebase === 'undefined') {
+        console.error('Firebase SDK not loaded!');
+        alert('Error: Firebase not loaded. Order saved locally only.');
+        saveOrderLocally(orderData);
+        return;
+    }
+    
+    try {
+        // Ensure Firebase is initialized
+        if (!firebase.apps.length) {
+            console.log('Initializing Firebase...');
+            firebase.initializeApp({
+                apiKey: "AIzaSyBMhNFK9ueVA6-1i22Z_NbGV_50Uy0xXjQ",
+                authDomain: "project-4da600f0-7b2b-45f4-808.firebaseapp.com",
+                projectId: "project-4da600f0-7b2b-45f4-808",
+                storageBucket: "project-4da600f0-7b2b-45f4-808.firebasestorage.app",
+                messagingSenderId: "531999731190",
+                appId: "1:531999731190:web:098953626b761eafb62bd7"
+            });
+        }
+        
         const db = firebase.firestore();
-        const user = firebase.auth().currentUser;
+        const auth = firebase.auth();
+        const user = auth.currentUser;
+        
+        console.log('Current user:', user);
         
         const orderRecord = {
             ...orderData,
             userId: user ? user.uid : 'guest',
-            userEmail: user ? user.email : 'customer@alfred.com',
+            userEmail: user ? user.email : (orderData.delivery ? orderData.delivery.email : 'customer@alfred.com'),
             userName: orderData.delivery ? (orderData.delivery.fullName || 'Guest') : (user ? user.displayName : 'Guest'),
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         };
         
+        console.log('Saving order to Firestore:', orderRecord);
+        
         db.collection('orders').add(orderRecord)
-        .then(() => {
-            console.log('Order saved to Firestore successfully!');
+        .then((docRef) => {
+            console.log('Order saved to Firestore successfully! Doc ID:', docRef.id);
+            alert('Order saved to database!');
         })
         .catch((error) => {
-            console.error('Error saving order:', error);
+            console.error('Error saving order to Firestore:', error);
+            alert('Error saving order: ' + error.message + '. Order saved locally.');
+            saveOrderLocally(orderData);
         });
-    } else {
-        console.log('Firebase not available');
+    } catch (error) {
+        console.error('Exception in saveOrderToFirestore:', error);
+        alert('Error: ' + error.message + '. Order saved locally.');
+        saveOrderLocally(orderData);
     }
+}
 
-    // Also save to localStorage for backup
+// Backup function to save orders locally
+function saveOrderLocally(orderData) {
     const localOrders = JSON.parse(localStorage.getItem('alfredOrders') || '[]');
     localOrders.unshift(orderData);
     localStorage.setItem('alfredOrders', JSON.stringify(localOrders));
+    console.log('Order saved to localStorage');
 }
 
 // Export for use in other files
