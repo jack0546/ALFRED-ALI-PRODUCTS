@@ -19,9 +19,205 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
+    <style>
+        .profile-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+        .profile-info h2 {
+            margin: 0 0 5px 0;
+            font-size: 24px;
+            color: #1a1a1a;
+        }
+        .profile-info p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .profile-badge {
+            display: inline-block;
+            background: #0abf53;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .profile-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        .profile-detail-item ion-icon {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        .profile-detail-item .label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .profile-detail-item .value {
+            font-size: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+        .trade-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        .trade-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+        .trade-card-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #0abf53 0%, #089b40 100%);
+        }
+        .trade-card-icon ion-icon {
+            font-size: 40px;
+            color: white;
+        }
+        .trade-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+        .trade-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 60px 0;
+            position: relative;
+        }
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: #e0e0e0;
+            z-index: 0;
+        }
+        .step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+        .step-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        .step-item.completed .step-circle {
+            background: #0abf53;
+            border-color: #0abf53;
+        }
+        .step-item.completed .step-circle ion-icon {
+            color: white;
+        }
+        .step-circle ion-icon {
+            font-size: 32px;
+            color: #ccc;
+        }
+        .step-item.completed .step-circle ion-icon {
+            color: white;
+        }
+        .step-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .step-desc {
+            font-size: 13px;
+            color: #999;
+            text-align: center;
+            max-width: 150px;
+        }
+        .protection-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .protection-item {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .protection-item ion-icon {
+            font-size: 36px;
+            color: #0abf53;
+            margin-bottom: 15px;
+        }
+        .protection-item h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .protection-item p {
+            margin: 0;
+            font-size: 13px;
+            color: #666;
+        }
+    </style>
 </head>
 
-<body style="background: #fcfcfc;">
+<body style="background: #f5f7fa;">
     <header>
         <div class="container">
             <div class="header-top">
@@ -47,63 +243,218 @@
         </div>
     </header>
 
-    <main class="container" style="padding: 60px 0;">
-        <div style="display: flex; align-items: center; gap: 40px; margin-bottom: 60px;">
-            <div style="flex: 1;">
-                <h1 style="font-size: 42px; color: #1a1a1a; margin-bottom: 20px;">Protect Your Orders from Payment to
-                    Delivery</h1>
-                <p style="font-size: 18px; color: var(--text-muted); line-height: 1.6;">Trade Assurance is a free
-                    service that creates trust between business buyers and suppliers. We provide a set of protections to
-                    ensure suppliers honor important details of your contract.</p>
-                <button class="btn btn-primary" style="margin-top: 30px; padding: 15px 40px;">Learn More</button>
-            </div>
-            <div style="flex: 1; text-align: center;">
-                <ion-icon name="shield-checkmark-outline"
-                    style="font-size: 200px; color: var(--primary-color); opacity: 0.8;"></ion-icon>
+    <main class="container" style="padding: 40px 0;">
+        <!-- User Profile Section (Shown when logged in) -->
+        <div id="userProfileSection" style="display: none;">
+            <div class="profile-section">
+                <div class="profile-header">
+                    <img id="profileAvatar" src="" alt="Profile" class="profile-avatar">
+                    <div class="profile-info">
+                        <h2 id="profileName">Welcome, User</h2>
+                        <p id="profileEmail">email@example.com</p>
+                        <span class="profile-badge"><ion-icon name="shield-checkmark"></ion-icon> Verified Buyer</span>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <div class="profile-detail-item">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <div>
+                            <div class="label">Full Name</div>
+                            <div class="value" id="profileNameDisplay">-</div>
+                        </div>
+                    </div>
+                    <div class="profile-detail-item">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <div>
+                            <div class="label">Email Address</div>
+                            <div class="value" id="profileEmailDisplay">-</div>
+                        </div>
+                    </div>
+                    <div class="profile-detail-item">
+                        <ion-icon name="call-outline"></ion-icon>
+                        <div>
+                            <div class="label">Phone Number</div>
+                            <div class="value" id="profilePhoneDisplay">Not set</div>
+                        </div>
+                    </div>
+                    <div class="profile-detail-item">
+                        <ion-icon name="location-outline"></ion-icon>
+                        <div>
+                            <div class="label">Location</div>
+                            <div class="value" id="profileLocationDisplay">Not set</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
-            <div class="banner-card" style="padding: 40px; border-top: 4px solid var(--primary-color);">
-                <h3 style="margin-bottom: 15px;">Payment Security</h3>
-                <p style="font-size: 14px; color: var(--text-muted);">Your payment is held in escrow and released only
-                    after you confirm delivery.</p>
-            </div>
-            <div class="banner-card" style="padding: 40px; border-top: 4px solid var(--primary-color);">
-                <h3 style="margin-bottom: 15px;">Shipping Protection</h3>
-                <p style="font-size: 14px; color: var(--text-muted);">Ensure your products are shipped on time, or get
-                    your money back.</p>
-            </div>
-            <div class="banner-card" style="padding: 40px; border-top: 4px solid var(--primary-color);">
-                <h3 style="margin-bottom: 15px;">Product Quality</h3>
-                <p style="font-size: 14px; color: var(--text-muted);">Products must meet the quality standards specified
-                    in your contract.</p>
+        <!-- Trade Assurance Hero -->
+        <div style="background: linear-gradient(135deg, #0abf53 0%, #089b40 100%); border-radius: 20px; padding: 60px; color: white; margin-bottom: 40px;">
+            <div style="display: flex; align-items: center; gap: 40px;">
+                <div style="flex: 1;">
+                    <h1 style="font-size: 36px; margin-bottom: 20px; color: white;">Protect Your Orders from Payment to Delivery</h1>
+                    <p style="font-size: 18px; opacity: 0.9; line-height: 1.6; margin-bottom: 30px;">Trade Assurance is a free service that creates trust between business buyers and suppliers. We provide comprehensive protection for your orders.</p>
+                    <button class="btn" style="background: white; color: #0abf53; padding: 15px 30px; border-radius: 8px; font-weight: 600;">Learn More</button>
+                </div>
+                <div style="flex: 1; text-align: center;">
+                    <ion-icon name="shield-checkmark" style="font-size: 150px; opacity: 0.9;"></ion-icon>
+                </div>
             </div>
         </div>
+
+        <!-- How Trade Assurance Works -->
+        <h2 style="text-align: center; margin-bottom: 10px; font-size: 28px; color: #1a1a1a;">How Trade Assurance Works</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 40px;">Simple steps to protect your business</p>
+        
+        <div class="steps-container">
+            <div class="step-item completed">
+                <div class="step-circle"><ion-icon name="cart-outline"></ion-icon></div>
+                <div class="step-label">Place Order</div>
+                <div class="step-desc">Select products and place your order with supplier</div>
+            </div>
+            <div class="step-item">
+                <div class="step-circle"><ion-icon name="wallet-outline"></ion-icon></div>
+                <div class="step-label">Make Payment</div>
+                <div class="step-desc">Pay securely through our platform</div>
+            </div>
+            <div class="step-item">
+                <div class="step-circle"><ion-icon name="cube-outline"></ion-icon></div>
+                <div class="step-label">Supplier Ships</div>
+                <div class="step-desc">Supplier ships your order as agreed</div>
+            </div>
+            <div class="step-item">
+                <div class="step-circle"><ion-icon name="checkmark-circle-outline"></ion-icon></div>
+                <div class="step-label">Confirm Delivery</div>
+                <div class="step-desc">Verify you received your order</div>
+            </div>
+        </div>
+
+        <!-- Protection Features -->
+        <h2 style="text-align: center; margin-bottom: 10px; font-size: 28px; color: #1a1a1a; margin-top: 60px;">What Trade Assurance Covers</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 40px;">Comprehensive protection for every transaction</p>
+
+        <div class="protection-grid">
+            <div class="protection-item">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <h4>Payment Security</h4>
+                <p>Your payment is held securely in escrow until you confirm delivery</p>
+            </div>
+            <div class="protection-item">
+                <ion-icon name="airplane-outline"></ion-icon>
+                <h4>On-Time Shipping</h4>
+                <p>Guaranteed delivery or full refund if supplier fails to ship on time</p>
+            </div>
+            <div class="protection-item">
+                <ion-icon name="shield-outline"></ion-icon>
+                <h4>Product Quality</h4>
+                <p>Protection against products that don't meet agreed specifications</p>
+            </div>
+            <div class="protection-item">
+                <ion-icon name="refresh-outline"></ion-icon>
+                <h4>Easy Returns</h4>
+                <p>Hassle-free returns if products arrive damaged or not as described</p>
+            </div>
+        </div>
+
+        <!-- Main Trade Assurance Cards -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 60px;">
+            <div class="trade-card">
+                <div class="trade-card-icon">
+                    <ion-icon name="shield-checkmark-outline"></ion-icon>
+                </div>
+                <h3>Payment Security</h3>
+                <p>Your payment is held in escrow and released only after you confirm delivery. We protect your funds throughout the entire transaction.</p>
+            </div>
+            <div class="trade-card">
+                <div class="trade-card-icon">
+                    <ion-icon name="airplane-outline"></ion-icon>
+                </div>
+                <h3>Shipping Protection</h3>
+                <p>Ensure your products are shipped on time, or get your money back. We hold suppliers accountable to their delivery commitments.</p>
+            </div>
+            <div class="trade-card">
+                <div class="trade-card-icon">
+                    <ion-icon name="medal-outline"></ion-icon>
+                </div>
+                <h3>Product Quality</h3>
+                <p>Products must meet the quality standards specified in your contract. Get refunds for substandard or non-conforming items.</p>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div style="background: #f9f9f9; border-radius: 16px; padding: 50px; text-align: center; margin-top: 60px;">
+            <h2 style="margin-bottom: 15px; font-size: 28px;">Ready to Shop Safely?</h2>
+            <p style="color: #666; margin-bottom: 30px; font-size: 16px;">Join thousands of satisfied buyers who trust ALFRED PRODUCTS</p>
+            <a href="categories.html" class="btn btn-primary" style="display: inline-block; padding: 15px 40px; background: #0abf53; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">Browse Products</a>
+        </div>
     </main>
+
+    <!-- Footer -->
+    <footer style="background: #1a1a1a; color: white; padding: 60px 0 30px; margin-top: 60px;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <h4 style="margin-bottom: 20px;">For Buyers</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #999; text-decoration: none;">How to Buy</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #999; text-decoration: none;">Payment Methods</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #999; text-decoration: none;">Buyer Safety</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 20px;">For Suppliers</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #999; text-decoration: none;">Become a Supplier</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #999; text-decoration: none;">Supplier Membership</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #999; text-decoration: none;">Learning Center</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 20px;">Company</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 10px;"><a href="about.html" style="color: #999; text-decoration: none;">About Us</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #999; text-decoration: none;">Contact</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: #999; text-decoration: none;">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 20px;">Support</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 10px;"><a href="help.html" style="color: #999; text-decoration: none;">Help Center</a></li>
+                        <li style="margin-bottom: 10px;"><a href="trade.html" style="color: #999; text-decoration: none;">Trade Assurance</a></li>
+                        <li style="margin-bottom: 10px;"><a href="logistics.html" style="color: #999; text-decoration: none;">Logistics</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #333; padding-top: 30px; text-align: center; color: #999;">
+                <p>&copy; 2024 ALFRED PRODUCTS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
         // User authentication - update header based on auth state
         document.addEventListener('DOMContentLoaded', function() {
             const headerActions = document.getElementById('headerActions');
+            const userProfileSection = document.getElementById('userProfileSection');
             if (!headerActions) return;
             
             if (typeof firebase !== 'undefined' && firebase.auth) {
                 firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
-                        // User is logged in - show user profile
+                        // User is logged in - show user profile in header
                         const userPhoto = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || user.email) + '&background=0abf53&color=fff';
                         const userName = user.displayName || user.email.split('@')[0];
                         
                         headerActions.innerHTML = `
-                            <a href="cart.html" class="action-item" id="cartLink"><ion-icon name="cart-outline"></ion-icon><span>Cart</span></a>
+                            <a href="cart.html" class="action-item"><ion-icon name="cart-outline"></ion-icon><span>Cart</span></a>
                             <div style="display: flex; align-items: center; gap: 10px; padding: 5px 15px; border-radius: 25px; background: #f5f5f5; cursor: pointer; position: relative;" onclick="toggleUserMenu()" id="userMenuContainer">
                                 <img src="${userPhoto}" alt="${userName}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
                                 <span style="font-size: 14px; font-weight: 500; color: #333;">${userName}</span>
                                 <ion-icon name="chevron-down-outline" style="font-size: 16px; color: #666;"></ion-icon>
                             </div>
                             <div id="userDropdown" style="display: none; position: absolute; top: 100%; right: 0; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 200px; z-index: 1000; padding: 10px 0; margin-top: 10px;">
-                                <a href="home.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: #333; font-size: 14px;">
+                                <a href="#" onclick="showUserProfile(); return false;" style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: #333; font-size: 14px;">
                                     <ion-icon name="person-outline"></ion-icon> My Profile
                                 </a>
                                 <a href="orders.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: #333; font-size: 14px;">
@@ -120,10 +471,63 @@
                             <a href="messages.html" class="action-item"><ion-icon name="mail-outline"></ion-icon><span>Messages</span></a>
                             <a href="orders.html" class="action-item"><ion-icon name="cart-outline"></ion-icon><span>Orders</span></a>
                         `;
+                        
+                        // Load user profile data from Firestore
+                        loadUserProfile(user);
                     }
                 });
             }
         });
+
+        // Load user profile from Firestore
+        function loadUserProfile(user) {
+            const userProfileSection = document.getElementById('userProfileSection');
+            
+            // Set basic user info
+            const userPhoto = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || user.email) + '&background=0abf53&color=fff';
+            document.getElementById('profileAvatar').src = userPhoto;
+            document.getElementById('profileName').textContent = 'Welcome, ' + (user.displayName || user.email.split('@')[0]);
+            document.getElementById('profileEmail').textContent = user.email;
+            document.getElementById('profileNameDisplay').textContent = user.displayName || 'Not set';
+            document.getElementById('profileEmailDisplay').textContent = user.email;
+            
+            // Try to get additional info from Firestore
+            if (typeof firebase !== 'undefined' && firebase.firestore) {
+                const db = firebase.firestore();
+                db.collection('users').doc(user.uid).get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            const data = doc.data();
+                            if (data.phone) {
+                                document.getElementById('profilePhoneDisplay').textContent = data.phone;
+                            }
+                            if (data.address || data.city || data.region) {
+                                let location = [];
+                                if (data.city) location.push(data.city);
+                                if (data.region) location.push(data.region);
+                                if (data.country) location.push(data.country);
+                                document.getElementById('profileLocationDisplay').textContent = location.join(', ') || 'Not set';
+                            }
+                            if (data.name) {
+                                document.getElementById('profileNameDisplay').textContent = data.name;
+                            }
+                        }
+                    })
+                    .catch((error) => {
+                        console.log('Error loading user profile:', error);
+                    });
+            }
+        }
+
+        // Show user profile section
+        function showUserProfile() {
+            const profileSection = document.getElementById('userProfileSection');
+            if (profileSection.style.display === 'none') {
+                profileSection.style.display = 'block';
+                profileSection.scrollIntoView({ behavior: 'smooth' });
+            }
+            toggleUserMenu();
+        }
 
         // Toggle user dropdown menu
         function toggleUserMenu() {
