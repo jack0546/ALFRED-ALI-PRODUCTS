@@ -112,99 +112,172 @@
 
     <script src="script.js"></script>
     <script>
-        auth.onAuthStateChanged(user => {
+        // Get user info from localStorage or check auth
+        function getUserInfo() {
+            const user = firebase.auth().currentUser;
             if (user) {
-                document.getElementById('logoutBtn').style.display = 'block';
-                fetchUserOrders(user.uid);
-            } else {
-                window.location.href = 'login.html';
+                return { uid: user.uid, email: user.email };
             }
-        });
-
-        function fetchUserOrders(uid) {
-            const container = document.getElementById('ordersContainer');
-            const noMsg = document.getElementById('noOrdersMessage');
-
-            db.collection("orders").where("userId", "==", uid).orderBy("timestamp", "desc").get()
-                .then((querySnapshot) => {
-                    container.innerHTML = '';
-                    if (querySnapshot.empty) {
-                        noMsg.style.display = 'block';
-                        return;
-                    }
-
-                    querySnapshot.forEach((doc) => {
-                        const order = doc.data();
-                        const date = order.timestamp ? order.timestamp.toDate().toLocaleDateString() : 'Just now';
-                        const firstItem = order.items[0];
-
-                        const orderDiv = document.createElement('div');
-                        orderDiv.className = 'order-card';
-                        orderDiv.style.marginBottom = '20px';
-                        orderDiv.innerHTML = `
-                            <div class="order-info">
-                                <div class="order-img">
-                                    <img src="${firstItem.image || 'https://via.placeholder.com/60'}" alt="Product">
-                                </div>
-                                <div>
-                                    <h4 style="margin-bottom: 5px;">Order #${order.reference}</h4>
-                                    <p style="font-size: 13px; color: var(--text-muted);">${order.items.length} item(s) purchased on ${date}</p>
-                                </div>
-                            </div>
-                            <div style="text-align: right;">
-                                <span class="status-badge" style="background: #e6ffed; color: #1e7e34; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;">Paid</span>
-                                <p style="font-size: 16px; font-weight: 700; margin-top: 10px;">GHS ${parseFloat(order.total).toFixed(2)}</p>
-                                <button class="btn btn-outline" style="padding: 8px 15px; font-size: 12px; margin-top: 10px;" onclick="showTracking('${doc.id}')">View Details</button>
-                            </div>
-                        `;
-                        container.appendChild(orderDiv);
-                    });
-                })
-                .catch((error) => {
-                    console.error("Error fetching orders: ", error);
-                    container.innerHTML = '<p style="text-align: center; color: red;">Error loading orders.</p>';
-                });
+            // Check localStorage for guest phone (used during checkout)
+            return { uid: 'guest', email: null };
         }
 
-        function showTracking(docId) {
+        auth.onAuthStateChanged(user => {
+            document.getElementById('logoutBtn').style.display = user ? 'block' : 'none';
+            fetchAllOrders();
+        });
+
+        async function fetchAllOrders() {
+            const container = document.getElementById('ordersContainer');
+            const noMsg = document.getElementById('noOrdersMessage');
+            container.innerHTML = '';
+
+            let allOrders = [];
+            const user = firebase.auth().currentUser;
+
+            try {
+                // Try to get orders from Firestore
+                let query;
+                if (user) {
+                    // Logged in user - get their orders
+                    query = await db.collection("orders").where("userId", "==", user.uid).orderBy("timestamp", "desc").get();
+                } else {
+                    // Guest user - get all recent orders (they need to provide info)
+                    query = await db.collection("orders").orderBy("timestamp", "desc").limit(20).get();
+                }
+
+                query.forEach((doc) => {
+                    allOrders.push({ id: doc.id, ...doc.data() });
+                });
+            } catch (error) {
+                console.log("Firestore error, trying localStorage:", error);
+            }
+
+            // Also get orders from localStorage (for guests)
+            const localOrders = JSON.parse(localStorage.getItem('alfredOrders') || '[]');
+            allOrders = [...allOrders, ...localOrders];
+
+            // Remove duplicates based on reference
+            const seen = new Set();
+            allOrders = allOrders.filter(order => {
+                const key = order.reference || order.id;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+
+            // Sort by timestamp
+            allOrders.sort((a, b) => {
+                const timeA = a.timestamp ? (a.timestamp.seconds || 0) : 0;
+                const timeB = b.timestamp ? (b.timestamp.seconds || 0) : 0;
+                return timeB - timeA;
+            });
+
+            if (allOrders.length === 0) {
+                noMsg.style.display = 'block';
+                return;
+            }
+
+            noMsg.style.display = 'none';
+
+            allOrders.forEach((order) => {
+                const date = order.timestamp ? (order.timestamp.toDate ? order.timestamp.toDate().toLocaleDateString() : new Date(order.timestamp.seconds * 1000).toLocaleDateString()) : (order.orderDate ? new Date(order.orderDate).toLocaleDateString() : 'Just now');
+                const firstItem = order.items && order.items[0];
+
+                const orderDiv = document.createElement('div');
+                orderDiv.className = 'order-card';
+                orderDiv.style.marginBottom = '20px';
+                orderDiv.innerHTML = `
+                    <div class="order-info">
+                        <div class="order-img">
+                            <img src="${firstItem ? (firstItem.image || 'https://via.placeholder.com/60') : 'https://via.placeholder.com/60'}" alt="Product">
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 5px;">Order #${order.reference || order.id.substring(0, 8)}</h4>
+                            <p style="font-size: 13px; color: var(--text-muted);">${order.items ? order.items.length : 0} item(s) purchased on ${date}</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="status-badge" style="background: #e6ffed; color: #1e7e34; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;">${order.status || 'Paid'}</span>
+                        <p style="font-size: 16px; font-weight: 700; margin-top: 10px;">GHS ${parseFloat(order.total || 0).toFixed(2)}</p>
+                        <button class="btn btn-outline" style="padding: 8px 15px; font-size: 12px; margin-top: 10px;" onclick="showTracking('${order.id}')">View Details</button>
+                    </div>
+                `;
+                container.appendChild(orderDiv);
+            });
+        }
+
+        function fetchUserOrders(uid) {
+            fetchAllOrders();
+        }
+
+        // Store orders in memory for tracking
+        let ordersCache = [];
+
+        async function showTracking(docId) {
             const modal = document.getElementById('trackingModal');
             const content = document.getElementById('trackingContent');
             modal.style.display = 'flex';
             content.innerHTML = '<p style="text-align:center;">Fetching details...</p>';
 
-            db.collection("orders").doc(docId).get().then(doc => {
+            // Try to find in Firestore first
+            try {
+                const doc = await db.collection("orders").doc(docId).get();
                 if (doc.exists) {
-                    const order = doc.data();
-                    const delivery = order.delivery || {};
-                    const date = order.timestamp ? order.timestamp.toDate().toLocaleString() : 'Just now';
-
-                    content.innerHTML = `
-                        <div class="order-detail-group">
-                            <span class="label">Payment Status</span>
-                            <span class="value" style="color: #28a745; font-weight: 700;">Completed (Ref: ${order.reference})</span>
-                        </div>
-                        <div class="order-detail-group">
-                            <span class="label">Delivery Address</span>
-                            <span class="value">${delivery.fullName || 'N/A'}<br>
-                            ${delivery.address || 'No address'}<br>
-                            ${delivery.city || ''}, ${delivery.region || ''}</span>
-                        </div>
-                        <div class="order-detail-group">
-                            <span class="label">Contact Info</span>
-                            <span class="value">Phone: ${delivery.phoneNumber || 'N/A'}<br>
-                            WhatsApp: ${delivery.whatsappNumber || 'N/A'}</span>
-                        </div>
-                        <div class="order-detail-group">
-                            <span class="label">Ordered Items</span>
-                            <span class="value" style="font-size: 12px;">${order.items.map(item => `${item.title} (x${item.quantity})`).join('<br>')}</span>
-                        </div>
-                        <div class="order-detail-group" style="text-align: right;">
-                            <span class="label">Purchase Date</span>
-                            <span class="value" style="color: #999;">${date}</span>
-                        </div>
-                    `;
+                    const order = { id: doc.id, ...doc.data() };
+                    displayOrderDetails(order);
+                    return;
                 }
-            });
+            } catch (e) {
+                console.log("Not in Firestore");
+            }
+
+            // Try localStorage
+            const localOrders = JSON.parse(localStorage.getItem('alfredOrders') || '[]');
+            const localOrder = localOrders.find(o => o.id === docId || o.reference === docId);
+            if (localOrder) {
+                displayOrderDetails(localOrder);
+                return;
+            }
+
+            content.innerHTML = '<p style="text-align:center;">Order not found.</p>';
+        }
+
+        function displayOrderDetails(order) {
+            const content = document.getElementById('trackingContent');
+            const delivery = order.delivery || {};
+            const date = order.timestamp ? (order.timestamp.toDate ? order.timestamp.toDate().toLocaleString() : new Date(order.timestamp.seconds * 1000).toLocaleString()) : (order.orderDate ? new Date(order.orderDate).toLocaleString() : 'Just now');
+            const itemsList = order.items ? order.items.map(item => `${item.title || 'Product'} (x${item.quantity || 1})`).join('<br>') : 'No items';
+
+            content.innerHTML = `
+                <div class="order-detail-group">
+                    <span class="label">Payment Status</span>
+                    <span class="value" style="color: #28a745; font-weight: 700;">Completed (Ref: ${order.reference || order.id})</span>
+                </div>
+                <div class="order-detail-group">
+                    <span class="label">Delivery Address</span>
+                    <span class="value">${delivery.fullName || delivery.name || 'N/A'}<br>
+                    ${delivery.address || 'No address'}<br>
+                    ${delivery.city || ''}, ${delivery.region || ''}</span>
+                </div>
+                <div class="order-detail-group">
+                    <span class="label">Contact Info</span>
+                    <span class="value">Phone: ${delivery.phone || delivery.phoneNumber || 'N/A'}<br>
+                    WhatsApp: ${delivery.whatsappNumber || 'N/A'}</span>
+                </div>
+                <div class="order-detail-group">
+                    <span class="label">Ordered Items</span>
+                    <span class="value" style="font-size: 12px;">${itemsList}</span>
+                </div>
+                <div class="order-detail-group">
+                    <span class="label">Total Amount</span>
+                    <span class="value" style="font-size: 18px; font-weight: 700;">GHS ${parseFloat(order.total || 0).toFixed(2)}</span>
+                </div>
+                <div class="order-detail-group" style="text-align: right;">
+                    <span class="label">Purchase Date</span>
+                    <span class="value" style="color: #999;">${date}</span>
+                </div>
+            `;
         }
 
         function closeTracking() {
