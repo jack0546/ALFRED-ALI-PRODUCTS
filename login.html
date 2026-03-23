@@ -85,17 +85,9 @@
 
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    // Check for admin redirect (case-insensitive)
-                    if (email.toLowerCase() === 'narhsnazzisco@gmail.com') {
-                        window.location.href = 'admin-dashboard/admin-dashboard.html';
-                        return;
-                    }
-                    // If there's a productId, add to cart first
-                    if (productId) {
-                        // Store the product ID to add after login
-                        sessionStorage.setItem('pendingProductId', productId);
-                    }
-                    window.location.href = redirectUrl;
+                    const user = userCredential.user;
+                    // Save user to Firestore (so admin can see them)
+                    saveUserToFirestore(user);
                 })
                 .catch((error) => {
                     alert('Login failed: ' + error.message);
@@ -107,20 +99,47 @@
             const provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider)
                 .then((result) => {
-                    // Check for admin redirect (case-insensitive)
-                    if (result.user.email.toLowerCase() === 'narhsnazzisco@gmail.com') {
-                        window.location.href = 'admin-dashboard/admin-dashboard.html';
-                        return;
-                    }
-                    // If there's a productId, add to cart first
-                    if (productId) {
-                        sessionStorage.setItem('pendingProductId', productId);
-                    }
-                    window.location.href = redirectUrl;
+                    const user = result.user;
+                    // Save user to Firestore (so admin can see them)
+                    saveUserToFirestore(user);
                 })
                 .catch((error) => {
                     alert('Google sign-in failed: ' + error.message);
                 });
+        }
+
+        // Save/update user in Firestore and redirect
+        function saveUserToFirestore(user) {
+            const isAdmin = user.email && user.email.toLowerCase() === 'narhsnazzisco@gmail.com';
+            const db = firebase.firestore();
+
+            db.collection('users').doc(user.uid).set({
+                name: user.displayName || user.email.split('@')[0],
+                email: user.email,
+                photo: user.photoURL || '',
+                isAdmin: isAdmin,
+                provider: user.providerData[0] ? user.providerData[0].providerId : 'email',
+                lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true })
+            .then(() => {
+                console.log('User saved to Firestore:', user.email);
+                if (isAdmin) {
+                    window.location.href = 'admin-dashboard/admin-dashboard.html';
+                } else {
+                    if (productId) sessionStorage.setItem('pendingProductId', productId);
+                    window.location.href = redirectUrl;
+                }
+            })
+            .catch((error) => {
+                console.error('Error saving user to Firestore:', error);
+                // Still redirect even if Firestore fails
+                if (isAdmin) {
+                    window.location.href = 'admin-dashboard/admin-dashboard.html';
+                } else {
+                    window.location.href = redirectUrl;
+                }
+            });
         }
         
         // Check if there's a pending product to add after login
