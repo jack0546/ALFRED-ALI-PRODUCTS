@@ -156,7 +156,7 @@
                         <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">Delivery Address *</label>
                         <input type="text" id="address" required placeholder="Your delivery address" style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
                     </div>
-                    <button type="button" onclick="alert('Order placed successfully!'); closeDeliveryForm();" style="width: 100%; padding: 15px; background: #0abf53; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;">Place Order</button>
+                    <button type="button" onclick="processPayment()" style="width: 100%; padding: 15px; background: #0abf53; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;">Place Order</button>
                 </form>
             </div>
         </div>
@@ -168,7 +168,17 @@
         function openDeliveryForm(category, title, price, desc, image){
             let p = typeof price === 'string' ? parseFloat(price.replace(/[^0-9.]/g, '')) : price;
             let d = typeof desc !== 'undefined' ? desc : '';
-            window.location.href = 'product.html?title=' + encodeURIComponent(title) + '&price=' + p + '&desc=' + encodeURIComponent(d) + '&image=' + encodeURIComponent(image) + '&category=' + encodeURIComponent(category);
+            currentProduct = { title, price: p, category, desc: d, image };
+            
+            document.getElementById('modalProductImg').src = image;
+            document.getElementById('modalProductTitle').textContent = title;
+            document.getElementById('modalProductPrice').textContent = 'GHS ' + p.toFixed(2);
+            document.getElementById('modalProductDesc').textContent = d;
+            
+            const modal = document.getElementById('deliveryModal');
+            if (modal) {
+                modal.style.display = 'flex';
+            }
         }
         
         function closeDeliveryForm() {
@@ -177,6 +187,63 @@
                 modal.style.display = 'none';
             }
             currentProduct = null;
+        }
+
+        // Process payment with Paystack
+        function processPayment() {
+            const fullName = document.getElementById('fullName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const address = document.getElementById('address').value;
+            
+            if (!fullName || !phoneNumber || !address) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            if (!currentProduct) {
+                alert('No product selected');
+                return;
+            }
+            
+            const priceNum = currentProduct.price || 0;
+            const deliveryInfo = { fullName, phoneNumber, address };
+            localStorage.setItem('tempDeliveryInfo', JSON.stringify(deliveryInfo));
+            
+            // Paystack payment integration
+            const paystack = new PaystackPop();
+            paystack.newTransaction({
+                key: 'pk_live_f89c4456a0860888a7fe1b1451f2808c32493',
+                amount: priceNum * 100,
+                email: 'customer@alfredproducts.com',
+                currency: 'GHS',
+                ref: 'ALF_PACK_' + Math.floor((Math.random() * 1e9) + 1),
+                metadata: {
+                    custom_fields: [
+                        { display_name: 'Customer', variable_name: 'customer_name', value: fullName },
+                        { display_name: 'Phone', variable_name: 'phone', value: phoneNumber },
+                        { display_name: 'Product', variable_name: 'product', value: currentProduct.title },
+                        { display_name: 'Guest ID', variable_name: 'guest_id', value: localStorage.getItem('alfredGuestId') || '' }
+                    ]
+                },
+                callback: function(response) {
+                    console.log('Payment success, ref:', response.reference);
+                    saveOrderToFirestore({
+                        items: [{ title: currentProduct.title, price: priceNum, quantity: 1, image: currentProduct.image || '', category: currentProduct.category || '' }],
+                        total: priceNum.toFixed(2),
+                        reference: response.reference,
+                        delivery: deliveryInfo,
+                        userName: fullName,
+                        status: 'Paid'
+                    });
+                    localStorage.removeItem('tempDeliveryInfo');
+                    alert('Payment successful! Your order has been placed.');
+                    closeDeliveryForm();
+                    window.location.href = 'orders.html';
+                },
+                onClose: function() {
+                    console.log('Payment dialog closed.');
+                }
+            });
         }
 
         function addProductToCart(category, title, price, desc, image) {
