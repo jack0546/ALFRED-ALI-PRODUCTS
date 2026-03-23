@@ -137,18 +137,16 @@
 
             try {
                 // Try to get orders from Firestore
-                let query;
                 if (user) {
                     // Logged in user - get their orders
-                    query = await db.collection("orders").where("userId", "==", user.uid).orderBy("timestamp", "desc").get();
+                    const query = await firebase.firestore().collection("orders").where("userId", "==", user.uid).orderBy("timestamp", "desc").get();
+                    query.forEach((doc) => {
+                        allOrders.push({ id: doc.id, ...doc.data() });
+                    });
                 } else {
-                    // Guest user - get all recent orders (they need to provide info)
-                    query = await db.collection("orders").orderBy("timestamp", "desc").limit(20).get();
+                    // Guest user - don't list from firestore for security
+                    console.log("Guest mode order fetching restricted to local storage.");
                 }
-
-                query.forEach((doc) => {
-                    allOrders.push({ id: doc.id, ...doc.data() });
-                });
             } catch (error) {
                 console.log("Firestore error, trying localStorage:", error);
             }
