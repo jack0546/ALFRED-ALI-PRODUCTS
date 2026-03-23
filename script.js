@@ -317,21 +317,26 @@ function processQuickPayment() {
             const orderData = {
                 items: [{
                     title: currentProduct.title,
-                    price: 'GHS ' + currentProduct.price.toFixed(2),
+                    price: currentProduct.price,
                     image: currentProduct.image,
                     quantity: 1
                 }],
                 total: (currentProduct.price + deliveryFee).toFixed(2),
                 reference: response.reference,
                 delivery: deliveryInfo,
-                status: 'paid',
+                status: 'Paid',
                 orderDate: new Date().toISOString()
             };
 
-            // Save order to localStorage
-            const orders = JSON.parse(localStorage.getItem('alfredOrders') || '[]');
-            orders.unshift(orderData);
-            localStorage.setItem('alfredOrders', JSON.stringify(orders));
+            // Save order to Firestore (this also handles local storage internally)
+            if (typeof saveOrderToFirestore === 'function') {
+                saveOrderToFirestore(orderData);
+            } else {
+                // Fallback: Save to localStorage if function is not defined
+                const orders = JSON.parse(localStorage.getItem('alfredOrders') || '[]');
+                orders.unshift(orderData);
+                localStorage.setItem('alfredOrders', JSON.stringify(orders));
+            }
 
             // Clear cart
             localStorage.removeItem('alfredCart');
@@ -1645,12 +1650,14 @@ function processCartPayment() {
             };
             
             // Save to Firestore
-            if (typeof firebase !== 'undefined') {
+            if (typeof saveOrderToFirestore === 'function') {
+                saveOrderToFirestore(orderData);
+            } else if (typeof firebase !== 'undefined') {
                 const db = firebase.firestore();
                 db.collection('orders').add({
                     ...orderData,
-                    userId: 'guest',
-                    userEmail: phone + '@customer.com',
+                    userId: 'GUEST_' + Date.now(),
+                    userEmail: (orderData.delivery ? orderData.delivery.email : phone + '@customer.com'),
                     userName: fullName,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 }).then(() => {
@@ -1697,6 +1704,10 @@ function addToWishlist(productId) {
 }
 
 // Validate Cart and Pay Function
+function validateAndPay() {
+    validateCartAndPay();
+}
+
 function validateCartAndPay() {
     const form = document.getElementById('deliveryForm');
     if (!form || !form.checkValidity()) {
@@ -1815,7 +1826,7 @@ function saveOrderToFirestore(orderData) {
         
         const orderRecord = {
             ...orderData,
-            userId: user ? user.uid : 'guest',
+            userId: user ? user.uid : 'GUEST_' + Date.now(),
             userEmail: user ? user.email : (orderData.delivery ? orderData.delivery.email : 'customer@alfred.com'),
             userName: orderData.delivery ? (orderData.delivery.fullName || 'Guest') : (user ? user.displayName : 'Guest'),
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -1826,7 +1837,11 @@ function saveOrderToFirestore(orderData) {
         db.collection('orders').add(orderRecord)
         .then((docRef) => {
             console.log('Order saved to Firestore successfully! Doc ID:', docRef.id);
-            alert('Order saved to database!');
+            // Also save locally for guests to see it on refresh
+            if (!user) {
+                saveOrderLocally(orderRecord);
+            }
+            alert('Order placed successfully! Reference: ' + (orderData.reference || docRef.id));
         })
         .catch((error) => {
             console.error('Error saving order to Firestore:', error);
