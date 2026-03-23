@@ -1116,6 +1116,7 @@
                     <td class="py-4 px-4">
                         <div class="flex items-center gap-2">
                             <span class="text-sm text-gray-900 dark:text-gray-200 font-semibold">${escapeHTML(order.userName || 'Guest')}</span>
+                            <span class="text-xs text-gray-400">${escapeHTML(order.userEmail || 'N/A')}</span>
                         </div>
                     </td>
                     <td class="py-4 px-4 text-sm text-gray-600">${itemCount} item${itemCount > 1 ? 's' : ''}</td>
