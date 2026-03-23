@@ -134,21 +134,31 @@
 
             let allOrders = [];
             const user = firebase.auth().currentUser;
+            
+            // Get or create consistent guest ID
+            let guestId = localStorage.getItem('alfredGuestId');
+            if (!guestId) {
+                guestId = 'GUEST_' + Date.now();
+                localStorage.setItem('alfredGuestId', guestId);
+            }
 
             try {
                 // Try to get orders from Firestore
                 if (user) {
-                    // Logged in user - get their orders
+                    // Logged in user - get their orders by userId
                     const query = await firebase.firestore().collection("orders").where("userId", "==", user.uid).orderBy("timestamp", "desc").get();
                     query.forEach((doc) => {
                         allOrders.push({ id: doc.id, ...doc.data() });
                     });
                 } else {
-                    // Guest user - don't list from firestore for security
-                    console.log("Guest mode order fetching restricted to local storage.");
+                    // Guest user - get orders by guest ID
+                    const guestQuery = await firebase.firestore().collection("orders").where("userId", "==", guestId).orderBy("timestamp", "desc").get();
+                    guestQuery.forEach((doc) => {
+                        allOrders.push({ id: doc.id, ...doc.data() });
+                    });
                 }
             } catch (error) {
-                console.log("Firestore error, trying localStorage:", error);
+                console.log("Firestore error, using localStorage:", error);
             }
 
             // Also get orders from localStorage (for guests)
