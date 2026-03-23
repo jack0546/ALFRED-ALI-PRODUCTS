@@ -1,24 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apparel & Accessories - ALFRED PRODUCTS</title>
+    <title>Luggage, Bags & Cases - ALFRED</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0abf53">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="new_logo.png">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="new_logo.png">
     <script src="https://js.paystack.co/v1/inline.js"></script>
-    <script src="script.js"></script>
 </head>
-
 <body>
     <!-- Floating Menu Button -->
     <div class="floating-menu-container">
@@ -50,375 +40,321 @@
         </div>
     </div>
 
-    <header>
+    <!-- Header -->
+    <header class="main-header">
         <div class="container">
-            <div class="header-top" style="padding: 15px 0;">
-                <div class="logo">
-                    <a href="index.html"><img src="new_logo.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="categories.html"><ion-icon name="apps-outline"></ion-icon> All Categories</a></li>
-                        <li><a href="index.html">Home</a></li>
-                    </ul>
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="new_logo.png" alt="ALFRED">
+                    <span>ALFRED</span>
+                </a>
+                <nav class="main-nav">
+                    <a href="index.html"><ion-icon name="home-outline"></ion-icon><span>Home</span></a>
+                    <a href="categories.html"><ion-icon name="apps-outline"></ion-icon><span>Categories</span></a>
+                    <a href="featured.html"><ion-icon name="star-outline"></ion-icon><span>Featured</span></a>
+                    <a href="suppliers.html"><ion-icon name="people-outline"></ion-icon><span>Suppliers</span></a>
+                    <a href="messages.html"><ion-icon name="mail-outline"></ion-icon><span>Messages</span></a>
                 </nav>
+                <div class="header-actions">
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartCount">0</span>
+                    </a>
+                    <a href="#" class="btn" onclick="viewCart(); return false;" style="background:#0abf53;color:white;padding:8px 15px;border-radius:5px;margin-right:5px;">Checkout</a>
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="register.html" class="btn btn-primary">Register</a>
+                </div>
             </div>
         </div>
     </header>
 
-    <main class="container">
-        <!-- EDITABLE CATEGORY HEADER -->
-        <section class="category-hero"
-            style="margin-top: 30px; border-radius: 12px; overflow: hidden; position: relative; height: 300px; background: #eee;">
-            <!-- 1. CHANGE CATEGORY BANNER HERE -->
-            <img src="images/banners/apparel_main.jpg"
-                onerror="this.src='https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=1200'; this.onerror=null;"
-                alt="Apparel & Accessories" style="width: 100%; height: 100%; object-fit: cover;">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <a href="categories.html">Categories</a>
+            <span>/</span>
+            <span>Luggage, Bags & Cases</span>
+        </div>
+    </div>
 
-            <div
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; color: white;">
-                <!-- 2. CHANGE CATEGORY TITLE HERE -->
-                <h1 style="font-size: 36px; font-weight: 800; margin-bottom: 5px;">Apparel & Accessories</h1>
-                <!-- 3. CHANGE CATEGORY DESCRIPTION HERE -->
-                <p style="font-size: 16px; opacity: 0.9;">Directly source high-quality fashion and apparel from verified
-                    manufacturers.</p>
-            </div>
-        </section>
+    <!-- Category Banner -->
+    <section class="category-banner" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center; color: white;">
+        <h1 style="margin: 0 0 10px 0; font-size: 36px;">Luggage, Bags & Cases</h1>
+        <p style="margin: 0; font-size: 18px; opacity: 0.9;">Premium bags from verified manufacturers</p>
+    </section>
 
-        <section class="products" style="margin-top: 50px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                <h2 style="font-size: 20px; font-weight: 800;">Wholesale Product Listings</h2>
-                <div style="font-size: 14px; color: var(--text-muted);">
-                    <a href="categories.html" style="color: var(--primary-color); text-decoration: none;">View all
-                        markets →</a>
-                </div>
-            </div>
-
-            <h2 style="font-size: 20px; font-weight: 800; margin-top: 30px; margin-bottom: 20px;">Clothing</h2>
-            <div class="product-grid modern-grid" style="margin-bottom: 30px;">
-                <div class="product-card" onclick="openDeliveryForm('Apparel', 'Casual T-Shirt', 25.00, 'Cotton casual t-shirt', 'images/SHOE1.jpg')">
-                    <img src="images/SHOE1.jpg" alt="T-Shirt" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Casual T-Shirt</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 25.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Casual T-Shirt', 25.00, 'Cotton casual t-shirt', 'images/SHOE1.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+    <!-- Products -->
+    <main class="container" style="padding: 40px 20px;">
+        <div class="product-grid modern-grid" style="margin-bottom: 30px;">
+                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
+                    onclick="openDeliveryForm('Bags', 'Designer Bag', 150.00, 'Genuine leather bag', 'images/BAG1.jpg')">
+                    <img src="images/BAG1.jpg" alt="Leather Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Designer Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$150.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Bags', 'Designer Bag', 150.00, 'Genuine leather bag', 'images/BAG1.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Denim Jeans', 55.00, 'Classic denim jeans', 'images/SHOE2.jpg')">
-                    <img src="images/SHOE2.jpg" alt="Jeans" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Denim Jeans</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 55.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Denim Jeans', 55.00, 'Classic denim jeans', 'images/SHOE2.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Bags', 'Travel Backpack', 85.00, 'Durable travel backpack', 'images/BAG2.jpg')">
+                    <img src="images/BAG2.jpg" alt="Backpack" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Travel Backpack</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$85.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Bags', 'Travel Backpack', 85.00, 'Durable travel backpack', 'images/BAG2.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Summer Dress', 45.00, 'Light summer dress', 'images/SHOE3.jpg')">
-                    <img src="images/SHOE3.jpg" alt="Dress" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Summer Dress</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 45.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Summer Dress', 45.00, 'Light summer dress', 'images/SHOE3.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Bags', 'Fashion Handbag', 95.00, 'Elegant handbag', 'images/BAG3.jpg')">
+                    <img src="images/BAG3.jpg" alt="Handbag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Fashion Handbag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$95.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Bags', 'Fashion Handbag', 95.00, 'Elegant handbag', 'images/BAG3.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Hoodie', 38.00, 'Warm cotton hoodie', 'images/SHOE4.jpg')">
-                    <img src="images/SHOE4.jpg" alt="Hoodie" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Hoodie</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 38.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Hoodie', 38.00, 'Warm cotton hoodie', 'images/SHOE4.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Polo Shirt', 28.00, 'Classic polo shirt', 'images/SHOE5.jpg')">
-                    <img src="images/SHOE5.jpg" alt="Polo Shirt" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Polo Shirt</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Polo Shirt', 28.00, 'Classic polo shirt', 'images/SHOE5.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Bags', 'Gym Bag', 55.00, 'Sports gym bag', 'images/BAG4.jpg')">
+                    <img src="images/BAG4.jpg" alt="Gym Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Gym Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$55.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Bags', 'Gym Bag', 55.00, 'Sports gym bag', 'images/BAG4.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Jacket', 75.00, 'Winter jacket', 'images/SHOE6.jpg')">
-                    <img src="images/SHOE6.jpg" alt="Jacket" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Jacket</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 75.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Jacket', 75.00, 'Winter jacket', 'images/SHOE6.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Shorts', 22.00, 'Casual shorts', 'images/SHOE7.jpg')">
-                    <img src="images/SHOE7.jpg" alt="Shorts" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Shorts</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
+                    onclick="openDeliveryForm('Bags', 'Laptop Bag', 45.00, 'Padded laptop bag', 'images/BAG5.jpg')">
+                    <img src="images/BAG5.jpg" alt="Laptop Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Laptop Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$45.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Bags', 'Laptop Bag', 45.00, 'Padded laptop bag', 'images/BAG5.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Sweater', 42.00, 'Wool blend sweater', 'images/SHOE8.jpg')">
-                    <img src="images/SHOE8.jpg" alt="Sweater" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Sweater</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 42.00</p>
-                    </div>
-                </div>
-            </div>
-
-            <h2 style="font-size: 20px; font-weight: 800; margin-top: 30px; margin-bottom: 20px;">Footwear</h2>
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Running Shoes', 65.00, 'Professional running shoes', 'images/SHOE1.jpg')">
-                    <img src="images/SHOE1.jpg" alt="Running Shoes"
-                        style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Running Shoes</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 65.00</p>
+                    onclick="openDeliveryForm('Bags', 'Wallet', 25.00, 'Leather wallet', 'images/BAG6.jpg')">
+                    <img src="images/BAG6.jpg" alt="Wallet" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Wallet</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$25.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Casual Sneakers', 48.00, 'Comfortable casual sneakers', 'images/SHOE2.jpg')">
-                    <img src="images/SHOE2.jpg" alt="Sneakers" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Casual Sneakers</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 48.00</p>
+                    onclick="openDeliveryForm('Bags', 'Clutch Bag', 35.00, 'Evening clutch bag', 'images/BAG7.jpg')">
+                    <img src="images/BAG7.jpg" alt="Clutch Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Clutch Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$35.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Leather Boots', 85.00, 'Genuine leather boots', 'images/SHOE3.jpg')">
-                    <img src="images/SHOE3.jpg" alt="Leather Boots"
-                        style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Leather Boots</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 85.00</p>
+                    onclick="openDeliveryForm('Bags', 'Messenger Bag', 55.00, 'Classic messenger bag', 'images/BAG8.jpg')">
+                    <img src="images/BAG8.jpg" alt="Messenger Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Messenger Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$55.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Sandals', 25.00, 'Summer sandals', 'images/SHOE5.jpg')">
-                    <img src="images/SHOE5.jpg" alt="Sandals" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Sandals</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 25.00</p>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Formal Shoes', 72.00, 'Business formal shoes', 'images/SHOE6.jpg')">
-                    <img src="images/SHOE6.jpg" alt="Formal Shoes"
-                        style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Formal Shoes</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 72.00</p>
+                    onclick="openDeliveryForm('Bags', 'Duffle Bag', 65.00, 'Large duffle bag', 'images/BAG9.jpg')">
+                    <img src="images/BAG9.jpg" alt="Duffle Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Duffle Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$65.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Loafers', 58.00, 'Classic leather loafers', 'images/SHOE7.jpg')">
-                    <img src="images/SHOE7.jpg" alt="Loafers" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Loafers</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 58.00</p>
+                    onclick="openDeliveryForm('Bags', 'Cosmetic Bag', 22.00, 'Makeup cosmetic bag', 'images/BAG10.jpg')">
+                    <img src="images/BAG10.jpg" alt="Cosmetic Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Cosmetic Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$22.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Heels', 45.00, 'Fashion heels', 'images/SHOE8.jpg')">
-                    <img src="images/SHOE8.jpg" alt="Heels" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Heels</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 45.00</p>
+                    onclick="openDeliveryForm('Bags', 'Canvas Bag', 28.00, 'Durable canvas bag', 'images/BAG11.jpg')">
+                    <img src="images/BAG11.jpg" alt="Canvas Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Canvas Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$28.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Flats', 32.00, 'Comfortable flats', 'images/SHOE9.jpg')">
-                    <img src="images/SHOE9.jpg" alt="Flats" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Flats</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 32.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Flats', 32.00, 'Comfortable flats', 'images/SHOE9.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <h2 style="font-size: 20px; font-weight: 800; margin-top: 30px; margin-bottom: 20px;">Accessories</h2>
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Watch', 120.00, 'Classic wrist watch', 'images/SHOE10.jpg')">
-                    <img src="images/SHOE10.jpg" alt="Watch" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Watch</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 120.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Watch', 120.00, 'Classic wrist watch', 'images/SHOE10.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Bags', 'Shopping Bag', 15.00, 'Reusable shopping bag', 'images/BAG12.jpg')">
+                    <img src="images/BAG12.jpg" alt="Shopping Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Shopping Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$15.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Sunglasses', 35.00, 'UV protection sunglasses', 'images/SHOE11.jpg')">
-                    <img src="images/SHOE11.jpg" alt="Sunglasses"
-                        style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Sunglasses</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 35.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Sunglasses', 35.00, 'UV protection sunglasses', 'images/SHOE11.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Kids Backpack', 'Bags', 32.00, 'Colorful kids backpack', 'images/BAG14.jpg')">
+                    <img src="images/BAG14.jpg" alt="Kids Backpack" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Kids Backpack</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$32.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Belt', 28.00, 'Leather belt', 'images/SHOE12.jpg')">
-                    <img src="images/SHOE12.jpg" alt="Belt" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Belt</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Belt', 28.00, 'Leather belt', 'images/SHOE12.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Briefcase', 'Bags', 75.00, 'Leather briefcase', 'images/BAG15.jpg')">
+                    <img src="images/BAG15.jpg" alt="Briefcase" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Briefcase</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$75.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Hat', 18.00, 'Fashion hat', 'images/SHOE13.jpg')">
-                    <img src="images/SHOE13.jpg" alt="Hat" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Hat</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 18.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Hat', 18.00, 'Fashion hat', 'images/SHOE13.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Scarf', 22.00, 'Winter scarf', 'images/SHOE14.jpg')">
-                    <img src="images/SHOE14.jpg" alt="Scarf" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Scarf</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Scarf', 22.00, 'Winter scarf', 'images/SHOE14.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Waist Bag', 'Bags', 18.00, 'Fashion waist bag', 'images/BAG16.jpg')">
+                    <img src="images/BAG16.jpg" alt="Waist Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Waist Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$18.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Gloves', 15.00, 'Winter gloves', 'images/SHOE15.jpg')">
-                    <img src="images/SHOE15.jpg" alt="Gloves" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Gloves</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 15.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Gloves', 15.00, 'Winter gloves', 'images/SHOE15.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Cooler Bag', 'Bags', 35.00, 'Insulated cooler bag', 'images/BAG17.jpg')">
+                    <img src="images/BAG17.jpg" alt="Cooler Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Cooler Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$35.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Handbag', 65.00, 'Leather handbag', 'images/SHOE16.jpg')">
-                    <img src="images/SHOE16.jpg" alt="Handbag" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Handbag</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 65.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Handbag', 65.00, 'Leather handbag', 'images/SHOE16.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Camera Bag', 'Bags', 45.00, 'Padded camera bag', 'images/BAG19.jpg')">
+                    <img src="images/BAG19.jpg" alt="Camera Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Camera Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$45.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Wallet', 32.00, 'Leather wallet', 'images/SHOE17.jpg')">
-                    <img src="images/SHOE17.jpg" alt="Wallet" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Wallet</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 32.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Wallet', 32.00, 'Leather wallet', 'images/SHOE17.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <h2 style="font-size: 20px; font-weight: 800; margin-top: 30px; margin-bottom: 20px;">More Products</h2>
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Backpack', 45.00, 'Travel backpack', 'images/SHOE18.jpg')">
-                    <img src="images/SHOE18.jpg" alt="Backpack" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Backpack</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 45.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Backpack', 45.00, 'Travel backpack', 'images/SHOE18.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Travel Bag', 'Bags', 68.00, 'Large travel bag', 'images/BAG20.jpg')">
+                    <img src="images/BAG20.jpg" alt="Travel Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Travel Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$68.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Tie', 18.00, 'Silk tie', 'images/SHOE19.jpg')">
-                    <img src="images/SHOE19.jpg" alt="Tie" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Tie</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 18.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Tie', 18.00, 'Silk tie', 'images/SHOE19.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Bags', 'Hiking Backpack', 78.00, 'Outdoor hiking backpack', 'images/BAG21.jpg')">
+                    <img src="images/BAG21.jpg" alt="Hiking Backpack" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Hiking Backpack</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$78.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Bags', 'Hiking Backpack', 78.00, 'Outdoor hiking backpack', 'images/BAG21.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Bow Tie', 15.00, 'Formal bow tie', 'images/SHOE20.jpg')">
-                    <img src="images/SHOE20.jpg" alt="Bow Tie" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Bow Tie</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 15.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Bow Tie', 15.00, 'Formal bow tie', 'images/SHOE20.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Bags', 'School Bag', 32.00, 'School backpack', 'images/BAG22.jpg')">
+                    <img src="images/BAG22.jpg" alt="School Bag" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">School Bag</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$32.00</p>
+                        <button onclick="event.stopPropagation(); addProductToCart('Bags', 'School Bag', 32.00, 'School backpack', 'images/BAG22.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Pocket Square', 12.00, 'Silk pocket square', 'images/SHOE21.jpg')">
-                    <img src="images/SHOE21.jpg" alt="Pocket Square"
-                        style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Pocket Square</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 12.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Pocket Square', 12.00, 'Silk pocket square', 'images/SHOE21.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Earrings', 22.00, 'Fashion earrings', 'images/SHOE22.jpg')">
-                    <img src="images/SHOE22.jpg" alt="Earrings" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Earrings</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Earrings', 22.00, 'Fashion earrings', 'images/SHOE22.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Suitcase', 'Bags', 95.00, 'Hard shell suitcase', 'images/BAG30.jpg')">
+                    <img src="images/BAG30.jpg" alt="Suitcase" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Suitcase</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$95.00</p>
                     </div>
                 </div>
                 <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Necklace', 35.00, 'Fashion necklace', 'images/SHOE23.jpg')">
-                    <img src="images/SHOE23.jpg" alt="Necklace" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Necklace</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 35.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Necklace', 35.00, 'Fashion necklace', 'images/SHOE23.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
+                    onclick="openDeliveryForm('Luggage Set', 'Bags', 180.00, 'Complete luggage set', 'images/BAGS26.jpg')">
+                    <img src="images/BAGS26.jpg" alt="Luggage Set" style="width: 100%; height: 150px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 14px;">Luggage Set</h4>
+                        <p style="margin: 0; color: #4CAF50; font-weight: bold;">$180.00</p>
                     </div>
                 </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Bracelet', 18.00, 'Fashion bracelet', 'images/SHOE24.jpg')">
-                    <img src="images/SHOE24.jpg" alt="Bracelet" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Bracelet</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 18.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Bracelet', 18.00, 'Fashion bracelet', 'images/SHOE24.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Apparel', 'Ring', 28.00, 'Fashion ring', 'images/SHOE25.jpg')">
-                    <img src="images/SHOE25.jpg" alt="Ring" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Ring</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Apparel', 'Ring', 28.00, 'Fashion ring', 'images/SHOE25.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-grid" id="productGrid">
-            </div>
-        </section>
+        </div>
     </main>
 
-    <footer style="margin-top: 100px;">
-        <div class="container" style="text-align: center; border-top: 1px solid #eee; padding: 40px 0;">
-            <p style="color: grey; font-size: 13px;">&copy; 2026 ALFRED PRODUCTS. Global Trade Starts Here.</p>
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ALFRED</h4>
+                    <p>Your trusted B2B marketplace for global trade.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="about.html">About Us</a>
+                    <a href="help.html">Help Center</a>
+                    <a href="trade.html">Trade Assurance</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: support@alfred.com</p>
+                    <p>Phone: +1 234 567 890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ALFRED. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);">
+        <div style="background-color:#fefefe;margin:5% auto;padding:20px;border:1px solid #888;width:90%;max-width:600px;border-radius:10px;max-height:80vh;overflow-y:auto;">
+            <span onclick="closeCartModal()" style="float:right;font-size:28px;font-weight:bold;cursor:pointer;">&times;</span>
+            <h2>Your Cart</h2>
+            <div id="cartItems"></div>
+            <div style="margin-top:20px;border-top:2px solid #eee;padding-top:15px;">
+                <h3>Total: GHS <span id="cartTotal">0.00</span></h3>
+                <p style="color:#666;">Delivery Fee: GHS <span id="deliveryFee">0.00</span></p>
+                <p style="font-weight:bold;color:#0abf53;">Grand Total: GHS <span id="grandTotal">0.00</span></p>
+            </div>
+            <button onclick="checkoutCart()" style="width:100%;padding:15px;background:#0abf53;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;margin-top:15px;">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Delivery Form Modal -->
+    <div id="deliveryModal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);">
+        <div style="background-color:#fefefe;margin:5% auto;padding:25px;border:1px solid #888;width:90%;max-width:500px;border-radius:10px;">
+            <span onclick="closeDeliveryModal()" style="float:right;font-size:28px;font-weight:bold;cursor:pointer;">&times;</span>
+            <h2>Delivery Information</h2>
+            <form id="deliveryForm" onsubmit="handleFormSubmit(event)">
+                <input type="hidden" id="productCategory">
+                <input type="hidden" id="productTitle">
+                <input type="hidden" id="productPrice">
+                <input type="hidden" id="productDescription">
+                <input type="hidden" id="productImage">
+                <div style="margin-bottom:15px;">
+                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Full Name</label>
+                    <input type="text" id="fullName" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Phone Number</label>
+                    <input type="tel" id="phoneNumber" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Delivery Address</label>
+                    <textarea id="deliveryAddress" required rows="3" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;"></textarea>
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Quantity</label>
+                    <input type="number" id="quantity" value="1" min="1" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Product</label>
+                    <div id="modalProductInfo" style="background:#f9f9f9;padding:10px;border-radius:5px;"></div>
+                </div>
+                <button type="submit" style="width:100%;padding:15px;background:#0abf53;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;">Make Payment</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>
         // Floating Menu Functions
         function toggleFloatingMenu() {
@@ -475,5 +411,4 @@
         });
     </script>
 </body>
-
 </html>
