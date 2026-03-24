@@ -330,23 +330,34 @@ function processQuickPayment() {
 
             // Save order to Firestore (this also handles local storage internally)
             if (typeof saveOrderToFirestore === 'function') {
-                saveOrderToFirestore(orderData);
+                saveOrderToFirestore(orderData)
+                    .then(function(docId) {
+                        console.log('Order saved to Firestore with ID:', docId);
+                        localStorage.removeItem('alfredCart');
+                        localStorage.removeItem('quickDeliveryInfo');
+                        closeDeliveryForm();
+                        alert('Payment Successful! Your order has been placed.\nReference: ' + response.reference);
+                        window.location.href = 'orders.html';
+                    })
+                    .catch(function(error) {
+                        console.error('Failed to save order to Firestore:', error);
+                        localStorage.removeItem('alfredCart');
+                        localStorage.removeItem('quickDeliveryInfo');
+                        closeDeliveryForm();
+                        alert('Payment Successful! Order saved locally.\nReference: ' + response.reference);
+                        window.location.href = 'orders.html';
+                    });
             } else {
                 // Fallback: Save to localStorage if function is not defined
                 const orders = JSON.parse(localStorage.getItem('alfredOrders') || '[]');
                 orders.unshift(orderData);
                 localStorage.setItem('alfredOrders', JSON.stringify(orders));
+                localStorage.removeItem('alfredCart');
+                localStorage.removeItem('quickDeliveryInfo');
+                closeDeliveryForm();
+                alert('Payment Successful! Your order has been placed.\nReference: ' + response.reference);
+                window.location.href = 'orders.html';
             }
-
-            // Clear cart
-            localStorage.removeItem('alfredCart');
-            localStorage.removeItem('quickDeliveryInfo');
-
-            closeDeliveryForm();
-
-            // Show success message and redirect
-            alert('Payment Successful! Your order has been placed.\nReference: ' + response.reference);
-            window.location.href = 'orders.html';
         },
         onClose: function () {
             alert('Payment cancelled. You can try again when ready.');
@@ -1760,16 +1771,28 @@ function payWithPaystack() {
         },
         callback: function (response) {
             console.log('Paystack payment success, ref:', response.reference);
-            saveOrderToFirestore({
+            
+            const orderData = {
                 items: [{ title: product.title, price: priceNum, quantity: 1, image: product.image || '', category: product.category || '' }],
                 total: priceNum.toFixed(2),
                 reference: response.reference,
                 delivery: deliveryInfo,
                 userName: deliveryInfo.fullName,
                 status: 'Paid'
-            });
-            localStorage.removeItem('tempDeliveryInfo');
-            setTimeout(function() { window.location.href = 'orders.html'; }, 1500);
+            };
+            
+            // Wait for Firestore save to complete before redirecting
+            saveOrderToFirestore(orderData)
+                .then(function(docId) {
+                    console.log('Order saved to Firestore with ID:', docId);
+                    localStorage.removeItem('tempDeliveryInfo');
+                    window.location.href = 'orders.html';
+                })
+                .catch(function(error) {
+                    console.error('Failed to save order to Firestore:', error);
+                    localStorage.removeItem('tempDeliveryInfo');
+                    window.location.href = 'orders.html';
+                });
         },
         onClose: function() {
             console.log('Payment dialog closed.');
