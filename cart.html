@@ -226,17 +226,29 @@
                     alert('Payment Successful! Reference: ' + res.reference);
                     
                     const cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
-                    saveOrderToFirestore({
+                    const orderData = {
                         items: cart,
                         total: total,
                         reference: res.reference,
                         delivery: deliveryInfo,
-                        status: 'pending'
-                    });
-
-                    localStorage.removeItem('alfredCart');
-                    localStorage.removeItem('tempDeliveryInfo');
-                    window.location.href = 'orders.html';
+                        status: 'Paid'
+                    };
+                    
+                    // Save to Firestore and wait for it to complete before redirecting
+                    saveOrderToFirestore(orderData)
+                        .then(function(docId) {
+                            console.log('Order saved to Firestore with ID:', docId);
+                            localStorage.removeItem('alfredCart');
+                            localStorage.removeItem('tempDeliveryInfo');
+                            window.location.href = 'orders.html';
+                        })
+                        .catch(function(error) {
+                            console.error('Failed to save order to Firestore:', error);
+                            alert('Order saved locally. It will sync when connected.');
+                            localStorage.removeItem('alfredCart');
+                            localStorage.removeItem('tempDeliveryInfo');
+                            window.location.href = 'orders.html';
+                        });
                 }
             });
             handler.openIframe();
