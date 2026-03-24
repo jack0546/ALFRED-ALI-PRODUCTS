@@ -526,20 +526,35 @@
                     alert('Payment Successful! Reference: ' + res.reference);
                     
                     const cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
-                    saveOrderToFirestore({
+                    const orderData = {
                         items: cart,
                         total: total,
                         reference: res.reference,
                         delivery: deliveryInfo,
-                        status: 'pending'
-                    });
+                        status: 'Paid'
+                    };
                     
-                    localStorage.removeItem('alfredCart');
-                    localStorage.removeItem('tempDeliveryInfo');
-                    updateCartBadge();
-                    updateCartSummary();
-                    closeCheckout();
-                    window.location.href = 'orders.html';
+                    // Save to Firestore and wait for it to complete before redirecting
+                    saveOrderToFirestore(orderData)
+                        .then(function(docId) {
+                            console.log('Order saved to Firestore with ID:', docId);
+                            localStorage.removeItem('alfredCart');
+                            localStorage.removeItem('tempDeliveryInfo');
+                            updateCartBadge();
+                            updateCartSummary();
+                            closeCheckout();
+                            window.location.href = 'orders.html';
+                        })
+                        .catch(function(error) {
+                            console.error('Failed to save order to Firestore:', error);
+                            localStorage.removeItem('alfredCart');
+                            localStorage.removeItem('tempDeliveryInfo');
+                            updateCartBadge();
+                            updateCartSummary();
+                            closeCheckout();
+                            alert('Order saved locally. It will sync when connected.');
+                            window.location.href = 'orders.html';
+                        });
                 }
             });
             handler.openIframe();
