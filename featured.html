@@ -186,18 +186,32 @@
                 },
                 callback: function(response) {
                     console.log('Payment success, ref:', response.reference);
-                    saveOrderToFirestore({
+                    
+                    const orderData = {
                         items: [{ title: currentProduct.title, price: priceNum, quantity: 1, image: currentProduct.image || '', category: currentProduct.category || '' }],
                         total: priceNum.toFixed(2),
                         reference: response.reference,
                         delivery: deliveryInfo,
                         userName: fullName,
                         status: 'Paid'
-                    });
-                    localStorage.removeItem('tempDeliveryInfo');
-                    alert('Payment successful! Your order has been placed.');
-                    closeDeliveryForm();
-                    window.location.href = 'orders.html';
+                    };
+                    
+                    // Save to Firestore and wait for it to complete before redirecting
+                    saveOrderToFirestore(orderData)
+                        .then(function(docId) {
+                            console.log('Order saved to Firestore with ID:', docId);
+                            localStorage.removeItem('tempDeliveryInfo');
+                            alert('Payment successful! Your order has been placed.');
+                            closeDeliveryForm();
+                            window.location.href = 'orders.html';
+                        })
+                        .catch(function(error) {
+                            console.error('Failed to save order to Firestore:', error);
+                            localStorage.removeItem('tempDeliveryInfo');
+                            alert('Payment successful! Order saved locally.');
+                            closeDeliveryForm();
+                            window.location.href = 'orders.html';
+                        });
                 },
                 onClose: function() {
                     console.log('Payment dialog closed.');
