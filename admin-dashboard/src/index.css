@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :root {
+        --primary-50: #f0f9ff;
+        --primary-100: #e0f2fe;
+        --primary-200: #bae6fd;
+        --primary-300: #7dd3fc;
+        --primary-400: #38bdf8;
+        --primary-500: #0ea5e9;
+        --primary-600: #0284c7;
+        --primary-700: #0369a1;
+        --primary-800: #075985;
+        --primary-900: #0c4a6e;
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -55,7 +70,7 @@ body {
 }
 
 .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700;
+    @apply bg-primary-600 text-white hover:bg-primary-700 shadow-sm;
 }
 
 .btn-secondary {
@@ -124,4 +139,156 @@ body {
 
 .modal-content {
     @apply bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto;
+}
+
+/* Custom gradient backgrounds */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-700) 100%);
+}
+
+/* Glass effect */
+.glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+/* Animated gradient background */
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+}
+
+/* Pulse animation for notifications */
+@keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.pulse-ring::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: inherit;
+    animation: pulse-ring 1.5s ease-out infinite;
+}
+
+/* Stagger animation delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* Skeleton loading */
+.skeleton {
+    @apply bg-gray-200 rounded animate-pulse;
+}
+
+/* Focus ring utility */
+.focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+}
+
+/* Text gradient */
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Custom checkbox */
+.custom-checkbox {
+    @apply w-4 h-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500;
+}
+
+/* Notification dot */
+.notification-dot {
+    @apply absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white;
+}
+
+/* Card shadow */
+.shadow-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-card-hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Smooth shadow on hover */
+.group-hover:shadow-card-hover {
+    transition: box-shadow 0.2s ease;
+}
+
+/* Table row hover animation */
+.table-row-hover {
+    @apply transition-colors duration-150;
+}
+
+.table-row-hover:hover {
+    @apply bg-gray-50;
+}
+
+/* Status indicator pulse */
+.status-pulse {
+    @apply relative;
+}
+
+.status-pulse::after {
+    content: '';
+    @apply absolute inset-0 rounded-full bg-current animate-ping opacity-75;
+}
+
+/* Progress bar animation */
+@keyframes progress {
+    0% { width: 0%; }
+    100% { width: var(--progress-width); }
+}
+
+.animate-progress {
+    animation: progress 1s ease-out forwards;
+}
+
+/* Tooltip styles */
+.tooltip {
+    @apply absolute z-50 px-2 py-1 text-xs text-white bg-gray-900 rounded;
+    transform: translateX(-50%);
+}
+
+.tooltip::before {
+    content: '';
+    @apply absolute -bottom-1 left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900;
+}
+
+/* Toggle switch */
+.toggle {
+    @apply relative inline-flex h-6 w-11 items-center rounded-full transition-colors;
+}
+
+.toggle::after {
+    @apply inline-block h-4 w-4 transform rounded-full bg-white transition-transform content-[''];
+}
+
+.toggle-checked {
+    @apply bg-primary-600;
+}
+
+.toggle-checked::after {
+    @apply translate-x-6;
+}
+
+.toggle-not-checked {
+    @apply bg-gray-200;
+}
+
+.toggle-not-checked::after {
+    @apply translate-x-1;
 }
