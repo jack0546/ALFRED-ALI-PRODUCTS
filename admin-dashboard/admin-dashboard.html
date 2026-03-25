@@ -253,7 +253,7 @@
     </div>
 
     <!-- Firebase Config - Use the actual config file -->
-    <script src="../../firebase-config.js"></script>
+    <script src="../firebase-config.js"></script>
     <script>
         // Check if Firebase is loaded
         document.addEventListener('DOMContentLoaded', function () {
@@ -265,52 +265,56 @@
             } else {
                 // Check auth state
                 firebase.auth().onAuthStateChanged(function (user) {
+                    // Always hide loading screen first
+                    var loadingScreen = document.getElementById('loading-screen');
+                    if (loadingScreen) loadingScreen.classList.add('hidden');
+                    
                     if (user) {
                         // SECURE: Check admin status using Custom Claims first
                         checkAdminStatus(user).then(async function(isAdminClaim) {
                             // If Custom Claims says admin, allow access
                             if (isAdminClaim) {
-                                var ls1 = document.getElementById('loading-screen');
-                                if (ls1) ls1.classList.add('hidden');
                                 showDashboard();
-                                return;
-                            }
-                            // Fallback: Check Firestore user document
-                            var isAdminFirestore = await checkAdminFromFirestore(user);
-                            if (isAdminFirestore) {
-                                var ls2 = document.getElementById('loading-screen');
-                                if (ls2) ls2.classList.add('hidden');
-                                showDashboard();
+                                
+                                // Check for Dashboard PIN Lock after successful auth
+                                firebase.firestore().collection('admins').doc('config').get().then(doc => {
+                                    if (doc.exists && doc.data().dashboardPIN) {
+                                        window.storedDashPIN = doc.data().dashboardPIN;
+                                        document.getElementById('pin-lock-overlay').classList.remove('hidden');
+                                    }
+                                });
+                                
+                                loadAdminProfileData(user.uid);
                             } else {
-                                var ls3 = document.getElementById('loading-screen');
-                                var lm = document.getElementById('login-modal');
-                                if (ls3) ls3.classList.add('hidden');
-                                if (lm) lm.classList.remove('hidden');
-                            }
-                        });
-                        var ls = document.getElementById('loading-screen');
-                        if (ls) ls.classList.add('hidden');
-                            
-                            // Check for Dashboard PIN Lock
-                            firebase.firestore().collection('admins').doc('config').get().then(doc => {
-                                if (doc.exists && doc.data().dashboardPIN) {
-                                    window.storedDashPIN = doc.data().dashboardPIN;
-                                    document.getElementById('pin-lock-overlay').classList.remove('hidden');
+                                // Fallback: Check Firestore user document
+                                var isAdminFirestore = await checkAdminFromFirestore(user);
+                                if (isAdminFirestore) {
+                                    showDashboard();
+                                    
+                                    // Check for Dashboard PIN Lock after successful auth
+                                    firebase.firestore().collection('admins').doc('config').get().then(doc => {
+                                        if (doc.exists && doc.data().dashboardPIN) {
+                                            window.storedDashPIN = doc.data().dashboardPIN;
+                                            document.getElementById('pin-lock-overlay').classList.remove('hidden');
+                                        }
+                                    });
+                                    
+                                    loadAdminProfileData(user.uid);
+                                } else {
+                                    // Not an admin - show login modal
+                                    var lm = document.getElementById('login-modal');
+                                    if (lm) lm.classList.remove('hidden');
                                 }
-                            });
-
-                            loadAdminProfileData(user.uid);
-                        } else {
-                            alert('Access denied. Only admin can access this dashboard.');
-                            firebase.auth().signOut().then(() => {
-                                window.location.href = '../index.html';
-                            });
-                        }
+                            }
+                        }).catch(function(error) {
+                            console.error('Admin check error:', error);
+                            var lm = document.getElementById('login-modal');
+                            if (lm) lm.classList.remove('hidden');
+                        });
                     } else {
-                        var loadingScreen = document.getElementById('loading-screen');
+                        // No user signed in - show login modal
                         var loginModal = document.getElementById('login-modal');
-                        if (loadingScreen) { loadingScreen.classList.add('hidden'); }
-                        if (loginModal) { loginModal.classList.remove('hidden'); }
+                        if (loginModal) loginModal.classList.remove('hidden');
                     }
                 });
             }
@@ -980,6 +984,11 @@
             }
         }
 
+        // Show dashboard - called after successful admin auth
+        function showDashboard() {
+            navigate('dashboard');
+        }
+
         // Modal functions
         function openModal(modalId) {
             document.getElementById('modal-' + modalId).classList.remove('hidden');
@@ -989,7 +998,7 @@
         }
 
         // Load orders from Firestore and localStorage
-    // Security: Escape HTML to prevent XSS
+        // Security: Escape HTML to prevent XSS
     function escapeHTML(str) {
         if (str === undefined || str === null) return '';
         return String(str)
