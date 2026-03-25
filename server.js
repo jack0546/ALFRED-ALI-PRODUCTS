@@ -1,11 +1,95 @@
 const express = require('express');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Rate limiting configuration
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: 'Too many requests from this IP, please try again later.',
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+// Apply rate limiting to all API routes
+app.use('/api/', limiter);
 
 // Middleware
 app.use(express.static(path.join(__dirname, './')));
 app.use(express.json());
+
+// Security Headers Middleware
+app.use((req, res, next) => {
+    // Content Security Policy - prevents XSS by controlling resource loading
+    res.setHeader('Content-Security-Policy', 
+        "default-src 'self'; " +
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.gstatic.com https://js.paystack.co https://cdn.tailwindcss.com https://cdn.jsdelivr.net; " +
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+        "font-src 'self' https://fonts.gstatic.com; " +
+        "img-src 'self' data: https: blob:; " +
+        "connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://api.paystack.co; " +
+        "frame-ancestors 'none';"
+    );
+    
+    // X-Content-Type-Options - prevents MIME type sniffing
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    
+    // X-Frame-Options - prevents clickjacking
+    res.setHeader('X-Frame-Options', 'DENY');
+    
+    // X-XSS-Protection - legacy browser XSS filtering
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    
+    // Referrer Policy - controls referrer information
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    // Permissions Policy - controls browser features
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    
+    // Strict-Transport-Security (HSTS) - enforces HTTPS
+    // Note: Only enable in production after testing
+    if (process.env.NODE_ENV === 'production') {
+        res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    }
+    
+    next();
+});
+
+// HTTPS enforcement middleware (for production)
+// Note: In production, configure behind a load balancer or reverse proxy
+app.use((req, res, next) => {
+    // Skip HTTPS redirect for localhost development
+    if (req.hostname === 'localhost' || req.hostname === '127.0.0.1') {
+        return next();
+    }
+    
+    // Check if request is already HTTPS
+    if (req.get('X-Forwarded-Proto') === 'https' || req.protocol === 'https') {
+        return next();
+    }
+    
+    // Redirect to HTTPS
+    res.redirect('https://' + req.hostname + req.url);
+});
+
+// Input sanitization middleware
+app.use((req, res, next) => {
+    // Sanitize URL parameters to prevent XSS
+    if (req.query) {
+        for (const key in req.query) {
+            if (typeof req.query[key] === 'string') {
+                // Remove script tags and event handlers
+                req.query[key] = req.query[key]
+                    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                    .replace(/on\w+="[^"]*"/gi, '')
+                    .replace(/on\w+='[^']*'/gi, '');
+            }
+        }
+    }
+    next();
+});
 
 // Product Generation Logic (Moved from Frontend)
 const categoryData = {
@@ -122,15 +206,31 @@ for (let i = 1; i <= 800; i++) {
 
 // API Endpoints
 app.get('/api/products', (req, res) => {
-    const { category, limit } = req.query;
+    const { category, limit, minPrice, maxPrice } = req.query;
     let results = catalog;
     
     if (category) {
         results = results.filter(p => p.category === category);
     }
     
+    // Server-side price validation - prevent manipulated prices
+    if (minPrice || maxPrice) {
+        results = results.filter(p => {
+            // Extract price number from price string (e.g., "GHS 120.00 - GHS 200.00" -> 120)
+            const priceMatch = p.price.match(/GHS\s*([\d.]+)/);
+            if (!priceMatch) return true;
+            
+            const price = parseFloat(priceMatch[1]);
+            if (minPrice && price < parseFloat(minPrice)) return false;
+            if (maxPrice && price > parseFloat(maxPrice)) return false;
+            return true;
+        });
+    }
+    
     if (limit) {
-        results = results.slice(0, parseInt(limit));
+        const parsedLimit = parseInt(limit);
+        // Limit max results to prevent abuse
+        results = results.slice(0, Math.min(parsedLimit, 100));
     }
     
     res.json(results);
@@ -142,10 +242,35 @@ app.get('/api/products/:id', (req, res) => {
     res.json(product);
 });
 
-// Fallback for HTML pages
+// Fallback for HTML pages - with path traversal protection
 app.get('*', (req, res) => {
-    const filePath = path.join(__dirname, req.path.endsWith('.html') ? req.path : req.path + '.html');
-    res.sendFile(filePath);
+    let requestedPath = req.path;
+    
+    // Prevent path traversal attacks
+    if (requestedPath.includes('..') || requestedPath.includes('\\')) {
+        return res.status(403).json({ message: 'Access denied' });
+    }
+    
+    // Only allow access to files in the allowed list
+    const allowedExtensions = ['.html', '.js', '.css', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.json', '.ico'];
+    const fileExt = path.extname(requestedPath).toLowerCase();
+    
+    if (!allowedExtensions.includes(fileExt)) {
+        return res.status(403).json({ message: 'File type not allowed' });
+    }
+    
+    const filePath = path.join(__dirname, requestedPath.endsWith('.html') ? requestedPath : requestedPath + '.html');
+    
+    // Ensure the resolved path is within the project directory
+    if (!filePath.startsWith(__dirname)) {
+        return res.status(403).json({ message: 'Access denied' });
+    }
+    
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            res.status(404).json({ message: 'File not found' });
+        }
+    });
 });
 
 app.listen(PORT, () => {
