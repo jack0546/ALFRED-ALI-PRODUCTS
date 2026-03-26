@@ -4,23 +4,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beauty - ALFRED PRODUCTS</title>
+    <title>Beauty - ALFRED</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0abf53">
+    <meta name="theme-color" content="#FF6B35">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="new_logo.png">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="firebase-config.js"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="script.js"></script>
 </head>
 
 <body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="new_logo.png" alt="ALFRED">
+                    </a>
+                </div>
+                
+                <div class="search-container" style="flex: 1; max-width: 500px; margin: 0 30px;">
+                    <input type="text" placeholder="Search for products..." id="searchInput">
+                    <button onclick="performSearch()">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </button>
+                </div>
+                
+                <div class="header-actions">
+                    <a href="cart.html" class="action-item">
+                        <ion-icon name="cart-outline"></ion-icon>
+                        <span>Cart</span>
+                        <span id="cartBadge" style="display: none; background: #FF477E; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px;">0</span>
+                    </a>
+                    <a href="login.html" class="action-item">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <span>Sign In</span>
+                    </a>
+                </div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="categories.html">All Categories</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="featured.html">Featured</a></li>
+                    <li><a href="bags.html">Bags & Luggage</a></li>
+                    <li><a href="shoes.html">Shoes</a></li>
+                    <li><a href="electronics.html">Electronics</a></li>
+                    <li><a href="apparel.html">Apparel</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <a href="categories.html">Categories</a>
+            <span>/</span>
+            <span style="color: #FF6B35;">Beauty</span>
+        </div>
+
+        <!-- Category Banner -->
+        <section class="category-banner" style="background: url('images/SPRAY1.jpg'); background-size: cover; background-position: center;">
+            <h1>Beauty & Personal Care</h1>
+            <p>Premium beauty products for every style</p>
+        </section>
+
+        <!-- Products -->
+        <section class="products-section">
+            <h2 class="section-title">
+                <ion-icon name="sparkles-outline"></ion-icon>
+                Shop Beauty Products
+            </h2>
+            
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card" onclick="openDeliveryForm('Beauty', 'Luxury Skincare Set', 320.00, 'Complete skincare set includes cleanser, toner, serum, and moisturizer. Natural ingredients suitable for all skin types. Brightening and anti-aging properties. Features: Complete set, All skin types, Natural ingredients, Anti-aging.', 'images/SPRAY1.jpg')">
+                    <span class="badge">Best Seller</span>
+                    <div class="image-container">
+                        <img src="images/SPRAY1.jpg" alt="Skincare Set">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Luxury Skincare Set - Complete Care</h4>
+                        <div class="price">GHS 320.00 <span class="original-price">GHS 640.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.9 (412)</span>
+                        </div>
+                        <div class="sales">2,156 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Beauty', 'Luxury Skincare Set', 320.00, 'Complete skincare set', 'images/SPRAY1.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" onclick="openDeliveryForm('Beauty', 'Designer Perfume Set', 275.00, 'Elegant designer perfume set with 3 fragrances. Long-lasting scent. Beautiful packaging perfect for gifting. Features: 3 fragrances, Long lasting, Gift ready, Designer quality.', 'images/SPRAY2.jpg')">
+                    <span class="badge">-30%</span>
+                    <div class="image-container">
+                        <img src="images/SPRAY2.jpg" alt="Perfume Set">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Designer Perfume Gift Set</h4>
+                        <div class="price">GHS 275.00 <span class="original-price">GHS 450.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.8 (287)</span>
+                        </div>
+                        <div class="sales">1,089 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Beauty', 'Designer Perfume Set', 275.00, 'Designer perfume set', 'images/SPRAY2.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" onclick="openDeliveryForm('Beauty', 'Makeup Palette Set', 245.00, 'Professional makeup palette with 12 colors. Perfect for day and night looks. High pigmentation. Features: 12 colors, Professional, High pigmentation, Day & night.', 'images/SPRAY3.jpg')">
+                    <span class="badge">New</span>
+                    <div class="image-container">
+                        <img src="images/SPRAY3.jpg" alt="Makeup Palette">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Professional Makeup Palette</h4>
+                        <div class="price">GHS 245.00 <span class="original-price">GHS 420.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.7 (198)</span>
+                        </div>
+                        <div class="sales">567 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Beauty', 'Makeup Palette Set', 245.00, 'Professional makeup palette', 'images/SPRAY3.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" onclick="openDeliveryForm('Beauty', 'Hair Care Set', 195.00, 'Complete hair care set with shampoo, conditioner, and treatment. Strengthening and nourishing. Features: Shampoo & conditioner, Strengthening, Nourishing, For all hair types.', 'images/image1.jpg')">
+                    <div class="image-container">
+                        <img src="images/image1.jpg" alt="Hair Care Set">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Complete Hair Care Set</h4>
+                        <div class="price">GHS 195.00 <span class="original-price">GHS 320.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.6 (234)</span>
+                        </div>
+                        <div class="sales">678 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Beauty', 'Hair Care Set', 195.00, 'Complete hair care set', 'images/image1.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" onclick="openDeliveryForm('Beauty', 'Lipstick Collection', 145.00, 'Set of 6 premium lipsticks with different shades. Long-lasting, moisturizing formula. Features: 6 shades, Long lasting, Moisturizing, Premium quality.', 'images/image2.jpg')">
+                    <span class="badge">-40%</span>
+                    <div class="image-container">
+                        <img src="images/image2.jpg" alt="Lipstick Set">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Premium Lipstick Collection</h4>
+                        <div class="price">GHS 145.00 <span class="original-price">GHS 240.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.5 (345)</span>
+                        </div>
+                        <div class="sales">890 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Beauty', 'Lipstick Collection', 145.00, '6-piece lipstick set', 'images/image2.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" onclick="openDeliveryForm('Beauty', 'Face Mask Set', 125.00, 'Pack of 10 face masks for different skin needs. Hydrating, brightening, and soothing. Features: 10 masks, Multiple benefits, For all skin types, Weekly use.', 'images/image3.jpg')">
+                    <span class="badge">Trending</span>
+                    <div class="image-container">
+                        <img src="images/image3.jpg" alt="Face Masks">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Face Mask Collection (10pcs)</h4>
+                        <div class="price">GHS 125.00 <span class="original-price">GHS 200.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.7 (456)</span>
+                        </div>
+                        <div class="sales">1,234 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Beauty', 'Face Mask Set', 125.00, '10 face masks', 'images/image3.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card" onclick="openDeliveryForm('Beauty', 'Nail Polish Set', 95.00, 'Set of 12 nail polishes in trending colors. Quick dry, long-lasting. Features: 12 colors, Quick dry, Long lasting, Trendy shades.', 'images/image4.jpg')">
+                    <span class="badge">Best Value</span>
+                    <div class="image-container">
+                        <img src="images/image4.jpg" alt="Nail Polish Set">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">12-Piece Nail Polish Set</h4>
+                        <div class="price">GHS 95.00 <span class="original-price">GHS 160.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.4 (289)</span>
+                        </div>
+                        <div class="sales">567 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Beauty', 'Nail Polish Set', 95.00, '12 nail polishes', 'images/image4.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card" onclick="openDeliveryForm('Beauty', 'Electric Facial Cleanser', 265.00, 'Rechargeable electric facial cleanser. Deep cleansing, gentle on skin. Multiple speed settings. Features: Rechargeable, Deep cleansing, Multiple speeds, Gentle on skin.', 'images/image5.jpg')">
+                    <span class="badge">-25%</span>
+                    <div class="image-container">
+                        <img src="images/image5.jpg" alt="Facial Cleanser">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Electric Facial Cleanser</h4>
+                        <div class="price">GHS 265.00 <span class="original-price">GHS 350.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.6 (178)</span>
+                        </div>
+                        <div class="sales">345 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Beauty', 'Electric Facial Cleanser', 265.00, 'Electric facial cleanser', 'images/image5.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 9 -->
+                <div class="product-card" onclick="openDeliveryForm('Beauty', 'Eye Cream Set', 185.00, 'Anti-aging eye cream set. Reduces dark circles and puffiness. Moisturizing formula. Features: Anti-aging, Dark circles, Puffiness, Moisturizing.', 'images/image6.jpg')">
+                    <div class="image-container">
+                        <img src="images/image6.jpg" alt="Eye Cream">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Anti-Aging Eye Cream Set</h4>
+                        <div class="price">GHS 185.00 <span class="original-price">GHS 280.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.5 (123)</span>
+                        </div>
+                        <div class="sales">234 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Beauty', 'Eye Cream Set', 185.00, 'Anti-aging eye cream', 'images/image6.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 10 -->
+                <div class="product-card" onclick="openDeliveryForm('Beauty', 'Body Lotion Set', 165.00, 'Set of 3 body lotions with different scents. Deep moisturizing, smooth skin. Features: 3 bottles, Deep moisturizing, Smooth skin, Different scents.', 'images/image7.jpg')">
+                    <span class="badge">Set</span>
+                    <div class="image-container">
+                        <img src="images/image7.jpg" alt="Body Lotion Set">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Body Lotion Set (3 Bottles)</h4>
+                        <div class="price">GHS 165.00 <span class="original-price">GHS 260.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.6 (267)</span>
+                        </div>
+                        <div class="sales">567 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Beauty', 'Body Lotion Set', 165.00, '3 body lotions', 'images/image7.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary" id="cartSummaryContainer" style="display: none;">
+            <h3><ion-icon name="cart-outline"></ion-icon> Your Shopping Cart</h3>
+            <div class="summary-row">
+                <span>Total Items:</span>
+                <span id="cartItemCount">0</span>
+            </div>
+            <div class="total-row">
+                <span class="label">Total Amount:</span>
+                <span class="amount" id="cartTotalAmount">GHS 0.00</span>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="openCheckout()">
+                <ion-icon name="card-outline"></ion-icon> Proceed to Checkout
+            </button>
+        </div>
+
+        <div class="empty-state" id="emptyCartMsg" style="display: none;">
+            <ion-icon name="cart-outline"></ion-icon>
+            <h3>Your cart is empty</h3>
+            <p>Add some products to get started!</p>
+        </div>
+    </main>
+
     <!-- Floating Menu Button -->
     <div class="floating-menu-container">
         <button class="floating-menu-btn" onclick="toggleFloatingMenu()">
@@ -31,415 +318,213 @@
                 <ion-icon name="person-outline"></ion-icon>
                 <span>Sign In</span>
             </a>
-            <a href="messages.html" class="floating-menu-item">
-                <ion-icon name="mail-outline"></ion-icon>
-                <span>Messages</span>
-            </a>
-            <div class="floating-menu-item floating-orders-btn" onclick="toggleOrdersSection()">
+            <a href="cart.html" class="floating-menu-item">
                 <ion-icon name="cart-outline"></ion-icon>
+                <span>Cart</span>
+            </a>
+            <a href="orders.html" class="floating-menu-item">
+                <ion-icon name="bag-handle-outline"></ion-icon>
                 <span>Orders</span>
-                <ion-icon name="chevron-down-outline" class="orders-chevron"></ion-icon>
+            </a>
+        </div>
+    </div>
+
+    <!-- Checkout Modal with Delivery Form -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-content" style="max-width: 550px;">
+            <div class="modal-header">
+                <h3><ion-icon name="cart-outline"></ion-icon> Checkout</h3>
+                <button class="modal-close" onclick="closeCheckout()">&times;</button>
             </div>
-            <div class="floating-orders-section" id="floatingOrdersSection">
-                <div id="floatingOrdersList">
-                    <div style="padding: 15px; text-align: center; color: #999; font-size: 13px;">
-                        <ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>
-                        No Order
+            <div class="modal-body">
+                <div style="max-height: 150px; overflow-y: auto; margin-bottom: 16px; border: 1px solid #eee; border-radius: 8px; padding: 10px;">
+                    <div id="checkoutCartItems"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 12px; background: #FFF5F2; border-radius: 8px; margin-bottom: 20px;">
+                    <span style="font-weight: 600;">Total:</span>
+                    <span id="checkoutTotalAmount" style="font-size: 20px; font-weight: 700; color: #FF6B35;">GHS 0.00</span>
+                </div>
+                <form id="checkoutDeliveryForm" class="delivery-form">
+                    <h4 style="margin-bottom: 16px; font-size: 16px;"><ion-icon name="location-outline"></ion-icon> Delivery Information</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="checkoutFullName" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" id="checkoutPhone" required placeholder="e.g., 0241234567">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp Number (Optional)</label>
+                        <input type="tel" id="checkoutWhatsapp" placeholder="e.g., 0241234567">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Region *</label>
+                            <select id="checkoutRegion" required>
+                                <option value="">Select Region</option>
+                                <option value="Greater Accra">Greater Accra</option>
+                                <option value="Ashanti">Ashanti</option>
+                                <option value="Central">Central</option>
+                                <option value="Eastern">Eastern</option>
+                                <option value="Western">Western</option>
+                                <option value="Volta">Volta</option>
+                                <option value="Northern">Northern</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>City/Town *</label>
+                            <input type="text" id="checkoutCity" required placeholder="Enter city or town">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Address *</label>
+                        <textarea id="checkoutAddress" required placeholder="Enter detailed delivery address or nearest landmark" style="height: 80px;"></textarea>
+                    </div>
+                    <button type="button" class="form-submit-btn" onclick="processCheckout()">
+                        <ion-icon name="lock-closed-outline"></ion-icon> Pay Now with Paystack
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Landing Page (Inline) -->
+    <div class="product-landing-page" id="productDetailPage" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 2000; overflow-y: auto;">
+        <div class="container" style="padding: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px; padding: 16px 0; font-size: 14px;">
+                <a href="index.html" style="color: #666; text-decoration: none;">Home</a><span>/</span>
+                <a href="beauty.html" style="color: #666; text-decoration: none;">Beauty</a><span>/</span>
+                <span id="detailBreadcrumb" style="color: #FF6B35;">Product</span>
+            </div>
+            <button onclick="closeProductDetail()" style="position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%; border: none; background: #f8f8f8; font-size: 24px; cursor: pointer; z-index: 2001;">&times;</button>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px;">
+                <div style="border-radius: 16px; overflow: hidden; background: #f8f8f8;">
+                    <img id="detailImage" src="" alt="Product" style="width: 100%; height: 400px; object-fit: cover;">
+                </div>
+                <div>
+                    <h1 id="detailTitle" style="font-size: 24px; font-weight: 700; margin-bottom: 16px;">Product Title</h1>
+                    <div style="font-size: 32px; font-weight: 800; color: #FF6B35; margin-bottom: 12px;">
+                        <span id="detailPrice">GHS 0.00</span>
+                        <span id="detailOriginal" style="font-size: 18px; color: #999; text-decoration: line-through; margin-left: 12px; font-weight: 400;"></span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                        <div style="display: flex; gap: 2px;"><ion-icon name="star" style="color: #FFDC00;"></ion-icon><ion-icon name="star" style="color: #FFDC00;"></ion-icon><ion-icon name="star" style="color: #FFDC00;"></ion-icon><ion-icon name="star" style="color: #FFDC00;"></ion-icon><ion-icon name="star-half" style="color: #FFDC00;"></ion-icon></div>
+                        <span id="detailRating" style="color: #666; font-size: 14px;">4.8 reviews</span>
+                    </div>
+                    <div id="detailDescription" style="color: #666; line-height: 1.8; padding: 20px; background: #f8f8f8; border-radius: 12px; margin-bottom: 24px;">Description...</div>
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                        <label style="font-weight: 600;">Quantity:</label>
+                        <div style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 8px;">
+                            <button onclick="detailChangeQty(-1)" style="width: 44px; height: 44px; border: none; background: #f8f8f8; font-size: 20px; cursor: pointer;">-</button>
+                            <input type="number" id="detailQuantity" value="1" min="1" style="width: 70px; height: 44px; border: none; text-align: center;">
+                            <button onclick="detailChangeQty(1)" style="width: 44px; height: 44px; border: none; background: #f8f8f8; font-size: 20px; cursor: pointer;">+</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button onclick="addFromDetail()" style="flex: 1; padding: 18px; background: linear-gradient(135deg, #FF6B35, #E55A2B); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;"><ion-icon name="cart-outline"></ion-icon> Add to Cart</button>
+                        <button onclick="buyFromDetail()" style="flex: 1; padding: 18px; background: #1a1a1a; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;"><ion-icon name="flash-outline"></ion-icon> Buy Now</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <header>
-        <div class="container">
-            <div class="header-top" style="padding: 15px 0;">
-                <div class="logo">
-                    <a href="index.html"><img src="new_logo.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a>
+    <!-- Quick View Modal -->
+    <div class="modal-overlay" id="deliveryModal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3><ion-icon name="information-circle-outline"></ion-icon> Product Details</h3>
+                <button class="modal-close" onclick="closeDeliveryForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
+                    <img id="modalProductImg" src="" alt="Product" style="width: 100px; height: 100px; object-fit: cover; border-radius: 10px;">
+                    <div>
+                        <h4 id="modalProductTitle" style="font-size: 16px; margin-bottom: 8px;">Product Title</h4>
+                        <div id="modalProductPrice" style="font-size: 22px; font-weight: 700; color: #FF6B35; margin-bottom: 8px;">GHS 0.00</div>
+                        <p id="modalProductDesc" style="font-size: 13px; color: #666;">Description</p>
+                    </div>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a href="categories.html"><ion-icon name="apps-outline"></ion-icon> All Categories</a></li>
-                        <li><a href="index.html">Home</a></li>
-                    </ul>
-                </nav>
-                <div class="header-actions">
-                    <a href="#" onclick="viewCart(); return false;" style="background:#0abf53;color:white;padding:8px 15px;border-radius:5px;margin-right:10px;text-decoration:none;">Checkout</a>
-                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="addCurrentProductToCart()">
+                    <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                </button>
             </div>
         </div>
-    </header>
+    </div>
 
-    <main class="container">
-        <!-- EDITABLE CATEGORY HEADER -->
-        <section class="category-hero"
-            style="margin-top: 30px; border-radius: 12px; overflow: hidden; position: relative; height: 300px; background: #eee;">
-            <!-- 1. CHANGE CATEGORY BANNER HERE -->
-            <img src="images/image1.jpg" alt="Beauty & Personal Care"
-                style="width: 100%; height: 100%; object-fit: cover;">
-
-            <div
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; color: white;">
-                <!-- 2. CHANGE CATEGORY TITLE HERE -->
-                <h1 style="font-size: 36px; font-weight: 800; margin-bottom: 5px;">Beauty & Personal Care</h1>
-                <!-- 3. CHANGE CATEGORY DESCRIPTION HERE -->
-                <p style="font-size: 16px; opacity: 0.9;">Source premium cosmetics and personal care products for your
-                    business.</p>
-            </div>
-        </section>
-
-        <section class="products" style="margin-top: 50px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                <h2 style="font-size: 20px; font-weight: 800;">Wholesale Product Listings</h2>
-                <div style="font-size: 14px; color: var(--text-muted);">
-                    <a href="categories.html" style="color: var(--primary-color); text-decoration: none;">View all
-                        markets →</a>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                    </ul>
                 </div>
-            </div>
-
-            <!-- Beauty Products Grid -->
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Skincare Set', 85.00, 'Complete skincare routine set', 'images/image1.jpg')">
-                    <img src="images/image1.jpg" alt="Skincare" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Skincare Set</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 85.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Beauty', 'Skincare Set', 85.00, 'Complete skincare routine set', 'images/image1.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
+                <div class="footer-column">
+                    <h4>About ALFRED</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
                 </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Makeup Kit', 120.00, 'Professional makeup kit', 'images/image2.jpg')">
-                    <img src="images/image2.jpg" alt="Makeup" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Makeup Kit</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 120.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Beauty', 'Makeup Kit', 120.00, 'Professional makeup kit', 'images/image2.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
+                <div class="footer-column">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="categories.html">All Categories</a></li>
+                        <li><a href="featured.html">Featured Products</a></li>
+                        <li><a href="suppliers.html">Suppliers</a></li>
+                    </ul>
                 </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Hair Care', 65.00, 'Premium hair care products', 'images/image3.jpg')">
-                    <img src="images/image3.jpg" alt="Hair Care" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Hair Care Products</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 65.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Beauty', 'Hair Care', 65.00, 'Premium hair care products', 'images/image3.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Perfume Set', 95.00, 'Luxury fragrance set', 'images/image4.jpg')">
-                    <img src="images/image4.jpg" alt="Perfume" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Perfume Set</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 95.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Beauty', 'Perfume Set', 95.00, 'Luxury fragrance set', 'images/image4.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><a href="messages.html">Messages</a></li>
+                        <li><a href="#">WhatsApp: +233 000 000000</a></li>
+                        <li><a href="#">Email: support@alfred.com</a></li>
+                    </ul>
                 </div>
             </div>
-
-            <h2 style="font-size: 20px; font-weight: 800; margin-top: 30px; margin-bottom: 20px;">Skincare Products</h2>
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Face Cream', 45.00, 'Moisturizing face cream', 'images/image5.jpg')">
-                    <img src="images/image5.jpg" alt="Face Cream"
-                        style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Face Cream</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 45.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Sunscreen', 35.00, 'SPF 50 sunscreen', 'images/image6.jpg')">
-                    <img src="images/image6.jpg" alt="Sunscreen" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Sunscreen</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 35.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Lipstick Set', 28.00, 'Lipstick collection', 'images/image7.jpg')">
-                    <img src="images/image7.jpg" alt="Lipstick" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Lipstick Set</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Nail Polish', 18.00, 'nail polish set', 'images/image8.jpg')">
-                    <img src="images/image8.jpg" alt="Nail Polish"
-                        style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Nail Polish Set</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 18.00</p>
-                    </div>
-                </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024-2026 Alfred Products. All rights reserved.</p>
             </div>
-
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Face Mask', 22.00, ' sheet masks pack', 'images/image9.jpg')">
-                    <img src="images/image9.jpg" alt="Face Mask" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Face Mask Pack</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Eye Cream', 38.00, 'Anti-aging eye cream', 'images/image10.jpg')">
-                    <img src="images/image10.jpg" alt="Eye Cream"
-                        style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Eye Cream</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 38.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Body Lotion', 32.00, 'Moisturizing body lotion', 'images/image11.jpg')">
-                    <img src="images/image11.jpg" alt="Body Lotion"
-                        style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Body Lotion</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 32.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Shampoo', 25.00, 'Premium shampoo', 'images/image12.jpg')">
-                    <img src="images/image12.jpg" alt="Shampoo" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Shampoo</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 25.00</p>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Conditioner', 22.00, 'Hair conditioner', 'images/image13.jpg')">
-                    <img src="images/image13.jpg" alt="Conditioner"
-                        style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Conditioner</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Serum', 48.00, 'Vitamin C serum', 'images/test.jpg')">
-                    <img src="images/test.jpg" alt="Serum" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Vitamin C Serum</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 48.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Facial Cleanser', 28.00, 'Gentle facial cleanser', 'images/SPRAY1.jpg')">
-                    <img src="images/SPRAY1.jpg" alt="Cleanser" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Facial Cleanser</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Toner', 22.00, 'Skin toner', 'images/SPRAY2.jpg')">
-                    <img src="images/SPRAY2.jpg" alt="Toner" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Skin Toner</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Foundation', 35.00, 'Liquid foundation', 'images/SPRAY3.jpg')">
-                    <img src="images/SPRAY3.jpg" alt="Foundation"
-                        style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Foundation</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 35.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Mascara', 25.00, 'Volume mascara', 'images/SPRAY1.jpg')">
-                    <img src="images/SPRAY1.jpg" alt="Mascara" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Mascara</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 25.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Eyeliner', 18.00, 'Liquid eyeliner', 'images/SPRAY2.jpg')">
-                    <img src="images/SPRAY2.jpg" alt="Eyeliner" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Eyeliner</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 18.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Blush', 22.00, 'Powder blush', 'images/SPRAY3.jpg')">
-                    <img src="images/SPRAY3.jpg" alt="Blush" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Blush</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 22.00</p>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Compact Powder', 20.00, 'Compact powder', 'images/image1.jpg')">
-                    <img src="images/image1.jpg" alt="Powder" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Compact Powder</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 20.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Primer', 32.00, 'Face primer', 'images/image2.jpg')">
-                    <img src="images/image2.jpg" alt="Primer" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Face Primer</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 32.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Highlighter', 28.00, 'Face highlighter', 'images/image3.jpg')">
-                    <img src="images/image3.jpg" alt="Highlighter" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Highlighter</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 28.00</p>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Beauty', 'Contour Kit', 42.00, 'Contouring kit', 'images/image4.jpg')">
-                    <img src="images/image4.jpg" alt="Contour Kit" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Contour Kit</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 42.00</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-grid" id="productGrid">
-                <!-- script.js will load beauty by cat=beauty -->
-            </div>
-        </section>
-    </main>
-
-    <footer style="margin-top: 100px;">
-        <div class="container" style="text-align: center; border-top: 1px solid #eee; padding: 40px 0;">
-            <p style="color: grey; font-size: 13px;">&copy; 2026 ALFRED PRODUCTS. Global Trade Starts Here.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
-
-    <!-- Cart Modal -->
-    <div id="cartModal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);">
-        <div style="background-color:#fefefe;margin:5% auto;padding:20px;border:1px solid #888;width:90%;max-width:600px;border-radius:10px;max-height:80vh;overflow-y:auto;">
-            <span onclick="closeCartModal()" style="float:right;font-size:28px;font-weight:bold;cursor:pointer;">&times;</span>
-            <h2>Your Cart</h2>
-            <div id="cartItems"></div>
-            <div style="margin-top:20px;border-top:2px solid #eee;padding-top:15px;">
-                <h3>Total: GHS <span id="cartTotal">0.00</span></h3>
-                <p style="color:#666;">Delivery Fee: GHS <span id="deliveryFee">0.00</span></p>
-                <p style="font-weight:bold;color:#0abf53;">Grand Total: GHS <span id="grandTotal">0.00</span></p>
-            </div>
-            <button onclick="checkoutCart()" style="width:100%;padding:15px;background:#0abf53;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;margin-top:15px;">Proceed to Checkout</button>
-        </div>
-    </div>
-
-    <!-- Delivery Form Modal -->
-    <div id="deliveryModal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);">
-        <div style="background-color:#fefefe;margin:5% auto;padding:25px;border:1px solid #888;width:90%;max-width:500px;border-radius:10px;">
-            <span onclick="closeDeliveryModal()" style="float:right;font-size:28px;font-weight:bold;cursor:pointer;">&times;</span>
-            <h2>Delivery Information</h2>
-            <form id="deliveryForm" onsubmit="handleFormSubmit(event)">
-                <input type="hidden" id="productCategory">
-                <input type="hidden" id="productTitle">
-                <input type="hidden" id="productPrice">
-                <input type="hidden" id="productDescription">
-                <input type="hidden" id="productImage">
-                <div style="margin-bottom:15px;">
-                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Full Name</label>
-                    <input type="text" id="fullName" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
-                </div>
-                <div style="margin-bottom:15px;">
-                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Phone Number</label>
-                    <input type="tel" id="phoneNumber" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
-                </div>
-                <div style="margin-bottom:15px;">
-                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Delivery Address</label>
-                    <textarea id="deliveryAddress" required rows="3" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;"></textarea>
-                </div>
-                <div style="margin-bottom:15px;">
-                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Quantity</label>
-                    <input type="number" id="quantity" value="1" min="1" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;">
-                </div>
-                <div style="margin-bottom:15px;">
-                    <label style="display:block;margin-bottom:5px;font-weight:bold;">Product</label>
-                    <div id="modalProductInfo" style="background:#f9f9f9;padding:10px;border-radius:5px;"></div>
-                </div>
-                <button type="submit" style="width:100%;padding:15px;background:#0abf53;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;">Make Payment</button>
-            </form>
-        </div>
-    </div>
-    
-    <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>
-        // Floating Menu Functions
-        function toggleFloatingMenu() {
-            const menu = document.getElementById('floatingMenu');
-            menu.classList.toggle('active');
+        function toggleFloatingMenu() { document.getElementById('floatingMenu').classList.toggle('active'); }
+        function updateCartBadge() { let cart = JSON.parse(localStorage.getItem('alfredCart')) || []; const badge = document.getElementById('cartBadge'); if (badge) { badge.textContent = cart.length; badge.style.display = cart.length > 0 ? 'inline-block' : 'none'; } }
+        function updateCartSummary() { let cart = JSON.parse(localStorage.getItem('alfredCart')) || []; const summaryContainer = document.getElementById('cartSummaryContainer'); const emptyMsg = document.getElementById('emptyCartMsg'); if (cart.length === 0) { if (summaryContainer) summaryContainer.style.display = 'none'; if (emptyMsg) emptyMsg.style.display = 'block'; return; } if (summaryContainer) summaryContainer.style.display = 'block'; if (emptyMsg) emptyMsg.style.display = 'none'; let total = 0; cart.forEach(item => { const price = parseFloat(item.price.replace('GHS', '').replace(/,/g, '').trim()); total += price * item.quantity; }); document.getElementById('cartItemCount').textContent = cart.length + ' item(s)'; document.getElementById('cartTotalAmount').textContent = 'GHS ' + total.toFixed(2); }
+        function addProductToCart(category, title, price, desc, image) { let cart = JSON.parse(localStorage.getItem('alfredCart')) || []; const priceStr = 'GHS ' + parseFloat(price).toFixed(2); cart.push({ category, title, price: priceStr, description: desc, image, quantity: 1 }); localStorage.setItem('alfredCart', JSON.stringify(cart)); updateCartBadge(); updateCartSummary(); alert('Product added to cart!'); }
+        let currentProduct = null;
+        function openDeliveryForm(category, title, price, desc, image) {
+            currentProduct = { category, title, price, desc, image };
+            document.getElementById('detailImage').src = image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZTIeMmUzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzk5OSI+UHJvZHVjdCBJbWFnZTwvdGV4dD48L3N2Zz4=';
+            document.getElementById('detailTitle').textContent = title;
+            document.getElementById('detailPrice').textContent = 'GHS ' + parseFloat(price).toFixed(2);
+            document.getElementById('detailOriginal').textContent = 'GHS ' + (parseFloat(price) * 1.5).toFixed(2);
+            document.getElementById('detailDescription').textContent = desc;
+            document.getElementById('detailBreadcrumb').textContent = title.substring(0, 30) + '...';
+            document.getElementById('detailQuantity').value = 1;
+            document.getElementById('productDetailPage').style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
-        
-        function toggleOrdersSection() {
-            const section = document.getElementById('floatingOrdersSection');
-            const chevron = section.previousElementSibling.querySelector('.orders-chevron');
-            section.classList.toggle('active');
-            chevron.classList.toggle('rotated');
-            
-            if (typeof firebase !== 'undefined' && firebase.auth()) {
-                firebase.auth().onAuthStateChanged((user) => {
-                    if (user) {
-                        loadFloatingOrders(user.uid);
-                    }
-                });
-            }
-        }
-        
-        function loadFloatingOrders(uid) {
-            const container = document.getElementById('floatingOrdersList');
-            if (typeof db !== 'undefined') {
-                db.collection("orders").where("userId", "==", uid).orderBy("timestamp", "desc").limit(5).get()
-                    .then((querySnapshot) => {
-                        if (querySnapshot.empty) {
-                            container.innerHTML = '<div style="padding: 15px; text-align: center; color: #999; font-size: 13px;"><ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>No Order</div>';
-                            return;
-                        }
-                        let ordersHTML = '';
-                        querySnapshot.forEach((doc) => {
-                            const order = doc.data();
-                            const firstItem = order.items[0];
-                            ordersHTML += '<a href="orders.html" class="floating-order-item"><img src="' + (firstItem.image || 'new_logo.png') + '" alt="Product" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;"><div style="flex: 1; overflow: hidden;"><p style="font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + firstItem.title + '</p><p style="font-size: 11px; color: #999;">' + order.items.length + ' item(s) • GHS ' + parseFloat(order.total).toFixed(2) + '</p></div></a>';
-                        });
-                        container.innerHTML = ordersHTML;
-                    })
-                    .catch((error) => {
-                        container.innerHTML = '<div style="padding: 15px; text-align: center; color: #999; font-size: 13px;"><ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>No Order</div>';
-                    });
-            } else {
-                container.innerHTML = '<div style="padding: 15px; text-align: center; color: #999; font-size: 13px;"><ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>No Order</div>';
-            }
-        }
-        
-        document.addEventListener('click', function(e) {
-            const menuContainer = document.querySelector('.floating-menu-container');
-            const menu = document.getElementById('floatingMenu');
-            if (menuContainer && !menuContainer.contains(e.target)) {
-                menu.classList.remove('active');
-            }
-        });
+        function closeProductDetail() { document.getElementById('productDetailPage').style.display = 'none'; document.body.style.overflow = 'auto'; currentProduct = null; }
+        function detailChangeQty(delta) { const input = document.getElementById('detailQuantity'); let val = parseInt(input.value) + delta; if (val < 1) val = 1; input.value = val; }
+        function addFromDetail() { if (currentProduct) { const qty = parseInt(document.getElementById('detailQuantity').value) || 1; for (let i = 0; i < qty; i++) { addProductToCart(currentProduct.category, currentProduct.title, currentProduct.price, currentProduct.desc, currentProduct.image); } alert('Added to cart!'); } }
+        function buyFromDetail() { if (currentProduct) { const qty = parseInt(document.getElementById('detailQuantity').value) || 1; localStorage.setItem('alfredCart', JSON.stringify([])); for (let i = 0; i < qty; i++) { addProductToCart(currentProduct.category, currentProduct.title, currentProduct.price, currentProduct.desc, currentProduct.image); } window.location.href = 'cart.html'; } }
+        function closeDeliveryForm() { document.getElementById('deliveryModal').classList.remove('active'); currentProduct = null; }
+        function addCurrentProductToCart() { if (currentProduct) { addProductToCart(currentProduct.category, currentProduct.title, currentProduct.price, currentProduct.desc, currentProduct.image); closeDeliveryForm(); } }
+        function openCheckout() { let cart = JSON.parse(localStorage.getItem('alfredCart')) || []; if (cart.length === 0) { alert('Your cart is empty!'); return; } const cartItemsContainer = document.getElementById('checkoutCartItems'); let total = 0; cartItemsContainer.innerHTML = ''; cart.forEach((item) => { const price = parseFloat(item.price.replace('GHS', '').replace(/,/g, '').trim()); total += price * item.quantity; const itemDiv = document.createElement('div'); itemDiv.style.cssText = 'display: flex; align-items: center; gap: 12px; padding: 10px; border-bottom: 1px solid #eee;'; itemDiv.innerHTML = `<img src="${item.image}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;"><div style="flex: 1;"><p style="margin: 0; font-size: 13px; font-weight: 600;">${item.title}</p><p style="margin: 0; font-size: 12px; color: #666;">${item.price} x ${item.quantity}</p></div><p style="margin: 0; font-weight: 700; color: #FF6B35;">GHS ${(price * item.quantity).toFixed(2)}</p>`; cartItemsContainer.appendChild(itemDiv); }); document.getElementById('checkoutTotalAmount').textContent = 'GHS ' + total.toFixed(2); localStorage.setItem('cartTotal', total.toFixed(2)); document.getElementById('checkoutModal').classList.add('active'); }
+        function closeCheckout() { document.getElementById('checkoutModal').classList.remove('active'); }
+        function processCheckout() { const form = document.getElementById('checkoutDeliveryForm'); if (!form.checkValidity()) { form.reportValidity(); return; } const deliveryInfo = { fullName: document.getElementById('checkoutFullName').value, phoneNumber: document.getElementById('checkoutPhone').value, whatsappNumber: document.getElementById('checkoutWhatsapp').value || 'N/A', region: document.getElementById('checkoutRegion').value, city: document.getElementById('checkoutCity').value, address: document.getElementById('checkoutAddress').value }; let cart = JSON.parse(localStorage.getItem('alfredCart')) || []; let total = parseFloat(localStorage.getItem('cartTotal')) || 0; const paystack = PaystackPop; paystack.newTransaction({ key: 'pk_live_6b9968065dc0bd4842c97ffa138e49127c862888', amount: total * 100, email: deliveryInfo.phoneNumber + '@alfred.com', currency: 'GHS', reference: 'ALFRED-' + Date.now(), metadata: { deliveryInfo: deliveryInfo, cartItems: cart, total: total }, onSuccess: function(transaction) { alert('Payment successful! Reference: ' + transaction.reference); localStorage.removeItem('alfredCart'); updateCartBadge(); updateCartSummary(); closeCheckout(); }, onCancel: function() { alert('Payment cancelled. You can try again.'); } }); }
+        document.addEventListener('DOMContentLoaded', function() { updateCartBadge(); updateCartSummary(); });
     </script>
 </body>
 
