@@ -7,18 +7,25 @@ service cloud.firestore {
       return request.auth != null && request.auth.token.email == 'narhsnazzisco@gmail.com';
     }
 
-    // Products - anyone can read, only admin can write
+    // Data validation function
+    function isValidData() {
+      // Prevent creating empty documents
+      return request.resource.data.keys().size() > 0;
+    }
+
+    // Products - anyone can read, only admin can write with validation
     match /products/{productId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow create: if isAdmin() && isValidData();
+      allow update, delete: if isAdmin();
     }
 
     // Users - ONLY authenticated users can read/write their own profile, admin can read all
     match /users/{userId} {
       allow read: if request.auth != null && request.auth.uid == userId;
-      allow create: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null && request.auth.uid == userId && isValidData();
       allow update: if request.auth != null && request.auth.uid == userId;
-      allow delete: if isAdmin();  // Only admin can delete users
+      allow delete: if isAdmin();
     }
 
     // Wishlists - ONLY the owner can read/write their wishlist
@@ -31,9 +38,16 @@ service cloud.firestore {
       allow read: if isAdmin() ||
                      (request.auth != null && request.auth.uid == resource.data.userId);
       allow list: if isAdmin();
-      allow create: if request.auth != null;  // Require authentication to create orders
+      allow create: if request.auth != null && isValidData();
       allow update: if isAdmin();
       allow delete: if isAdmin();
+    }
+
+    // Reviews - anyone can read, only authenticated users can create
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if request.auth != null && isValidData();
+      allow update, delete: if isAdmin();
     }
 
     // Admin-only collection
