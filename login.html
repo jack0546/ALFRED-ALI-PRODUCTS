@@ -7,7 +7,7 @@
     <title>Sign In - ALFRED</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0abf53">
+    <meta name="theme-color" content="#FF6B35">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="new_logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,30 +19,229 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #FF6B35 0%, #FF477E 50%, #7B61FF 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .logo-container img {
+            height: 36px;
+        }
+
+        .auth-title {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin: 0 0 8px 0;
+            color: #1A1A1A;
+        }
+
+        .auth-subtitle {
+            font-size: 14px;
+            color: #5A5A5A;
+            text-align: center;
+            margin: 0 0 24px 0;
+        }
+
+        .google-btn {
+            width: 100%;
+            padding: 14px;
+            border: 1.5px solid #E5E5E5;
+            border-radius: 10px;
+            background: white;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1A1A1A;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            transition: all 0.2s;
+        }
+
+        .google-btn:hover {
+            background: #F8F9FA;
+            border-color: #D0D0D0;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #E5E5E5;
+        }
+
+        .divider-text {
+            padding: 0 16px;
+            font-size: 12px;
+            color: #8E8E8E;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #E5E5E5;
+            border-radius: 10px;
+            font-size: 15px;
+            background: #F8F9FA;
+            box-sizing: border-box;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #FF6B35;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .remember-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .remember-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .remember-checkbox input {
+            width: 16px;
+            height: 16px;
+        }
+
+        .forgot-link {
+            color: #FF6B35;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #5A5A5A;
+        }
+
+        .auth-footer a {
+            color: #FF6B35;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 16px;
+            }
+            
+            .auth-card {
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+            
+            .auth-title {
+                font-size: 22px;
+            }
+            
+            .logo-container img {
+                height: 32px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Auth Page -->
-    <div class="auth-page">
+    <div class="auth-container">
         <div class="auth-card">
-            <div class="auth-header">
-                <a href="index.html" style="display: inline-block; margin-bottom: 24px;">
-                    <img src="new_logo.png" alt="ALFRED" style="height: 40px;">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="new_logo.png" alt="ALFRED">
                 </a>
-                <h1>Welcome back</h1>
-                <p>Sign in to continue to ALFRED</p>
             </div>
 
-            <button class="btn btn-outline" onclick="signInWithGoogle()"
-                style="width: 100%; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px;">
-                <ion-icon name="logo-google" style="font-size: 20px; color: #4285F4;"></ion-icon> Continue with Google
+            <h1 class="auth-title">Welcome back</h1>
+            <p class="auth-subtitle">Sign in to continue to ALFRED</p>
+
+            <button class="google-btn" onclick="signInWithGoogle()">
+                <ion-icon name="logo-google" style="font-size: 20px; color: #4285F4;"></ion-icon>
+                Continue with Google
             </button>
 
-            <div style="text-align: center; position: relative; margin: 24px 0;">
-                <hr style="border: none; border-top: 1px solid var(--border-color);">
-                <span
-                    style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bg-primary); padding: 0 12px; font-size: 12px; color: var(--text-muted);">or
-                    sign in with email</span>
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-text">or sign in with email</span>
+                <div class="divider-line"></div>
             </div>
 
             <form id="loginForm" onsubmit="handleLogin(event)">
@@ -54,30 +253,26 @@
                     <label class="form-label">Password</label>
                     <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                    <label style="display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" style="width: 16px; height: 16px;"> Remember me
+                <div class="remember-row">
+                    <label class="remember-checkbox">
+                        <input type="checkbox">
+                        Remember me
                     </label>
-                    <a href="#" style="font-size: 14px; color: var(--primary-color); font-weight: 500;">Forgot
-                        password?</a>
+                    <a href="#" class="forgot-link">Forgot password?</a>
                 </div>
-                <button type="submit" class="btn btn-primary"
-                    style="width: 100%; border-radius: 8px; padding: 14px;">Sign In</button>
+                <button type="submit" class="submit-btn">Sign In</button>
             </form>
 
-            <div class="auth-footer" style="margin-top: 24px;">
+            <div class="auth-footer">
                 Don't have an account? <a href="register.html">Create one</a>
             </div>
         </div>
     </div>
 
     <script>
-        // Get redirect URL from query params
         const urlParams = new URLSearchParams(window.location.search);
         const redirectUrl = urlParams.get('redirect') || 'index.html';
-        const productId = urlParams.get('productId');
         
-        // Login with email and password
         function handleLogin(event) {
             event.preventDefault();
             const email = document.getElementById('email').value;
@@ -86,81 +281,39 @@
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    // Save user to Firestore (so admin can see them)
                     saveUserToFirestore(user);
+                    window.location.href = redirectUrl;
                 })
                 .catch((error) => {
                     alert('Login failed: ' + error.message);
                 });
         }
 
-        // Login with Google
         function signInWithGoogle() {
             const provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider)
                 .then((result) => {
                     const user = result.user;
-                    // Save user to Firestore (so admin can see them)
                     saveUserToFirestore(user);
+                    window.location.href = redirectUrl;
                 })
                 .catch((error) => {
                     alert('Google sign-in failed: ' + error.message);
                 });
         }
 
-        // Save/update user in Firestore and redirect
         function saveUserToFirestore(user) {
-            const isAdmin = user.email && user.email.toLowerCase() === 'narhsnazzisco@gmail.com';
-            const db = firebase.firestore();
-
-            db.collection('users').doc(user.uid).set({
-                name: user.displayName || user.email.split('@')[0],
-                email: user.email,
-                photo: user.photoURL || '',
-                isAdmin: isAdmin,
-                provider: user.providerData[0] ? user.providerData[0].providerId : 'email',
-                lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true })
-            .then(() => {
-                console.log('User saved to Firestore:', user.email);
-                if (isAdmin) {
-                    window.location.href = 'admin-dashboard/admin-dashboard.html';
-                } else {
-                    if (productId) sessionStorage.setItem('pendingProductId', productId);
-                    window.location.href = redirectUrl;
-                }
-            })
-            .catch((error) => {
-                console.error('Error saving user to Firestore:', error);
-                // Still redirect even if Firestore fails
-                if (isAdmin) {
-                    window.location.href = 'admin-dashboard/admin-dashboard.html';
-                } else {
-                    window.location.href = redirectUrl;
-                }
-            });
-        }
-        
-        // Check if there's a pending product to add after login
-        document.addEventListener('DOMContentLoaded', function() {
-            const pendingProductId = sessionStorage.getItem('pendingProductId');
-            if (pendingProductId && window.location.pathname.includes('cart.html')) {
-                sessionStorage.removeItem('pendingProductId');
-                // Add the product to cart
-                if (typeof addToCart === 'function') {
-                    addToCart(parseInt(pendingProductId));
-                    location.reload();
-                }
+            if (typeof db !== 'undefined') {
+                db.collection('users').doc(user.uid).set({
+                    email: user.email,
+                    displayName: user.displayName || user.email.split('@')[0],
+                    photoURL: user.photoURL,
+                    phoneNumber: user.phoneNumber,
+                    createdAt: new Date(),
+                    lastLogin: new Date()
+                }, { merge: true });
             }
-
-            // Check if user is already logged in as admin
-            firebase.auth().onAuthStateChanged((user) => {
-                if (user && user.email && user.email.toLowerCase() === 'narhsnazzisco@gmail.com') {
-                    window.location.href = 'admin-dashboard/admin-dashboard.html';
-                }
-            });
-        });
+        }
     </script>
 </body>
 
