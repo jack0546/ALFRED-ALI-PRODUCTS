@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Suppliers - ALFRED</title>
+    <title>Supplier Profile - ALFRED</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0abf53">
@@ -17,7 +17,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
-    <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
 
 <body>
@@ -33,27 +32,11 @@
             </button>
         </div>
         <ul>
-            <li><a href="categories.html"><ion-icon name="grid-outline"></ion-icon> All Categories</a></li>
-            <li><a href="suppliers.html"><ion-icon name="business-outline"></ion-icon> Find Suppliers</a></li>
-            <li><a href="featured.html"><ion-icon name="cube-outline"></ion-icon> Featured Products</a></li>
-            <li><a href="cart.html"><ion-icon name="cart-outline"></ion-icon> Shopping Cart</a></li>
-            <li><a href="login.html"><ion-icon name="person-outline"></ion-icon> Sign In</a></li>
-            <li><a href="register.html"><ion-icon name="person-add-outline"></ion-icon> Create Account</a></li>
+            <li><a href="categories.html">All Categories</a></li>
+            <li><a href="suppliers.html">Find Suppliers</a></li>
+            <li><a href="product.html">Featured Products</a></li>
+            <li><a href="login.html">Sign In</a></li>
         </ul>
-    </div>
-
-    <!-- Main Navigation Tabs -->
-    <div class="main-nav-tabs">
-        <div class="container">
-            <ul class="nav-tabs-list">
-                <li><a href="categories.html" class="nav-tab"><ion-icon name="grid-outline"></ion-icon> All Categories</a></li>
-                <li><a href="suppliers.html" class="nav-tab active"><ion-icon name="business-outline"></ion-icon> Find Suppliers</a></li>
-                <li><a href="featured.html" class="nav-tab"><ion-icon name="cube-outline"></ion-icon> Featured Products</a></li>
-                <li><a href="cart.html" class="nav-tab"><ion-icon name="cart-outline"></ion-icon> Shopping Cart</a></li>
-                <li><a href="login.html" class="nav-tab"><ion-icon name="person-outline"></ion-icon> Sign In</a></li>
-                <li><a href="register.html" class="nav-tab"><ion-icon name="person-add-outline"></ion-icon> Create Account</a></li>
-            </ul>
-        </div>
     </div>
 
     <!-- Navbar -->
@@ -71,7 +54,7 @@
 
             <div class="navbar-search">
                 <div class="search-wrapper">
-                    <input type="text" placeholder="Search suppliers, products...">
+                    <input type="text" placeholder="Search products, suppliers...">
                     <button type="submit">
                         <ion-icon name="search-outline"></ion-icon>
                         Search
@@ -80,15 +63,11 @@
             </div>
 
             <div class="navbar-actions">
-                <a href="#" class="navbar-action">
-                    <ion-icon name="globe-outline"></ion-icon>
-                    <span class="action-label">EN</span>
-                </a>
                 <a href="cart.html" class="navbar-action">
                     <ion-icon name="cart-outline"></ion-icon>
                     <span class="action-label">Cart</span>
                 </a>
-                <a href="login.html" class="navbar-action" id="userAction">
+                <a href="login.html" class="navbar-action">
                     <ion-icon name="person-outline"></ion-icon>
                     <span class="action-label">Sign In</span>
                 </a>
@@ -102,159 +81,121 @@
             <div class="breadcrumb">
                 <a href="index.html">Home</a>
                 <ion-icon name="chevron-forward-outline"></ion-icon>
-                <span>Find Suppliers</span>
+                <a href="suppliers.html">Suppliers</a>
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+                <span>Supplier Profile</span>
             </div>
-            <h1 style="font-size: 28px; font-weight: 700; margin-top: 12px;">Find Suppliers</h1>
-            <p style="color: var(--text-muted); margin-top: 8px;">Connect with verified manufacturers and traders
-                worldwide</p>
         </div>
     </div>
 
-    <!-- Suppliers Content -->
+    <!-- Supplier Profile -->
     <section class="container" style="padding: 32px 24px;">
-        <!-- Category Images Banner -->
-        <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 32px;">
-            <div style="cursor: pointer; border-radius: 8px; overflow: hidden; text-align: center; padding: 10px; border: 2px solid #e5e5e5;"
-                onclick="openDeliveryForm('Apparel Supplier', 'Premium Apparel Manufacturer', 0, 'Verified apparel supplier', 'images/SHOE1.jpg')">
-                <img src="images/SHOE1.jpg"
-                    style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;">
-                <span style="font-size: 12px; font-weight: 600;">Apparel</span>
-                <button style="margin-top:5px; padding:4px 8px; background:#0abf53; color:white; border:none; border-radius:4px; font-size:10px; cursor:pointer;" onclick="addProductToCart('Apparel', 'Premium Apparel Manufacturer', 45.00, 'Verified apparel supplier', 'images/SHOE1.jpg'); event.stopPropagation();">Add to Cart</button>
-            </div>
-            <div style="cursor: pointer; border-radius: 8px; overflow: hidden; text-align: center; padding: 10px; border: 2px solid #e5e5e5;"
-                onclick="openDeliveryForm('Electronics Supplier', 'Electronics Manufacturer', 0, 'Verified electronics supplier', 'images/SMART1.jpg')">
-                <img src="images/SMART1.jpg"
-                    style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;">
-                <span style="font-size: 12px; font-weight: 600;">Electronics</span>
-                <button style="margin-top:5px; padding:4px 8px; background:#0abf53; color:white; border:none; border-radius:4px; font-size:10px; cursor:pointer;" onclick="addProductToCart('Electronics', 'Electronics Manufacturer', 120.00, 'Verified electronics supplier', 'images/SMART1.jpg'); event.stopPropagation();">Add to Cart</button>
-            </div>
-            <div style="cursor: pointer; border-radius: 8px; overflow: hidden; text-align: center; padding: 10px; border: 2px solid #e5e5e5;"
-                onclick="openDeliveryForm('Beauty Supplier', 'Beauty Products Manufacturer', 0, 'Verified beauty supplier', 'images/image1.jpg')">
-                <img src="images/image1.jpg"
-                    style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;">
-                <span style="font-size: 12px; font-weight: 600;">Beauty</span>
-                <button style="margin-top:5px; padding:4px 8px; background:#0abf53; color:white; border:none; border-radius:4px; font-size:10px; cursor:pointer;" onclick="addProductToCart('Beauty', 'Beauty Products Manufacturer', 35.00, 'Verified beauty supplier', 'images/image1.jpg'); event.stopPropagation();">Add to Cart</button>
-            </div>
-            <div style="cursor: pointer; border-radius: 8px; overflow: hidden; text-align: center; padding: 10px; border: 2px solid #e5e5e5;"
-                onclick="openDeliveryForm('Bags Supplier', 'Bags Manufacturer', 0, 'Verified bags supplier', 'images/BAG1.jpg')">
-                <img src="images/BAG1.jpg"
-                    style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;">
-                <span style="font-size: 12px; font-weight: 600;">Bags</span>
-                <button style="margin-top:5px; padding:4px 8px; background:#0abf53; color:white; border:none; border-radius:4px; font-size:10px; cursor:pointer;" onclick="addProductToCart('Bags', 'Bags Manufacturer', 55.00, 'Verified bags supplier', 'images/BAG1.jpg'); event.stopPropagation();">Add to Cart</button>
-            </div>
-            <div style="cursor: pointer; border-radius: 8px; overflow: hidden; text-align: center; padding: 10px; border: 2px solid #e5e5e5;"
-                onclick="openDeliveryForm('Shoes Supplier', 'Shoes Manufacturer', 0, 'Verified shoes supplier', 'images/SHOE5.jpg')">
-                <img src="images/SHOE5.jpg"
-                    style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;">
-                <span style="font-size: 12px; font-weight: 600;">Shoes</span>
-                <button style="margin-top:5px; padding:4px 8px; background:#0abf53; color:white; border:none; border-radius:4px; font-size:10px; cursor:pointer;" onclick="addProductToCart('Shoes', 'Shoes Manufacturer', 65.00, 'Verified shoes supplier', 'images/SHOE5.jpg'); event.stopPropagation();">Add to Cart</button>
-            </div>
-            <div style="cursor: pointer; border-radius: 8px; overflow: hidden; text-align: center; padding: 10px; border: 2px solid #e5e5e5;"
-                onclick="openDeliveryForm('Industrial Supplier', 'Industrial Equipment', 0, 'Verified industrial supplier', 'images/banners/industrial.jpg')">
-                <img src="images/banners/industrial.jpg"
-                    style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;">
-                <span style="font-size: 12px; font-weight: 600;">Industrial</span>
-                <button style="margin-top:5px; padding:4px 8px; background:#0abf53; color:white; border:none; border-radius:4px; font-size:10px; cursor:pointer;" onclick="addProductToCart('Industrial', 'Industrial Equipment', 250.00, 'Verified industrial supplier', 'images/banners/industrial.jpg'); event.stopPropagation();">Add to Cart</button>
-            </div>
-        </div>
+        <!-- Supplier Header Card -->
+        <div
+            style="background: white; border-radius: 16px; border: 1px solid var(--border-light); padding: 32px; margin-bottom: 32px;">
+            <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                <!-- Supplier Avatar -->
+                <div
+                    style="width: 120px; height: 120px; background: var(--primary-light); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: 700; color: var(--primary-color); flex-shrink: 0;">
+                    P
+                </div>
 
-        <!-- Filters -->
-        <div style="display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; align-items: center;">
-            <div class="form-group" style="margin-bottom: 0; flex: 1; min-width: 200px;">
-                <select class="form-input" style="padding: 12px 16px;">
-                    <option>All Categories</option>
-                    <option>Apparel & Fashion</option>
-                    <option>Electronics</option>
-                    <option>Beauty & Personal Care</option>
-                    <option>Bags & Luggage</option>
-                    <option>Sports & Outdoors</option>
-                </select>
+                <!-- Supplier Info -->
+                <div style="flex: 1; min-width: 300px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <h1 style="font-size: 24px; font-weight: 700;">Premium Fashion Co.</h1>
+                        <ion-icon name="checkmark-circle"
+                            style="color: var(--primary-color); font-size: 24px;"></ion-icon>
+                        <span class="badge badge-primary">Verified</span>
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 16px;">Manufacturer, Trading Company | 12 Years
+                        Experience</p>
+
+                    <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                        <div>
+                            <div style="font-size: 24px; font-weight: 700;">4.9</div>
+                            <div style="font-size: 14px; color: var(--text-muted);">Rating</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 24px; font-weight: 700;">1,200+</div>
+                            <div style="font-size: 14px; color: var(--text-muted);">Orders</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 24px; font-weight: 700;">98%</div>
+                            <div style="font-size: 14px; color: var(--text-muted);">On-time Delivery</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 24px; font-weight: 700;">
+                                <1h< /div>
+                                    <div style="font-size: 14px; color: var(--text-muted);">Response Time</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <a href="messages.html" class="btn btn-primary">
+                            <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                            Contact Supplier
+                        </a>
+                        <button class="btn btn-outline">
+                            <ion-icon name="heart-outline"></ion-icon>
+                            Follow
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="form-group" style="margin-bottom: 0; flex: 1; min-width: 200px;">
-                <select class="form-input" style="padding: 12px 16px;">
-                    <option>All Countries</option>
-                    <option>China</option>
-                    <option>USA</option>
-                    <option>UK</option>
-                    <option>Germany</option>
-                    <option>India</option>
-                </select>
+
+            <!-- Tabs -->
+            <div
+                style="display: flex; gap: 8px; border-bottom: 1px solid var(--border-light); margin-bottom: 32px; overflow-x: auto;">
+                <button class="navbar-menu-item active"
+                    style="border-bottom: 2px solid var(--primary-color); border-radius: 0; padding-bottom: 16px;">Products</button>
+                <button class="navbar-menu-item" style="border: none; border-radius: 0; padding-bottom: 16px;">Company
+                    Profile</button>
+                <button class="navbar-menu-item"
+                    style="border: none; border-radius: 0; padding-bottom: 16px;">Reviews</button>
             </div>
-            <div class="form-group" style="margin-bottom: 0; flex: 1; min-width: 200px;">
-                <select class="form-input" style="padding: 12px 16px;">
-                    <option>All Verified Status</option>
-                    <option>Verified Only</option>
-                </select>
+
+            <!-- Products Section -->
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Products</h2>
+                    <p class="section-subtitle">520 products available</p>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <select class="form-input" style="width: auto; padding: 8px 16px;">
+                        <option>Sort by: Recommended</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Newest</option>
+                    </select>
+                </div>
             </div>
-            <button class="btn btn-primary">Apply Filters</button>
-        </div>
 
-        <!-- Results Count -->
-        <p style="margin-bottom: 24px; color: var(--text-muted);">
-            Showing <strong>8</strong> suppliers
-        </p>
+            <div class="product-grid" id="supplierProducts">
+                <!-- Products will be loaded by JavaScript -->
+            </div>
 
-        <!-- Suppliers Grid -->
-        <div class="product-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));"
-            id="suppliersGrid">
-            <!-- Suppliers will be loaded by JavaScript -->
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination">
-            <button class="pagination-btn" disabled>
-                <ion-icon name="chevron-back-outline"></ion-icon>
-            </button>
-            <button class="pagination-btn active">1</button>
-            <button class="pagination-btn">2</button>
-            <button class="pagination-btn">3</button>
-            <button class="pagination-btn">4</button>
-            <button class="pagination-btn">5</button>
-            <button class="pagination-btn">
-                <ion-icon name="chevron-forward-outline"></ion-icon>
-            </button>
-        </div>
-    </section>
-
-    <!-- Become Supplier CTA -->
-    <section style="background: var(--primary-color); padding: 48px 24px; text-align: center; color: white;">
-        <div class="container">
-            <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 16px;">Become a Supplier on ALFRED</h2>
-            <p
-                style="font-size: 16px; opacity: 0.9; margin-bottom: 24px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                Join millions of suppliers growing their business on the world's leading B2B marketplace.
-            </p>
-            <a href="register.html" class="btn btn-white" style="font-weight: 700;">Start Selling Today</a>
-        </div>
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="pagination-btn" disabled>
+                    <ion-icon name="chevron-back-outline"></ion-icon>
+                </button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">4</button>
+                <button class="pagination-btn">5</button>
+                <button class="pagination-btn">
+                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                </button>
+            </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Get Support</h4>
-                    <ul>
-                        <li><a href="help.html">Help Center</a></li>
-                        <li><a href="messages.html">Live Chat</a></li>
-                        <li><a href="orders.html">Check Order Status</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Trade Services</h4>
-                    <ul>
-                        <li><a href="trade.html">Trade Assurance</a></li>
-                        <li><a href="logistics.html">Logistics Service</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>About ALFRED</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 ALFRED. All rights reserved.</p>
             </div>
@@ -269,135 +210,11 @@
             nav.classList.toggle('active');
         }
 
-        // Load suppliers
+        // Load supplier products
         document.addEventListener('DOMContentLoaded', function () {
-            renderSuppliers('suppliersGrid', 12);
+            renderProductsModern('apparel', null, 'supplierProducts', 16);
         });
-
-        // Check auth state
-        firebase.auth().onAuthStateChanged((user) => {
-            const userAction = document.getElementById('userAction');
-            if (user) {
-                userAction.innerHTML = `
-                    <ion-icon name="person-circle-outline"></ion-icon>
-                    <span class="action-label">${user.displayName || 'My Account'}</span>
-                `;
-                userAction.href = 'orders.html';
-            }
-        });
-
-        // Current product for payment
-        let currentProduct = null;
-
-        // Open delivery form modal
-        function openDeliveryForm(category, title, price, desc, image){
-            let p = typeof price === 'string' ? parseFloat(price.replace(/[^0-9.]/g, '')) : price;
-            let d = typeof desc !== 'undefined' ? desc : '';
-            window.location.href = 'product.html?title=' + encodeURIComponent(title) + '&price=' + p + '&desc=' + encodeURIComponent(d) + '&image=' + encodeURIComponent(image) + '&category=' + encodeURIComponent(category);
-        }
-
-        // Close delivery form modal
-        function closeDeliveryForm() {
-            document.getElementById('deliveryModal').classList.remove('active');
-            currentProduct = null;
-        }
-
-        // Process payment
-        function processPayment() {
-            const fullName = document.getElementById('fullName').value;
-            const phone = document.getElementById('phoneNumber').value;
-            const region = document.getElementById('region').value;
-            const city = document.getElementById('city').value;
-            const address = document.getElementById('address').value;
-
-            if (!fullName || !phone || !region || !city || !address) {
-                alert('Please fill in all required fields');
-                return;
-            }
-
-            alert('Thank you! Your inquiry has been sent to the supplier. They will contact you shortly.');
-            closeDeliveryForm();
-        }
     </script>
-
-    <!-- Delivery Form Modal -->
-    <div class="modal-overlay" id="deliveryModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
-        <div style="background: white; border-radius: 16px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto;">
-            <div style="padding: 20px; border-bottom: 1px solid #e5e5e5; display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-size: 18px;">Contact Supplier</h3>
-                <button onclick="closeDeliveryForm()" style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
-            </div>
-            <div style="padding: 20px;">
-                <div style="display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #e5e5e5;">
-                    <img id="modalProductImg" src="" alt="Product" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
-                    <div>
-                        <h4 id="modalProductTitle" style="font-size: 14px; margin-bottom: 5px;">Supplier</h4>
-                        <div id="modalProductPrice" style="font-size: 18px; font-weight: 700; color: #0abf53;">Price</div>
-                        <p id="modalProductDesc" style="font-size: 12px; color: #8e8e8e; margin-top: 5px;">Description</p>
-                    </div>
-                </div>
-                <form>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                        <div>
-                            <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">Full Name *</label>
-                            <input type="text" id="fullName" required placeholder="Your name" style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px;">
-                        </div>
-                        <div>
-                            <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">Phone *</label>
-                            <input type="tel" id="phoneNumber" required placeholder="0500000000" style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px;">
-                        </div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                        <div>
-                            <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">Region *</label>
-                            <select id="region" required style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px;">
-                                <option value="">Select Region</option>
-                                <option value="Greater Accra">Greater Accra</option>
-                                <option value="Ashanti">Ashanti</option>
-                                <option value="Central">Central</option>
-                                <option value="Eastern">Eastern</option>
-                                <option value="Western">Western</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">City *</label>
-                            <input type="text" id="city" required placeholder="Accra" style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px;">
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px;">Address *</label>
-                        <textarea id="address" required placeholder="Your address" rows="2" style="width: 100%; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px;"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div style="padding: 20px; border-top: 1px solid #e5e5e5;">
-                <button onclick="processPayment()" style="width: 100%; padding: 15px; background: #0abf53; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer;">Send Inquiry</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div id="cartModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1001; padding:20px;">
-        <div style="background:white; border-radius:16px; max-width:600px; width:100%; margin:50px auto; padding:24px; max-height:90vh; overflow-y:auto;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h2 style="margin:0; font-size:20px;">Shopping Cart (<span id="cartItemCount">0</span> items)</h2>
-                <button onclick="closeCartModal()" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
-            </div>
-            <div id="cartItemsContainer">
-                <div style="text-align:center; padding:40px 0;">
-                    <p style="color:#666;">Your cart is empty</p>
-                </div>
-            </div>
-            <div style="margin-top:20px; border-top:1px solid #eee; padding-top:20px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:700; font-size:18px;">
-                    <span>Total:</span>
-                    <span id="cartTotal">GHS 0.00</span>
-                </div>
-                <button onclick="checkoutCart()" style="width:100%; padding:14px; background:#0abf53; color:white; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; margin-bottom:10px;">Proceed to Checkout</button>
-                <button onclick="closeCartModal()" style="width:100%; padding:12px; background:#f5f5f5; border:1px solid #ddd; border-radius:8px; cursor:pointer;">Continue Shopping</button>
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>
