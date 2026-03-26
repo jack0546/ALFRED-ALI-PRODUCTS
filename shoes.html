@@ -4,26 +4,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shoes - ALFRED PRODUCTS</title>
+    <title>Shoes - ALFRED</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#FF6600">
+    <meta name="theme-color" content="#FF6B35">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="new_logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="firebase-config.js"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="script.js"></script>
 </head>
 
 <body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="new_logo.png" alt="ALFRED">
+                    </a>
+                </div>
+                
+                <div class="search-container" style="flex: 1; max-width: 500px; margin: 0 30px;">
+                    <input type="text" placeholder="Search for products..." id="searchInput">
+                    <button onclick="performSearch()">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </button>
+                </div>
+                
+                <div class="header-actions">
+                    <a href="cart.html" class="action-item">
+                        <ion-icon name="cart-outline"></ion-icon>
+                        <span>Cart</span>
+                        <span id="cartBadge" style="display: none; background: #FF477E; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px;">0</span>
+                    </a>
+                    <a href="login.html" class="action-item">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <span>Sign In</span>
+                    </a>
+                </div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="categories.html">All Categories</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="featured.html">Featured</a></li>
+                    <li><a href="bags.html">Bags & Luggage</a></li>
+                    <li><a href="beauty.html">Beauty</a></li>
+                    <li><a href="electronics.html">Electronics</a></li>
+                    <li><a href="apparel.html">Apparel</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <a href="categories.html">Categories</a>
+            <span>/</span>
+            <span style="color: #FF6B35;">Shoes</span>
+        </div>
+
+        <!-- Category Banner -->
+        <section class="category-banner" style="background: url('images/SHOE22.jpg'); background-size: cover; background-position: center;">
+            <h1>Shoes</h1>
+            <p>Trendy footwear for every occasion</p>
+        </section>
+
+        <!-- Products -->
+        <section class="products-section">
+            <h2 class="section-title">
+                <ion-icon name="footsteps-outline"></ion-icon>
+                Shop Shoes
+            </h2>
+            
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card" onclick="openDeliveryForm('Shoes', 'Running Sports Shoes', 280.00, 'Lightweight breathable running shoes with cushioned sole. Perfect for jogging, gym, and daily wear. Anti-slip durable outsole. Features: Breathable mesh, Cushioned sole, Anti-slip, Multiple colors.', 'images/SHOE5.jpg')">
+                    <span class="badge">Best Seller</span>
+                    <div class="image-container">
+                        <img src="images/SHOE5.jpg" alt="Running Shoes">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Professional Running Sports Shoes</h4>
+                        <div class="price">GHS 280.00 <span class="original-price">GHS 560.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.6 (189)</span>
+                        </div>
+                        <div class="sales">856 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Running Sports Shoes', 280.00, 'Lightweight running shoes', 'images/SHOE5.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" onclick="openDeliveryForm('Shoes', 'Casual Sneakers', 195.00, 'Stylish casual sneakers for everyday wear. Comfortable insole, breathable upper. Perfect match for jeans and casual outfits. Features: Comfortable insole, Breathable upper, Stylish design, Daily wear.', 'images/SHOE1.jpg')">
+                    <span class="badge">New</span>
+                    <div class="image-container">
+                        <img src="images/SHOE1.jpg" alt="Casual Sneakers">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Comfortable Casual Sneakers</h4>
+                        <div class="price">GHS 195.00 <span class="original-price">GHS 350.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.4 (98)</span>
+                        </div>
+                        <div class="sales">234 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Casual Sneakers', 195.00, 'Comfortable sneakers', 'images/SHOE1.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" onclick="openDeliveryForm('Shoes', 'Formal Leather Shoes', 380.00, 'Classic formal leather shoes for business occasions. Premium leather, comfortable fit. Durable sole. Features: Premium leather, Business ready, Durable sole, Classic design.', 'images/SHOE10.jpg')">
+                    <span class="badge">-40%</span>
+                    <div class="image-container">
+                        <img src="images/SHOE10.jpg" alt="Formal Shoes">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Classic Formal Leather Shoes</h4>
+                        <div class="price">GHS 380.00 <span class="original-price">GHS 650.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.6 (145)</span>
+                        </div>
+                        <div class="sales">312 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Formal Leather Shoes', 380.00, 'Classic formal shoes', 'images/SHOE10.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" onclick="openDeliveryForm('Shoes', 'High Heels Elegant', 290.00, 'Elegant high heels for formal events and parties. Comfortable block heel. Multiple color options. Features: Block heel, Multiple colors, Party ready, Elegant design.', 'images/SHOE3.jpg')">
+                    <span class="badge">Trending</span>
+                    <div class="image-container">
+                        <img src="images/SHOE3.jpg" alt="High Heels">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Elegant High Heels</h4>
+                        <div class="price">GHS 290.00 <span class="original-price">GHS 480.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.5 (167)</span>
+                        </div>
+                        <div class="sales">456 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'High Heels Elegant', 290.00, 'Elegant high heels', 'images/SHOE3.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" onclick="openDeliveryForm('Shoes', 'Classic Loafers', 265.00, 'Comfortable classic loafers for work and casual wear. Soft leather upper. Cushioned insole. Features: Soft leather, Cushioned insole, Slip-on, Business casual.', 'images/SHOE4.jpg')">
+                    <div class="image-container">
+                        <img src="images/SHOE4.jpg" alt="Loafers">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Classic Leather Loafers</h4>
+                        <div class="price">GHS 265.00 <span class="original-price">GHS 420.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.7 (234)</span>
+                        </div>
+                        <div class="sales">567 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Classic Loafers', 265.00, 'Classic loafers', 'images/SHOE4.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" onclick="openDeliveryForm('Shoes', 'Winter Boots', 320.00, 'Warm winter boots with fur lining. Waterproof exterior. Perfect for cold weather. Features: Fur lining, Waterproof, Warm, Durable.', 'images/SHOE6.jpg')">
+                    <span class="badge">-30%</span>
+                    <div class="image-container">
+                        <img src="images/SHOE6.jpg" alt="Winter Boots">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Warm Winter Boots</h4>
+                        <div class="price">GHS 320.00 <span class="original-price">GHS 480.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.6 (123)</span>
+                        </div>
+                        <div class="sales">289 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Winter Boots', 320.00, 'Warm winter boots', 'images/SHOE6.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card" onclick="openDeliveryForm('Shoes', 'Canvas Shoes', 145.00, 'Casual canvas shoes for everyday wear. Lightweight and breathable. Easy to clean. Features: Lightweight, Breathable, Easy clean, Casual.', 'images/SHOE7.jpg')">
+                    <span class="badge">Best Value</span>
+                    <div class="image-container">
+                        <img src="images/SHOE7.jpg" alt="Canvas Shoes">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Casual Canvas Shoes</h4>
+                        <div class="price">GHS 145.00 <span class="original-price">GHS 220.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.4 (345)</span>
+                        </div>
+                        <div class="sales">789 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Canvas Shoes', 145.00, 'Casual canvas shoes', 'images/SHOE7.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card" onclick="openDeliveryForm('Shoes', 'Sandals Comfort', 175.00, 'Comfortable sandals for summer. Soft strap, cushioned footbed. Multiple colors. Features: Soft strap, Cushioned footbed, Summer wear, Multiple colors.', 'images/SHOE8.jpg')">
+                    <span class="badge">Summer</span>
+                    <div class="image-container">
+                        <img src="images/SHOE8.jpg" alt="Sandals">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Comfortable Summer Sandals</h4>
+                        <div class="price">GHS 175.00 <span class="original-price">GHS 280.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.5 (198)</span>
+                        </div>
+                        <div class="sales">456 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Sandals Comfort', 175.00, 'Comfortable sandals', 'images/SHOE8.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 9 -->
+                <div class="product-card" onclick="openDeliveryForm('Shoes', 'Slipper Indoor', 85.00, 'Comfortable indoor slippers. Soft sole, breathable upper. Perfect for home. Features: Soft sole, Breathable, Indoor use, Multiple colors.', 'images/SHOE9.jpg')">
+                    <span class="badge">-45%</span>
+                    <div class="image-container">
+                        <img src="images/SHOE9.jpg" alt="Indoor Slippers">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Comfortable Indoor Slippers</h4>
+                        <div class="price">GHS 85.00 <span class="original-price">GHS 155.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.6 (456)</span>
+                        </div>
+                        <div class="sales">1,234 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Slipper Indoor', 85.00, 'Indoor slippers', 'images/SHOE9.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+
+                <!-- Product 10 -->
+                <div class="product-card" onclick="openDeliveryForm('Shoes', 'Kids Shoes', 120.00, 'Durable kids shoes for school and play. Comfortable fit. Cute design. Features: Durable, Comfortable fit, Cute design, School ready.', 'images/SHOE11.jpg')">
+                    <span class="badge">Kids</span>
+                    <div class="image-container">
+                        <img src="images/SHOE11.jpg" alt="Kids Shoes">
+                    </div>
+                    <div class="info">
+                        <h4 class="title">Kids School Shoes</h4>
+                        <div class="price">GHS 120.00 <span class="original-price">GHS 180.00</span></div>
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <span>4.5 (234)</span>
+                        </div>
+                        <div class="sales">567 sold</div>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Kids Shoes', 120.00, 'Kids school shoes', 'images/SHOE11.jpg')">
+                        <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary" id="cartSummaryContainer" style="display: none;">
+            <h3><ion-icon name="cart-outline"></ion-icon> Your Shopping Cart</h3>
+            <div class="summary-row">
+                <span>Total Items:</span>
+                <span id="cartItemCount">0</span>
+            </div>
+            <div class="total-row">
+                <span class="label">Total Amount:</span>
+                <span class="amount" id="cartTotalAmount">GHS 0.00</span>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="openCheckout()">
+                <ion-icon name="card-outline"></ion-icon> Proceed to Checkout
+            </button>
+        </div>
+
+        <div class="empty-state" id="emptyCartMsg" style="display: none;">
+            <ion-icon name="cart-outline"></ion-icon>
+            <h3>Your cart is empty</h3>
+            <p>Add some products to get started!</p>
+        </div>
+    </main>
+
     <!-- Floating Menu Button -->
     <div class="floating-menu-container">
         <button class="floating-menu-btn" onclick="toggleFloatingMenu()">
@@ -34,280 +319,319 @@
                 <ion-icon name="person-outline"></ion-icon>
                 <span>Sign In</span>
             </a>
-            <a href="messages.html" class="floating-menu-item">
-                <ion-icon name="mail-outline"></ion-icon>
-                <span>Messages</span>
-            </a>
-            <div class="floating-menu-item floating-orders-btn" onclick="toggleOrdersSection()">
+            <a href="cart.html" class="floating-menu-item">
                 <ion-icon name="cart-outline"></ion-icon>
+                <span>Cart</span>
+            </a>
+            <a href="orders.html" class="floating-menu-item">
+                <ion-icon name="bag-handle-outline"></ion-icon>
                 <span>Orders</span>
-                <ion-icon name="chevron-down-outline" class="orders-chevron"></ion-icon>
+            </a>
+        </div>
+    </div>
+
+    <!-- Checkout Modal with Delivery Form -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-content" style="max-width: 550px;">
+            <div class="modal-header">
+                <h3><ion-icon name="cart-outline"></ion-icon> Checkout</h3>
+                <button class="modal-close" onclick="closeCheckout()">&times;</button>
             </div>
-            <div class="floating-orders-section" id="floatingOrdersSection">
-                <div id="floatingOrdersList">
-                    <div style="padding: 15px; text-align: center; color: #999; font-size: 13px;">
-                        <ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>
-                        No Order
+            <div class="modal-body">
+                <div style="max-height: 150px; overflow-y: auto; margin-bottom: 16px; border: 1px solid #eee; border-radius: 8px; padding: 10px;">
+                    <div id="checkoutCartItems"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 12px; background: #FFF5F2; border-radius: 8px; margin-bottom: 20px;">
+                    <span style="font-weight: 600;">Total:</span>
+                    <span id="checkoutTotalAmount" style="font-size: 20px; font-weight: 700; color: #FF6B35;">GHS 0.00</span>
+                </div>
+                <form id="checkoutDeliveryForm" class="delivery-form">
+                    <h4 style="margin-bottom: 16px; font-size: 16px;"><ion-icon name="location-outline"></ion-icon> Delivery Information</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="checkoutFullName" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" id="checkoutPhone" required placeholder="e.g., 0241234567">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp Number (Optional)</label>
+                        <input type="tel" id="checkoutWhatsapp" placeholder="e.g., 0241234567">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Region *</label>
+                            <select id="checkoutRegion" required>
+                                <option value="">Select Region</option>
+                                <option value="Greater Accra">Greater Accra</option>
+                                <option value="Ashanti">Ashanti</option>
+                                <option value="Central">Central</option>
+                                <option value="Eastern">Eastern</option>
+                                <option value="Western">Western</option>
+                                <option value="Volta">Volta</option>
+                                <option value="Northern">Northern</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>City/Town *</label>
+                            <input type="text" id="checkoutCity" required placeholder="Enter city or town">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Address *</label>
+                        <textarea id="checkoutAddress" required placeholder="Enter detailed delivery address or nearest landmark" style="height: 80px;"></textarea>
+                    </div>
+                    <button type="button" class="form-submit-btn" onclick="processCheckout()">
+                        <ion-icon name="lock-closed-outline"></ion-icon> Pay Now with Paystack
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Landing Page (Inline) -->
+    <div class="product-landing-page" id="productDetailPage" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 2000; overflow-y: auto;">
+        <div class="container" style="padding: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px; padding: 16px 0; font-size: 14px;">
+                <a href="index.html" style="color: #666; text-decoration: none;">Home</a><span>/</span>
+                <a href="shoes.html" style="color: #666; text-decoration: none;">Shoes</a><span>/</span>
+                <span id="detailBreadcrumb" style="color: #FF6B35;">Product</span>
+            </div>
+            <button onclick="closeProductDetail()" style="position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%; border: none; background: #f8f8f8; font-size: 24px; cursor: pointer; z-index: 2001;">&times;</button>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px;">
+                <div style="border-radius: 16px; overflow: hidden; background: #f8f8f8;">
+                    <img id="detailImage" src="" alt="Product" style="width: 100%; height: 400px; object-fit: cover;">
+                </div>
+                <div>
+                    <h1 id="detailTitle" style="font-size: 24px; font-weight: 700; margin-bottom: 16px;">Product Title</h1>
+                    <div style="font-size: 32px; font-weight: 800; color: #FF6B35; margin-bottom: 12px;">
+                        <span id="detailPrice">GHS 0.00</span>
+                        <span id="detailOriginal" style="font-size: 18px; color: #999; text-decoration: line-through; margin-left: 12px; font-weight: 400;"></span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                        <div style="display: flex; gap: 2px;"><ion-icon name="star" style="color: #FFDC00;"></ion-icon><ion-icon name="star" style="color: #FFDC00;"></ion-icon><ion-icon name="star" style="color: #FFDC00;"></ion-icon><ion-icon name="star" style="color: #FFDC00;"></ion-icon><ion-icon name="star-half" style="color: #FFDC00;"></ion-icon></div>
+                        <span id="detailRating" style="color: #666; font-size: 14px;">4.8 reviews</span>
+                    </div>
+                    <div id="detailDescription" style="color: #666; line-height: 1.8; padding: 20px; background: #f8f8f8; border-radius: 12px; margin-bottom: 24px;">Description...</div>
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                        <label style="font-weight: 600;">Quantity:</label>
+                        <div style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 8px;">
+                            <button onclick="detailChangeQty(-1)" style="width: 44px; height: 44px; border: none; background: #f8f8f8; font-size: 20px; cursor: pointer;">-</button>
+                            <input type="number" id="detailQuantity" value="1" min="1" style="width: 70px; height: 44px; border: none; text-align: center;">
+                            <button onclick="detailChangeQty(1)" style="width: 44px; height: 44px; border: none; background: #f8f8f8; font-size: 20px; cursor: pointer;">+</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button onclick="addFromDetail()" style="flex: 1; padding: 18px; background: linear-gradient(135deg, #FF6B35, #E55A2B); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;"><ion-icon name="cart-outline"></ion-icon> Add to Cart</button>
+                        <button onclick="buyFromDetail()" style="flex: 1; padding: 18px; background: #1a1a1a; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;"><ion-icon name="flash-outline"></ion-icon> Buy Now</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <header>
+    <!-- Quick View Modal -->
+    <div class="modal-overlay" id="deliveryModal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3><ion-icon name="information-circle-outline"></ion-icon> Product Details</h3>
+                <button class="modal-close" onclick="closeDeliveryForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
+                    <img id="modalProductImg" src="" alt="Product" style="width: 100px; height: 100px; object-fit: cover; border-radius: 10px;">
+                    <div>
+                        <h4 id="modalProductTitle" style="font-size: 16px; margin-bottom: 8px;">Product Title</h4>
+                        <div id="modalProductPrice" style="font-size: 22px; font-weight: 700; color: #FF6B35; margin-bottom: 8px;">GHS 0.00</div>
+                        <p id="modalProductDesc" style="font-size: 13px; color: #666;">Description</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="addCurrentProductToCart()">
+                    <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
         <div class="container">
-            <div class="header-top">
-                <div class="logo"><a href="index.html"><a href="index.html"><img src="new_logo.png" alt="ALFRED PRODUCTS Logo"
-                                style="height: 28px;"></a></a></div>
-                <div class="header-actions">
-                    <a href="#" onclick="viewCart(); return false;" style="background:#0abf53;color:white;padding:8px 15px;border-radius:5px;margin-right:10px;text-decoration:none;">Checkout</a>
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>About ALFRED</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="categories.html">All Categories</a></li>
+                        <li><a href="featured.html">Featured Products</a></li>
+                        <li><a href="suppliers.html">Suppliers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><a href="messages.html">Messages</a></li>
+                        <li><a href="#">WhatsApp: +233 000 000000</a></li>
+                        <li><a href="#">Email: support@alfred.com</a></li>
+                    </ul>
                 </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="categories.html">All Categories</a></li>
-                    <li><a href="shoes.html" class="active">Shoes</a></li>
-                </ul>
-            </nav>
+            <div class="footer-bottom">
+                <p>&copy; 2024-2026 Alfred Products. All rights reserved.</p>
+            </div>
         </div>
-    </header>
+    </footer>
 
-    <main class="container">
-        <div style="margin-top: 20px; border-radius: 12px; overflow: hidden; position: relative; height: 350px;">
-            <img src="images/SHOE1.jpg" alt="Shoes Banner" style="width: 100%; height: 100%; object-fit: cover;">
-            <div
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: center; padding: 60px; color: white;">
-                <h1 style="font-size: 48px; margin-bottom: 10px;">Shoes & Footwear</h1>
-                <p style="font-size: 20px;">Step up your inventory with global footwear trends.</p>
-            </div>
-        </div>
-
-        <section class="products">
-            <h2 class="section-title">Latest Footwear</h2>
-
-            <!-- Shoes Products Grid -->
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Shoes', 'Running Shoes', 95.00, 'Comfortable running shoes', 'images/SHOE5.jpg')">
-                    <img src="images/SHOE5.jpg" alt="Running" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Running Sports Shoes</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 95.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Shoes', 'Running Shoes', 95.00, 'Comfortable running shoes', 'images/SHOE5.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Shoes', 'Casual Loafers', 75.00, 'Comfortable casual loafers', 'images/SHOE6.jpg')">
-                    <img src="images/SHOE6.jpg" alt="Loafers" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Casual Loafers</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 2.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Shoes', 'Casual Loafers', 75.00, 'Comfortable casual loafers', 'images/SHOE6.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Shoes', 'Formal Shoes', 2.00, 'Elegant formal shoes', 'images/SHOE7.jpg')">
-                    <img src="images/SHOE7.jpg" alt="Formal" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Formal Dress Shoes</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS .00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Shoes', 'Formal Shoes', 120.00, 'Elegant formal shoes', 'images/SHOE7.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-                <div style="cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid #e5e5e5;"
-                    onclick="openDeliveryForm('Shoes', 'Sneakers', 2.00, 'Lightweight canvas sneakers', 'images/SHOE8.jpg')">
-                    <img src="images/SHOE8.jpg" alt="Sneakers" style="width: 100%; height: 150px; object-fit: cover;">
-                    <div style="padding: 10px;">
-                        <h4 style="font-size: 13px; margin-bottom: 5px;">Canvas Sneakers</h4>
-                        <p style="font-size: 14px; font-weight: 700; color: #0abf53;">GHS 2.00</p>
-                        <button onclick="event.stopPropagation(); addProductToCart('Shoes', 'Sneakers', 2.00, 'Lightweight canvas sneakers', 'images/SHOE8.jpg')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-grid" id="productGrid"></div>
-        </section>
-    </main>
-    <script src="script.js"></script>
     <script>
-        let currentProduct = null;
-        function openDeliveryForm(category, title, price, desc, image){
-            let p = typeof price === 'string' ? parseFloat(price.replace(/[^0-9.]/g, '')) : price;
-            let d = typeof desc !== 'undefined' ? desc : '';
-            currentProduct = { title, price: p, category, desc: d, image };
-            
-            document.getElementById('modalProductImg').src = image;
-            document.getElementById('modalProductTitle').textContent = title;
-            document.getElementById('modalProductPrice').textContent = 'GHS ' + p.toFixed(2);
-            document.getElementById('modalProductDesc').textContent = d;
-            
-            const modal = document.getElementById('deliveryModal');
-            if (modal) {
-                modal.style.display = 'block';
-            }
+        function toggleFloatingMenu() {
+            document.getElementById('floatingMenu').classList.toggle('active');
         }
-        function closeDeliveryForm() {
-            const modal = document.getElementById('deliveryModal');
-            if (modal) {
-                modal.style.display = 'none';
+        function updateCartBadge() {
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            const badge = document.getElementById('cartBadge');
+            if (badge) { badge.textContent = cart.length; badge.style.display = cart.length > 0 ? 'inline-block' : 'none'; }
+        }
+        function updateCartSummary() {
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            const summaryContainer = document.getElementById('cartSummaryContainer');
+            const emptyMsg = document.getElementById('emptyCartMsg');
+            if (cart.length === 0) {
+                if (summaryContainer) summaryContainer.style.display = 'none';
+                if (emptyMsg) emptyMsg.style.display = 'block';
+                return;
             }
+            if (summaryContainer) summaryContainer.style.display = 'block';
+            if (emptyMsg) emptyMsg.style.display = 'none';
+            let total = 0;
+            cart.forEach(item => { const price = parseFloat(item.price.replace('GHS', '').replace(/,/g, '').trim()); total += price * item.quantity; });
+            document.getElementById('cartItemCount').textContent = cart.length + ' item(s)';
+            document.getElementById('cartTotalAmount').textContent = 'GHS ' + total.toFixed(2);
+        }
+        function addProductToCart(category, title, price, desc, image) {
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            const priceStr = 'GHS ' + parseFloat(price).toFixed(2);
+            cart.push({ category, title, price: priceStr, description: desc, image, quantity: 1 });
+            localStorage.setItem('alfredCart', JSON.stringify(cart));
+            updateCartBadge();
+            updateCartSummary();
+            alert('Product added to cart!');
+        }
+        let currentProduct = null;
+        function openDeliveryForm(category, title, price, desc, image) {
+            currentProduct = { category, title, price, desc, image };
+            document.getElementById('detailImage').src = image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZTIeMmUzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzk5OSI+UHJvZHVjdCBJbWFnZTwvdGV4dD48L3N2Zz4=';
+            document.getElementById('detailTitle').textContent = title;
+            document.getElementById('detailPrice').textContent = 'GHS ' + parseFloat(price).toFixed(2);
+            document.getElementById('detailOriginal').textContent = 'GHS ' + (parseFloat(price) * 1.5).toFixed(2);
+            document.getElementById('detailDescription').textContent = desc;
+            document.getElementById('detailBreadcrumb').textContent = title.substring(0, 30) + '...';
+            document.getElementById('detailQuantity').value = 1;
+            document.getElementById('productDetailPage').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeProductDetail() {
+            document.getElementById('productDetailPage').style.display = 'none';
+            document.body.style.overflow = 'auto';
             currentProduct = null;
         }
-
-        // Process payment with Paystack
-        function processPayment() {
-            const fullName = document.getElementById('fullName').value;
-            const phoneNumber = document.getElementById('phoneNumber').value;
-            const address = document.getElementById('address').value;
-            
-            if (!fullName || !phoneNumber || !address) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            if (!currentProduct) {
-                alert('No product selected');
-                return;
-            }
-            
-            const priceNum = currentProduct.price || 0;
-            const deliveryInfo = { fullName, phoneNumber, address };
-            localStorage.setItem('tempDeliveryInfo', JSON.stringify(deliveryInfo));
-            
-            // Paystack payment integration
-            const paystack = new PaystackPop();
-            paystack.newTransaction({
-                key: 'pk_live_f89c4456a0860888a7fe1b1451f2808c32493',
-                amount: priceNum * 100,
-                email: 'customer@alfredproducts.com',
-                currency: 'GHS',
-                ref: 'ALF_SHOE_' + Math.floor((Math.random() * 1e9) + 1),
-                metadata: {
-                    custom_fields: [
-                        { display_name: 'Customer', variable_name: 'customer_name', value: fullName },
-                        { display_name: 'Phone', variable_name: 'phone', value: phoneNumber },
-                        { display_name: 'Product', variable_name: 'product', value: currentProduct.title },
-                        { display_name: 'Guest ID', variable_name: 'guest_id', value: localStorage.getItem('alfredGuestId') || '' }
-                    ]
-                },
-                callback: function(response) {
-                    console.log('Payment success, ref:', response.reference);
-                    saveOrderToFirestore({
-                        items: [{ title: currentProduct.title, price: priceNum, quantity: 1, image: currentProduct.image || '', category: currentProduct.category || '' }],
-                        total: priceNum.toFixed(2),
-                        reference: response.reference,
-                        delivery: deliveryInfo,
-                        userName: fullName,
-                        status: 'Paid'
-                    });
-                    localStorage.removeItem('tempDeliveryInfo');
-                    alert('Payment successful! Your order has been placed.');
-                    closeDeliveryForm();
-                    window.location.href = 'orders.html';
-                },
-                onClose: function() {
-                    console.log('Payment dialog closed.');
+        
+        function detailChangeQty(delta) {
+            const input = document.getElementById('detailQuantity');
+            let val = parseInt(input.value) + delta;
+            if (val < 1) val = 1;
+            input.value = val;
+        }
+        
+        function addFromDetail() {
+            if (currentProduct) {
+                const qty = parseInt(document.getElementById('detailQuantity').value) || 1;
+                for (let i = 0; i < qty; i++) {
+                    addProductToCart(currentProduct.category, currentProduct.title, currentProduct.price, currentProduct.desc, currentProduct.image);
                 }
+                alert('Added to cart!');
+            }
+        }
+        
+        function buyFromDetail() {
+            if (currentProduct) {
+                const qty = parseInt(document.getElementById('detailQuantity').value) || 1;
+                localStorage.setItem('alfredCart', JSON.stringify([]));
+                for (let i = 0; i < qty; i++) {
+                    addProductToCart(currentProduct.category, currentProduct.title, currentProduct.price, currentProduct.desc, currentProduct.image);
+                }
+                window.location.href = 'cart.html';
+            }
+        }
+        function closeDeliveryForm() { document.getElementById('deliveryModal').classList.remove('active'); currentProduct = null; }
+        function addCurrentProductToCart() { if (currentProduct) { addProductToCart(currentProduct.category, currentProduct.title, currentProduct.price, currentProduct.desc, currentProduct.image); closeDeliveryForm(); } }
+        function openCheckout() {
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            if (cart.length === 0) { alert('Your cart is empty!'); return; }
+            const cartItemsContainer = document.getElementById('checkoutCartItems');
+            let total = 0;
+            cartItemsContainer.innerHTML = '';
+            cart.forEach((item) => {
+                const price = parseFloat(item.price.replace('GHS', '').replace(/,/g, '').trim());
+                total += price * item.quantity;
+                const itemDiv = document.createElement('div');
+                itemDiv.style.cssText = 'display: flex; align-items: center; gap: 12px; padding: 10px; border-bottom: 1px solid #eee;';
+                itemDiv.innerHTML = `<img src="${item.image}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;"><div style="flex: 1;"><p style="margin: 0; font-size: 13px; font-weight: 600;">${item.title}</p><p style="margin: 0; font-size: 12px; color: #666;">${item.price} x ${item.quantity}</p></div><p style="margin: 0; font-weight: 700; color: #FF6B35;">GHS ${(price * item.quantity).toFixed(2)}</p>`;
+                cartItemsContainer.appendChild(itemDiv);
+            });
+            document.getElementById('checkoutTotalAmount').textContent = 'GHS ' + total.toFixed(2);
+            localStorage.setItem('cartTotal', total.toFixed(2));
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+        function closeCheckout() { document.getElementById('checkoutModal').classList.remove('active'); }
+        function processCheckout() {
+            const form = document.getElementById('checkoutDeliveryForm');
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+            const deliveryInfo = {
+                fullName: document.getElementById('checkoutFullName').value,
+                phoneNumber: document.getElementById('checkoutPhone').value,
+                whatsappNumber: document.getElementById('checkoutWhatsapp').value || 'N/A',
+                region: document.getElementById('checkoutRegion').value,
+                city: document.getElementById('checkoutCity').value,
+                address: document.getElementById('checkoutAddress').value
+            };
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            let total = parseFloat(localStorage.getItem('cartTotal')) || 0;
+            const paystack = PaystackPop;
+            paystack.newTransaction({
+                key: 'pk_live_6b9968065dc0bd4842c97ffa138e49127c862888',
+                amount: total * 100,
+                email: deliveryInfo.phoneNumber + '@alfred.com',
+                currency: 'GHS',
+                reference: 'ALFRED-' + Date.now(),
+                metadata: { deliveryInfo: deliveryInfo, cartItems: cart, total: total },
+                onSuccess: function(transaction) {
+                    alert('Payment successful! Reference: ' + transaction.reference);
+                    localStorage.removeItem('alfredCart');
+                    updateCartBadge();
+                    updateCartSummary();
+                    closeCheckout();
+                },
+                onCancel: function() { alert('Payment cancelled. You can try again.'); }
             });
         }
-    </script>
-
-    <!-- Delivery Modal -->
-    <div id="deliveryModal"
-        style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1000; padding:20px;">
-        <div style="background:white; border-radius:16px; max-width:500px; margin:50px auto; padding:20px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                <h3>Complete Order</h3>
-                <button onclick="closeDeliveryForm()"
-                    style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
-            </div>
-            <img id="modalProductImg" src="" style="width:100px; height:100px; object-fit:cover; border-radius:8px;">
-            <h4 id="modalProductTitle" style="margin:10px 0;"></h4>
-            <p id="modalProductPrice" style="font-size:20px; font-weight:bold; color:#0abf53;"></p>
-            <p id="modalProductDesc" style="font-size:12px; color:#666; margin:10px 0;"></p>
-            <input type="text" id="fullName" placeholder="Full Name"
-                style="width:100%; padding:10px; margin:10px 0; border:1px solid #ddd; border-radius:8px;">
-            <input type="tel" id="phoneNumber" placeholder="Phone Number"
-                style="width:100%; padding:10px; margin:10px 0; border:1px solid #ddd; border-radius:8px;">
-            <input type="text" id="address" placeholder="Delivery Address"
-                style="width:100%; padding:10px; margin:10px 0; border:1px solid #ddd; border-radius:8px;">
-            <button onclick="processPayment()"
-                style="width:100%; padding:15px; background:#0abf53; color:white; border:none; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer;">Pay
-                Now</button>
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div id="cartModal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);">
-        <div style="background-color:#fefefe;margin:5% auto;padding:20px;border:1px solid #888;width:90%;max-width:600px;border-radius:10px;max-height:80vh;overflow-y:auto;">
-            <span onclick="closeCartModal()" style="float:right;font-size:28px;font-weight:bold;cursor:pointer;">&times;</span>
-            <h2>Your Cart</h2>
-            <div id="cartItems"></div>
-            <div style="margin-top:20px;border-top:2px solid #eee;padding-top:15px;">
-                <h3>Total: GHS <span id="cartTotal">0.00</span></h3>
-                <p style="color:#666;">Delivery Fee: GHS <span id="deliveryFee">0.00</span></p>
-                <p style="font-weight:bold;color:#0abf53;">Grand Total: GHS <span id="grandTotal">0.00</span></p>
-            </div>
-            <button onclick="checkoutCart()" style="width:100%;padding:15px;background:#0abf53;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;margin-top:15px;">Proceed to Checkout</button>
-        </div>
-    </div>
-    
-    <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script>
-        // Floating Menu Functions
-        function toggleFloatingMenu() {
-            const menu = document.getElementById('floatingMenu');
-            menu.classList.toggle('active');
-        }
-        
-        function toggleOrdersSection() {
-            const section = document.getElementById('floatingOrdersSection');
-            const chevron = section.previousElementSibling.querySelector('.orders-chevron');
-            section.classList.toggle('active');
-            chevron.classList.toggle('rotated');
-            
-            if (typeof firebase !== 'undefined' && firebase.auth()) {
-                firebase.auth().onAuthStateChanged((user) => {
-                    if (user) {
-                        loadFloatingOrders(user.uid);
-                    }
-                });
-            }
-        }
-        
-        function loadFloatingOrders(uid) {
-            const container = document.getElementById('floatingOrdersList');
-            if (typeof db !== 'undefined') {
-                db.collection("orders").where("userId", "==", uid).orderBy("timestamp", "desc").limit(5).get()
-                    .then((querySnapshot) => {
-                        if (querySnapshot.empty) {
-                            container.innerHTML = '<div style="padding: 15px; text-align: center; color: #999; font-size: 13px;"><ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>No Order</div>';
-                            return;
-                        }
-                        let ordersHTML = '';
-                        querySnapshot.forEach((doc) => {
-                            const order = doc.data();
-                            const firstItem = order.items[0];
-                            ordersHTML += '<a href="orders.html" class="floating-order-item"><img src="' + (firstItem.image || 'new_logo.png') + '" alt="Product" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;"><div style="flex: 1; overflow: hidden;"><p style="font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + firstItem.title + '</p><p style="font-size: 11px; color: #999;">' + order.items.length + ' item(s) • GHS ' + parseFloat(order.total).toFixed(2) + '</p></div></a>';
-                        });
-                        container.innerHTML = ordersHTML;
-                    })
-                    .catch((error) => {
-                        container.innerHTML = '<div style="padding: 15px; text-align: center; color: #999; font-size: 13px;"><ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>No Order</div>';
-                    });
-            } else {
-                container.innerHTML = '<div style="padding: 15px; text-align: center; color: #999; font-size: 13px;"><ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>No Order</div>';
-            }
-        }
-        
-        document.addEventListener('click', function(e) {
-            const menuContainer = document.querySelector('.floating-menu-container');
-            const menu = document.getElementById('floatingMenu');
-            if (menuContainer && !menuContainer.contains(e.target)) {
-                menu.classList.remove('active');
-            }
-        });
+        document.addEventListener('DOMContentLoaded', function() { updateCartBadge(); updateCartSummary(); });
     </script>
 </body>
 
