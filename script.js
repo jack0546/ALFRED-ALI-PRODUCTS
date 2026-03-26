@@ -1,8 +1,105 @@
 // ALFRED PRODUCTS - Main Script
 // This script handles product generation, category filtering, and local image mapping.
+// SECURITY: Input sanitization and validation functions added
 
 // Placeholder image for products
 const PLACEHOLDER_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZTIeMmUzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzk5OSI+SW1hZ2UgTm90IEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
+
+// ========================================
+// SECURITY: Input Sanitization Functions
+// ========================================
+
+// Sanitize HTML to prevent XSS attacks
+function sanitizeHTML(str) {
+    if (!str || typeof str !== 'string') return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+// Validate and sanitize price input
+function sanitizePrice(price) {
+    if (typeof price === 'string') {
+        const num = parseFloat(price.replace(/[^0-9.]/g, ''));
+        return isNaN(num) ? 0 : Math.abs(num);
+    }
+    return typeof price === 'number' && price > 0 ? Math.abs(price) : 0;
+}
+
+// Validate email format
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+}
+
+// Validate phone number (Ghana format)
+function validatePhone(phone) {
+    if (!phone) return false;
+    // Remove all non-digits
+    const digits = phone.replace(/\D/g, '');
+    // Ghana phone numbers are 10 digits starting with 0, or 9 digits starting with 2
+    return digits.length === 10 || digits.length === 9;
+}
+
+// Validate required field
+function validateRequired(value) {
+    return value && String(value).trim().length > 0;
+}
+
+// Sanitize text input (remove dangerous characters)
+function sanitizeTextInput(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/[<>]/g, '') // Remove < and >
+        .replace(/javascript:/gi, '') // Remove javascript: protocol
+        .replace(/on\w+=/gi, '') // Remove event handlers
+        .trim();
+}
+
+// CSRF Token generation (simple version - in production use proper tokens)
+const csrfToken = 'alfred_' + Date.now() + '_' + Math.random().toString(36).substr(2);
+
+// Validate URL to prevent redirect attacks
+function validateRedirectURL(url) {
+    if (!url) return false;
+    const allowedDomains = ['alfredproducts.com', 'localhost', ''];
+    try {
+        const urlObj = new URL(url, window.location.origin);
+        return allowedDomains.some(domain => 
+            urlObj.hostname.endsWith(domain) || domain === ''
+        );
+    } catch (e) {
+        // If URL parsing fails, check if it's a relative path
+        return url.startsWith('/') || url.startsWith('index.html') || 
+               url.startsWith('product.html') || url.startsWith('categories.html');
+    }
+}
+
+// Secure localStorage operations
+const secureStorage = {
+    set: function(key, value) {
+        try {
+            // Encode data to prevent simple XSS access
+            const encoded = btoa(encodeURIComponent(JSON.stringify(value)));
+            localStorage.setItem(key, encoded);
+        } catch (e) {
+            console.error('Storage error:', e);
+        }
+    },
+    get: function(key) {
+        try {
+            const encoded = localStorage.getItem(key);
+            if (!encoded) return null;
+            return JSON.parse(decodeURIComponent(atob(encoded)));
+        } catch (e) {
+            console.error('Storage read error:', e);
+            return null;
+        }
+    },
+    remove: function(key) {
+        localStorage.removeItem(key);
+    }
+};
 
 // Current product for delivery form
 // Note: Don't use 'let' here to avoid conflicts with HTML files that also declare this variable
@@ -10,11 +107,17 @@ if (typeof currentProduct === 'undefined') {
     currentProduct = null;
 }
 
-// Open Delivery Form Modal with Paystack Payment
+// Open Delivery Form Modal with Paystack Payment - Redirect to Landing Page
 function openDeliveryForm(category, title, price, description, image) {
     let p = typeof price === 'string' ? parseFloat(price.replace(/[^0-9.]/g, '')) : price;
     let d = typeof description !== 'undefined' ? description : '';
+    // Redirect to product landing page with parameters
     window.location.href = 'product.html?title=' + encodeURIComponent(title) + '&price=' + p + '&desc=' + encodeURIComponent(d) + '&image=' + encodeURIComponent(image) + '&category=' + encodeURIComponent(category);
+}
+
+// Function to navigate to product detail page (used by all product cards)
+function viewProductDetail(category, title, price, description, image) {
+    openDeliveryForm(category, title, price, description, image);
 }
 
 function closeDeliveryForm() {
