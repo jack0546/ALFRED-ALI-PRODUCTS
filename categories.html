@@ -4,21 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Categories - ALFRED PRODUCTS</title>
+    <title>All Categories - ALFRED</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#FF6600">
+    <meta name="theme-color" content="#FF6B35">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="new_logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="firebase-config.js"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <style>
         .category-explorer {
@@ -26,156 +18,6 @@
             grid-template-columns: 250px 1fr;
             gap: 30px;
             margin-top: 30px;
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 16px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            font-size: 18px;
-            color: var(--text-color);
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-muted);
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .modal-product-info {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .modal-product-img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .modal-product-details h4 {
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
-        .modal-product-details .price {
-            font-size: 18px;
-            font-weight: 700;
-            color: #0abf53;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--text-color);
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #0abf53;
-        }
-
-        .modal-footer {
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .payment-btn {
-            width: 100%;
-            padding: 15px;
-            background: #0abf53;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .payment-btn:hover {
-            background: #08a648;
         }
 
         .category-nav {
@@ -186,13 +28,13 @@
             background: white;
             border-radius: 12px;
             padding: 20px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-light);
         }
 
         .category-nav h3 {
             font-size: 16px;
             margin-bottom: 20px;
-            color: var(--primary-color);
+            color: #FF6B35;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -207,16 +49,18 @@
 
         .category-nav a {
             text-decoration: none;
-            color: var(--text-color);
+            color: var(--text-primary);
             font-size: 14px;
             font-weight: 500;
             transition: 0.3s;
             display: block;
+            padding: 10px 12px;
+            border-radius: 8px;
         }
 
-        .category-nav a:hover {
-            color: var(--primary-color);
-            padding-left: 5px;
+        .category-nav a:hover, .category-nav a.active {
+            background: #FFF5F2;
+            color: #FF6B35;
         }
 
         .category-section {
@@ -230,25 +74,18 @@
             align-items: center;
             margin-bottom: 25px;
             padding-bottom: 12px;
-            border-bottom: 2px solid var(--primary-color);
+            border-bottom: 2px solid #FF6B35;
         }
 
         .category-header h3 {
             font-size: 24px;
             font-weight: 800;
-            color: var(--text-color);
-        }
-
-        .category-header .view-all {
-            font-size: 14px;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 700;
+            color: var(--text-primary);
         }
 
         .sub-category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 20px;
         }
 
@@ -256,64 +93,159 @@
             background: white;
             border-radius: 12px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            color: inherit;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
+            border: 1px solid var(--border-light);
+            transition: all 0.25s ease;
+            cursor: pointer;
         }
 
         .sub-category-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-color);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: #FF6B35;
         }
 
         .sub-category-img {
             height: 140px;
             overflow: hidden;
             background: #f7f7f7;
-            position: relative;
         }
 
         .sub-category-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
+            transition: transform 0.3s;
         }
 
         .sub-category-card:hover .sub-category-img img {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .sub-category-name {
             font-size: 13px;
             font-weight: 600;
             padding: 12px 10px;
-            display: block;
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1.4;
+            text-align: center;
+            color: var(--text-primary);
         }
 
-        @media (max-width: 900px) {
-            .category-explorer {
-                grid-template-columns: 1fr;
-            }
+        /* Loading State */
+        .loading-state {
+            text-align: center;
+            padding: 60px;
+            color: var(--text-muted);
+        }
 
-            .category-nav {
-                display: none;
-            }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-light);
+            border-top-color: #FF6B35;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 
 <body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="new_logo.png" alt="ALFRED">
+                    </a>
+                </div>
+                
+                <div class="search-container" style="flex: 1; max-width: 500px; margin: 0 30px;">
+                    <input type="text" placeholder="Search for products..." id="searchInput">
+                    <button onclick="performSearch()">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </button>
+                </div>
+                
+                <div class="header-actions">
+                    <a href="cart.html" class="action-item">
+                        <ion-icon name="cart-outline"></ion-icon>
+                        <span>Cart</span>
+                        <span id="cartBadge" style="display: none; background: #FF477E; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px;">0</span>
+                    </a>
+                    <a href="login.html" class="action-item">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <span>Sign In</span>
+                    </a>
+                </div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="featured.html">Featured</a></li>
+                    <li><a href="bags.html">Bags</a></li>
+                    <li><a href="shoes.html">Shoes</a></li>
+                    <li><a href="beauty.html">Beauty</a></li>
+                    <li><a href="electronics.html">Electronics</a></li>
+                    <li><a href="apparel.html">Apparel</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <span style="color: #FF6B35;">All Categories</span>
+        </div>
+
+        <div class="category-explorer">
+            <!-- Sidebar Navigation -->
+            <aside class="category-nav" id="sidebarNav">
+                <h3><ion-icon name="grid-outline"></ion-icon> Categories</h3>
+                <ul id="categoryNavList">
+                    <!-- Generated by JS -->
+                </ul>
+            </aside>
+
+            <!-- Category Display -->
+            <div class="category-display" id="categoryDisplay">
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <p>Loading categories...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary" id="cartSummaryContainer" style="display: none;">
+            <h3><ion-icon name="cart-outline"></ion-icon> Your Shopping Cart</h3>
+            <div class="summary-row">
+                <span>Total Items:</span>
+                <span id="cartItemCount">0</span>
+            </div>
+            <div class="total-row">
+                <span class="label">Total Amount:</span>
+                <span class="amount" id="cartTotalAmount">GHS 0.00</span>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="openCheckout()">
+                <ion-icon name="card-outline"></ion-icon> Proceed to Checkout
+            </button>
+        </div>
+
+        <div class="empty-state" id="emptyCartMsg" style="display: none;">
+            <ion-icon name="cart-outline"></ion-icon>
+            <h3>Your cart is empty</h3>
+            <p>Click on a product to view details and add to cart!</p>
+        </div>
+    </main>
+
     <!-- Floating Menu Button -->
     <div class="floating-menu-container">
         <button class="floating-menu-btn" onclick="toggleFloatingMenu()">
@@ -324,469 +256,157 @@
                 <ion-icon name="person-outline"></ion-icon>
                 <span>Sign In</span>
             </a>
-            <a href="messages.html" class="floating-menu-item">
-                <ion-icon name="mail-outline"></ion-icon>
-                <span>Messages</span>
-            </a>
-            <div class="floating-menu-item floating-orders-btn" onclick="toggleOrdersSection()">
+            <a href="cart.html" class="floating-menu-item">
                 <ion-icon name="cart-outline"></ion-icon>
+                <span>Cart</span>
+            </a>
+            <a href="orders.html" class="floating-menu-item">
+                <ion-icon name="bag-handle-outline"></ion-icon>
                 <span>Orders</span>
-                <ion-icon name="chevron-down-outline" class="orders-chevron"></ion-icon>
+            </a>
+        </div>
+    </div>
+
+    <!-- Product Detail Landing Page (Inline) -->
+    <div class="product-landing-page" id="productDetailPage" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 2000; overflow-y: auto;">
+        <div class="container" style="padding: 20px;">
+            <!-- Breadcrumb -->
+            <div style="display: flex; align-items: center; gap: 8px; padding: 16px 0; font-size: 14px;">
+                <a href="index.html" style="color: #666; text-decoration: none;">Home</a>
+                <span>/</span>
+                <a href="categories.html" style="color: #666; text-decoration: none;">Categories</a>
+                <span>/</span>
+                <span id="detailBreadcrumb" style="color: #FF6B35;">Product</span>
             </div>
-            <div class="floating-orders-section" id="floatingOrdersSection">
-                <div id="floatingOrdersList">
-                    <div style="padding: 15px; text-align: center; color: #999; font-size: 13px;">
-                        <ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>
-                        No Order
+            
+            <!-- Close Button -->
+            <button onclick="closeProductDetail()" style="position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%; border: none; background: #f8f8f8; font-size: 24px; cursor: pointer; z-index: 2001;">&times;</button>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px;">
+                <!-- Image -->
+                <div style="border-radius: 16px; overflow: hidden; background: #f8f8f8;">
+                    <img id="detailImage" src="" alt="Product" style="width: 100%; height: 400px; object-fit: cover;">
+                </div>
+                
+                <!-- Info -->
+                <div>
+                    <h1 id="detailTitle" style="font-size: 24px; font-weight: 700; margin-bottom: 16px;">Product Title</h1>
+                    <div style="font-size: 32px; font-weight: 800; color: #FF6B35; margin-bottom: 12px;">
+                        <span id="detailPrice">GHS 0.00</span>
+                        <span id="detailOriginal" style="font-size: 18px; color: #999; text-decoration: line-through; margin-left: 12px; font-weight: 400;"></span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                        <div style="display: flex; gap: 2px;">
+                            <ion-icon name="star" style="color: #FFDC00; font-size: 18px;"></ion-icon>
+                            <ion-icon name="star" style="color: #FFDC00; font-size: 18px;"></ion-icon>
+                            <ion-icon name="star" style="color: #FFDC00; font-size: 18px;"></ion-icon>
+                            <ion-icon name="star" style="color: #FFDC00; font-size: 18px;"></ion-icon>
+                            <ion-icon name="star-half" style="color: #FFDC00; font-size: 18px;"></ion-icon>
+                        </div>
+                        <span id="detailRating" style="color: #666; font-size: 14px;">4.8 (256 reviews)</span>
+                    </div>
+                    <div id="detailSales" style="color: #999; font-size: 14px; margin-bottom: 20px;">1,234 sold</div>
+                    
+                    <div id="detailDescription" style="color: #666; line-height: 1.8; padding: 20px; background: #f8f8f8; border-radius: 12px; margin-bottom: 24px;">
+                        Product description...
+                    </div>
+                    
+                    <div style="margin-bottom: 24px;">
+                        <h3 style="font-size: 16px; margin-bottom: 12px;">Specifications</h3>
+                        <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee;">
+                            <span style="color: #999;">Category</span>
+                            <span id="detailCategory" style="font-weight: 600;">General</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee;">
+                            <span style="color: #999;">Material</span>
+                            <span style="font-weight: 600;">Premium Quality</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee;">
+                            <span style="color: #999;">Brand</span>
+                            <span style="font-weight: 600;">ALFRED Verified</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                        <label style="font-weight: 600;">Quantity:</label>
+                        <div style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+                            <button onclick="detailChangeQty(-1)" style="width: 44px; height: 44px; border: none; background: #f8f8f8; font-size: 20px; cursor: pointer;">-</button>
+                            <input type="number" id="detailQuantity" value="1" min="1" style="width: 70px; height: 44px; border: none; text-align: center; font-size: 16px; font-weight: 600;">
+                            <button onclick="detailChangeQty(1)" style="width: 44px; height: 44px; border: none; background: #f8f8f8; font-size: 20px; cursor: pointer;">+</button>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 12px;">
+                        <button onclick="addFromDetail()" style="flex: 1; padding: 18px; background: linear-gradient(135deg, #FF6B35, #E55A2B); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                        </button>
+                        <button onclick="buyFromDetail()" style="flex: 1; padding: 18px; background: #1a1a1a; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <ion-icon name="flash-outline"></ion-icon> Buy Now
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <header>
-        <div class="container">
-            <div class="header-top">
-                <div class="logo">
-                    <a href="index.html"><img src="new_logo.png" alt="ALFRED PRODUCTS Logo" style="height: 28px;"></a>
-                </div>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search for products or categories...">
-                    <button>Search</button>
-                </div>
-                <div class="header-actions" id="headerActions">
-                    <a href="#" class="action-item" onclick="viewCart(); return false;">
-                        <ion-icon name="wallet-outline"></ion-icon>
-                        <span>Checkout</span>
-                    </a>
-                    <a href="login.html" class="action-item">
-                        <ion-icon name="person-outline"></ion-icon>
-                        <span>Sign In</span>
-                    </a>
-                    <a href="messages.html" class="action-item">
-                        <ion-icon name="mail-outline"></ion-icon>
-                        <span>Messages</span>
-                    </a>
-                    <a href="cart.html" class="action-item">
-                        <ion-icon name="cart-outline"></ion-icon>
-                        <span id="cartCount">0</span>
-                    </a>
-                </div>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="categories.html" class="active">All Categories</a></li>
-                    <li><a href="featured.html">Featured Products</a></li>
-                    <li><a href="trade.html">Trade Assurance</a></li>
-                    <li><a href="logistics.html">Logistics Services</a></li>
-                    <li><a href="help.html">Help Center</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <main class="container">
-        <div class="category-explorer">
-            <aside class="category-nav">
-                <h3>All Markets</h3>
-                <ul id="sidebarNav">
-                    <!-- Nav items will be loaded here -->
-                </ul>
-            </aside>
-            <section id="categoryDisplay">
-                <div style="text-align: center; padding: 100px 0;">
-                    <ion-icon name="sync-outline"
-                        style="font-size: 48px; color: var(--primary-color); animation: spin 2s linear infinite;"></ion-icon>
-                    <p style="margin-top: 15px; color: var(--text-muted);">Organizing categories...</p>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container footer-grid">
-            <div class="footer-col">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="help.html">Help Center</a></li>
-                    <li><a href="messages.html">Contact Us</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Trade Services</h4>
-                <ul>
-                    <li><a href="trade.html">Trade Assurance</a></li>
-                    <li><a href="logistics.html">Logistics Service</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
-    <style>
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-
-    <script src="script.js"></script>
-    <script>
-        // --- IMAGE MAPPING FOR CATEGORIES IN ALL MARKET ---
-        // Updated with ALL available local images - mapped to ALL categories to prevent blanks
-        const categoryImagesAllMarket = {
-            bags: [
-                'images/BAG1.jpg', 'images/BAG2.jpg', 'images/BAG3.jpg', 'images/BAG4.jpg',
-                'images/BAG5.jpg', 'images/BAG6.jpg', 'images/BAG7.jpg', 'images/BAG8.jpg',
-                'images/BAG9.jpg', 'images/BAG10.jpg', 'images/BAG11.jpg', 'images/BAG12.jpg',
-                'images/BAG14.jpg', 'images/BAG15.jpg', 'images/BAG16.jpg', 'images/BAG17.jpg',
-                'images/BAG18.jpg', 'images/BAG19.jpg', 'images/BAG20.jpg', 'images/BAG21.jpg',
-                'images/BAG22.jpg', 'images/BAG23.jpg', 'images/BAG24.jpg', 'images/BAG25.jpg',
-                'images/BAG26.jpg', 'images/BAG29.jpg', 'images/BAG30.jpg',
-                'images/BAGS26.jpg', 'images/BAGS27.jpg', 'images/BAGS28.jpg'
-            ],
-            shoes: [
-                'images/SHOE1.jpg', 'images/SHOE2.jpg', 'images/SHOE3.jpg', 'images/SHOE 4.jpg',
-                'images/SHOE5.jpg', 'images/SHOE6.jpg', 'images/SHOE7.jpg', 'images/SHOE8.jpg',
-                'images/SHOE9.jpg', 'images/SHOE10.jpg', 'images/SHOE11.jpg', 'images/SHOE12.jpg',
-                'images/SHOE13.jpg', 'images/SHOE14.jpg', 'images/SHOE15.jpg', 'images/SHOE16.jpg',
-                'images/SHOE17.jpg', 'images/SHOE18.jpg', 'images/SHOE19.jpg', 'images/SHOE20.jpg',
-                'images/SHOE21.jpg', 'images/SHOE22.jpg', 'images/SHOE23.jpg', 'images/SHOE24.jpg',
-                'images/SHOE25.jpg', 'images/SHOE26.jpg', 'images/SHOE27.jpg', 'images/SHOE28.jpg',
-                'images/SHOE29.jpg', 'images/SHOE30.jpg', 'images/SHOE31.jpg', 'images/SHOE32.jpg',
-                'images/SHOE33.jpg', 'images/SHOE34.jpg', 'images/SHOE35.jpg', 'images/SHOE36.jpg',
-                'images/SHOE37.jpg', 'images/SHOE38.jpg', 'images/SHOE39.jpg', 'images/SHOE40.jpg',
-                'images/SHOE340#.jpg'
-            ],
-            electronics: [
-                'images/SMART1.jpg', 'images/SMART2.jpg', 'images/SMART3.jpg', 'images/SMAR4.jpg',
-                'images/SMART5.jpg', 'images/SMART6.jpg', 'images/SMART7.jpg', 'images/SMART8.jpg',
-                'images/SMART9.jpg'
-            ],
-            beauty: [
-                'images/SPRAY1.jpg', 'images/SPRAY2.jpg', 'images/SPRAY3.jpg'
-            ],
-            home: [
-                'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg',
-                'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg',
-                'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg',
-                'images/image13.jpg', 'images/test.jpg'
-            ],
-            gifts: [
-                'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg',
-                'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg',
-                'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg',
-                'images/image13.jpg', 'images/test.jpg'
-            ],
-            // Reuse images for categories without specific images
-            sports: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            toys: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            apparel: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            outdoor: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            jewelry: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            printing: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            personal: ['images/SPRAY1.jpg', 'images/SPRAY2.jpg', 'images/SPRAY3.jpg', 'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg'],
-            health: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            pet: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            school: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            industrial: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            commercial: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            construction: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            furniture: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            lighting: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            appliances: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            automotive: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            renewable: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            electrical: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            safety: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            handling: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            testing: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg'],
-            power: ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg']
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const display = document.getElementById('categoryDisplay');
-            const nav = document.getElementById('sidebarNav');
-
-            // Comprehensive Category Data structure based on user request
-            const sectors = [
-                {
-                    id: "sports",
-                    name: "Sports & Entertainment",
-                    items: ["Camping Gear", "Fishing Accessories", "Novelties", "Step Platforms", "Accessories", "Bows", "Slides", "Diving Reel", "Shot Put", "Tennis Net", "Flying Car", "Suspension Trainers", "Amusement Park Products"]
-                },
-                {
-                    id: "beauty",
-                    name: "Beauty",
-                    items: ["Perfume Gift Sets", "Perfume Set", "Body Mist", "Women's Perfume", "Deodorant Spray", "Deodorant", "Men's Perfume", "Cosmetic", "Nail Equipments", "Hair Removal Machine", "Makeup Sets", "Antiperspirant", "Nail Supplies"]
-                },
-                {
-                    id: "shoes",
-                    name: "Shoes & Accessories",
-                    items: ["Home Slippers", "Fur Slippers", "Moccasin Slippers", "Moccasins", "Flats", "Slides Slippers", "Sandals", "Women Flats", "Clogs Shoes", "Summer Sandals", "Beach Slippers", "Indoor Slippers", "Women Slides"]
-                },
-                {
-                    id: "toys",
-                    name: "Parents, Kids & Toys",
-                    items: ["Educational Toys", "Transformation Toys", "Swimming Pool", "Children Slippers", "Girls Sandals", "Clogs", "Slippers", "Snow Scooters", "Miscellaneous", "Pool Accessories", "Kaleidoscopes", "Water Toys", "Party Decoration"]
-                },
-                {
-                    id: "apparel",
-                    name: "Apparel & Accessories",
-                    items: ["Graduation Cap", "Cheongsam", "Sequins", "Trimmings", "Ice Hockey", "Rhinestones", "Men's Sets", "Muslim Skirt", "Pirate Hat", "Dance Pants", "Tactical Clothes", "Fabric Belts", "Pilot Shirt"]
-                },
-                {
-                    id: "electronics",
-                    name: "Consumer Electronics",
-                    items: ["Speaker Driver", "Keyboard switches", "Tf Card", "Camera Accessories", "Smart Products", "Computer Accessories", "Software", "Ethernet Adapter", "Satellite Multiswitch", "Hd Camcorder", "Uv Filter", "Camera Filters", "Soldering Mat"]
-                },
-                {
-                    id: "home",
-                    name: "Home & Garden",
-                    items: ["Snow Spray", "Blackout Curtain", "Smart Blinds", "Bouquet", "Curtains", "Bottle", "Roses", "Window Canopy", "Vertical Awning", "Automatic Curtain", "Blind Motor", "Valances", "Shade Cloth"]
-                },
-                {
-                    id: "outdoor",
-                    name: "Sportswear & Outdoor",
-                    items: ["Leg Warmers", "Leg Massager", "Knee Support", "Barefoot Shoes", "Volleyball Shoes", "Souvenirs", "Football Boots", "Hockey Skate", "Mtb Shoes", "Sports Gloves", "Back Support", "Sweatband", "Keeper Gloves"]
-                },
-                {
-                    id: "jewelry",
-                    name: "Jewelry, Eyewear & Watches",
-                    items: ["Jewelry Tools", "Acrylic beads", "Crystal Beads", "Silicone Beads", "Glass Beads", "Charms", "Amber", "Hair Sticks", "Headpiece", "Tourmaline", "Earring Cards", "Turquoise", "Christmas Jewelry"]
-                },
-                {
-                    id: "bags",
-                    name: "Luggage, Bags & Cases",
-                    items: ["Beauty Case", "College Bag", "Cosmetic Case", "Bag Accessories", "Wine Bag", "Shoulder Bag", "Backpack", "Bag Chain", "Shoulder Strap", "Lipstick Bags", "Luggage Scooter", "Lipstick Case", "Bag Handle"]
-                },
-                {
-                    id: "printing",
-                    name: "Packaging & Printing",
-                    items: ["Cardboard Boxes", "Paper Bags", "Plastic Bags", "Glass Bottles", "Labels", "Stickers", "Bubble Wrap", "Express Envelopes", "Gift Boxes", "Wine Boxes", "Jewelry Packaging"]
-                },
-                {
-                    id: "personal",
-                    name: "Personal Care & Home Care",
-                    items: ["Feminine Hygiene Products", "Laundry Soap", "After Shave Cologne", "Hair Extension Tools", "Washing Powder", "Aftershave", "Perfume Oil", "Sea Salt", "Hair Relaxers", "Breath Fresheners", "Detergent Sheets", "Detangling Brush", "Hair Mousse"]
-                },
-                {
-                    id: "health",
-                    name: "Health & Medical",
-                    items: ["Ecg Machine", "Insulin Syringe", "Medical Consumables", "Rehabilitation Equipment", "Veterinary Medicine", "Massage Products", "Stretcher", "Acupuncture Machine", "Rehabilitation Therapy Supplies", "Wheelchair Parts", "Scalpel Blade", "Sleeping Aid", "Pathological Analysis Equipments"]
-                },
-                {
-                    id: "gifts",
-                    name: "Gifts & Crafts",
-                    items: ["Name Tag", "Promotional Business Gifts", "Amethyst", "Key Chain", "Gift Sets", "Flags", "Metal Crafts", "Buffalo", "Nameplate", "Lucky Cat", "Plastic Key Chains", "Crystal Stone", "Leather Crafts"]
-                },
-                {
-                    id: "pet",
-                    name: "Pet Supplies",
-                    items: ["Dog Food", "Hamster Cage", "Dog Kennel", "Aquarium Filter", "Cat Tree", "Pet Accessories", "Aquariums", "Saltwater Aquarium", "Dog Ramp", "Sponge Filter", "Cat Toy", "Dog Car Seat", "Dog Crate"]
-                },
-                {
-                    id: "school",
-                    name: "School & Office",
-                    items: ["Water Color", "Paper Punch", "Bible Cover", "Cutting Plotter", "Art Supplies", "Erasers", "Medical Science", "World Globe", "Sketch Pad", "Watercolor Paper", "Id Badge Holder", "Binder Clips", "Cork Board"]
-                },
-                {
-                    id: "industrial",
-                    name: "Industrial Machinery",
-                    items: ["Air Dryer", "Farm Trailers", "Agriculture Products", "Grinder Machine", "Gasoline Engine", "Crystallizers", "Air Curtain", "Boiler Parts", "Shredder Blades", "Machine Tools Accessories", "Worm Gears", "Ultrasonic Extractor", "Shafts"]
-                },
-                {
-                    id: "commercial",
-                    name: "Commercial Equipment",
-                    items: ["Plastic Welders", "TIG Welders", "Arc Welders", "Welding Robot", "Spot Welders", "Laser Welders", "Welding Machine", "Amenity Kit", "Juice Dispenser", "Shopping Cart", "Poultry", "Food Cart", "Food Trailer"]
-                },
-                {
-                    id: "construction",
-                    name: "Construction & Real Estate",
-                    items: ["Excavators", "Concrete Mixers", "Scaffolding", "Pipes", "Roofing Tiles", "Steel Bars", "Windows", "Doors", "Marble", "Granite", "Real Estate Services"]
-                },
-                {
-                    id: "furniture",
-                    name: "Furniture",
-                    items: ["Office Chairs", "Sofas", "Dining Tables", "Beds", "Cabinets", "Desks", "Mattresses", "Outdoor Furniture", "Kids Furniture", "Hotel Furniture"]
-                },
-                {
-                    id: "lighting",
-                    name: "Lights & Lighting",
-                    items: ["LED Bulbs", "Smart Lighting", "Outdoor Lamps", "Chandeliers", "Solar Lights", "Flashlights", "Stage Lighting", "Grow Lights", "Night Lights"]
-                },
-                {
-                    id: "appliances",
-                    name: "Home Appliances",
-                    items: ["Air Conditioners", "Refrigerators", "Washing Machines", "Microwaves", "Vacuum Cleaners", "Water Heaters", "Blenders", "Coffee Makers"]
-                },
-                {
-                    id: "automotive",
-                    name: "Automotive & Tools",
-                    items: ["Car Chargers", "Diagnostic Tools", "Tire Pressure Gauges", "Car Vacuum", "Wrench Sets", "Screwdrivers", "Jump Starters", "Dash Cams"]
-                },
-                {
-                    id: "renewable",
-                    name: "Renewable Energy",
-                    items: ["Water Turbine", "Rechargeable Batteries", "Hydro Generator", "Wind Turbine", "Battery", "Solar Panels", "Solar Energy System", "Magnet Generator", "Solar Cells", "Solar Charger", "Solar Tracker", "Turbine Generator", "Solar Kits"]
-                },
-                {
-                    id: "electrical",
-                    name: "Electrical Supplies",
-                    items: ["Winding Wire", "Wall Socket", "Electrical Switch", "Transformers", "Cable Connector", "Welding Cable", "Gasoline Generators", "Bnc Connector", "Generator Parts", "Aluminum Box", "Fuse Box", "Electrical Equipment", "Gas Turbine Generators"]
-                },
-                {
-                    id: "safety",
-                    name: "Safety & Security",
-                    items: ["Work Clothing", "Parking Barrier", "Locksmith Tools", "Keys", "Locksmith Supplies", "Nvr", "Spy Camera", "Latch", "Smart Card Reader", "Rim Lock", "Military Supplies", "Reflective Fabric", "Lightning Rods"]
-                },
-                {
-                    id: "handling",
-                    name: "Material Handling",
-                    items: ["Dollies", "Conveyor Belt", "Hoists", "Wheelbarrows", "Rope", "Forklifts", "Shelves", "Forklift Truck", "Truck Lift", "Casters", "Anchor Winch", "Manipulator", "Stacker"]
-                },
-                {
-                    id: "testing",
-                    name: "Testing & Instruments",
-                    items: ["Data Logger", "Level Measuring Instruments", "Optics Instruments", "Gas Regulator", "Lab Equipment", "Flasks", "Thermostat", "Weighing Indicator", "Humidity Controller", "Temperature Instruments", "Soil Moisture Meter", "Humidity Sensor", "Lpg Regulator"]
-                },
-                {
-                    id: "power",
-                    name: "Power Transmission",
-                    items: ["Fan Motor", "Stepper Motors", "Motor", "Bearing", "Tubular Motor", "Micro Motor", "Housings", "Ebike Controller", "Hydraulic Fittings", "Hydraulic Motors", "Hydraulic Cylinders", "Bushing", "Hydraulic Power Pack"]
-                },
-                {
-                    id: "components",
-                    name: "Electronic Components",
-                    items: ["Buzzer", "Bluetooth Modules", "Terminals", "Fiber", "Sensor", "Onu", "LEDs", "WiFi Modules", "Porcelain Insulator", "Rain Sensor", "Microcontrollers", "Lora Module", "Electronic Data Systems"]
-                },
-                {
-                    id: "transport",
-                    name: "Vehicles & Transportation",
-                    items: ["Sport Car", "Pit Bike", "Used Motorcycles", "Motorcycle", "Trailers", "Electric Truck", "ATVs", "Suv Car", "Pick Up Truck", "Utility Trailer", "Dump Trailer", "Tow Truck", "Hybrid Car"]
-                },
-                {
-                    id: "food",
-                    name: "Agriculture & Food",
-                    items: ["Absinthe", "Dory", "Coconut Water", "Vanilla Beans", "Cardamom", "Cloves", "Saffron", "Mooncakes", "Mussel", "Ramune", "Condensed Milk", "Logs", "Betel Nuts"]
-                },
-                {
-                    id: "raw",
-                    name: "Raw Materials",
-                    items: ["Ammonium Nitrate", "Phosphoric Acid", "Rubber Feet", "Ramie Yarn", "PET", "Scented Oil", "Aluminum", "Bedding fabric", "Camphor Powder", "Sulphur", "Polyurethane Rubber", "Camphor", "Chlorine Tablets"]
-                },
-                {
-                    id: "fabrication",
-                    name: "Fabrication Services",
-                    items: ["Casting Services", "Concrete Blocks Molds", "Plastic Mold", "Sheet Metal Fabrication", "Machining Services", "Concrete Molds", "Moulds", "Steel Products", "Injection Mould", "Bottle Mold", "Forging Services", "Press Mold", "Plastic Model"]
-                },
-                {
-                    id: "service",
-                    name: "Service & Business",
-                    items: ["Fashion Design", "PC Games", "Quality Control", "Wix", "AI Chatbot", "Taobao Agent", "1688 Agent", "Mobile Games", "Supplier Search", "Other Goods", "Positive Material Identification", "Household items"]
-                }
-            ];
-
-            let globalImgIndex = 0;
-            display.innerHTML = ''; // Clear loading spinner
-
-            sectors.forEach(sector => {
-                // Add to Sidebar
-                const li = document.createElement('li');
-                li.innerHTML = `<a href="#${sector.id}">${sector.name}</a>`;
-                nav.appendChild(li);
-
-                // Add to main display
-                const section = document.createElement('section');
-                section.id = sector.id;
-                section.className = 'category-section';
-
-                let subItemsHTML = '';
-                let catImgIndex = 0;
-                const catImages = categoryImagesAllMarket[sector.id] || [];
-
-                sector.items.forEach(item => {
-                    globalImgIndex++;
-                    const encodedItem = encodeURIComponent(item);
-                    const fileName = item.replace(/\s+/g, '_').toLowerCase();
-
-                    // Use mapped category images if available, otherwise use sequential naming
-                    const localSrc = catImages.length > 0
-                        ? catImages[catImgIndex % catImages.length]
-                        : `images/image${catImgIndex + 1}.jpg`;
-                    catImgIndex++;
-
-                    // Remote fallback path
-                    const stockSrc = `https://images.unsplash.com/featured/400x300?${encodedItem},${sector.id}&sig=${globalImgIndex}`;
-
-                    subItemsHTML += `
-                        <div class="sub-category-card" onclick="openDeliveryForm('${sector.name}', '${item}', ${Math.floor(Math.random() * 200) + 20}, 'High-quality ${item.toLowerCase()} from verified suppliers', '${localSrc}')" style="cursor: pointer;">
-                            <div class="sub-category-img">
-                                <img src="${localSrc}" alt="${item}" onerror="this.src='https://via.placeholder.com/150?text=Product'; this.onerror=null;">
-                            </div>
-                            <div class="sub-category-info">
-                                <span class="sub-category-name">${item}</span>
-                                <span style="color: #0abf53; font-weight: bold;">GHS ${Math.floor(Math.random() * 200) + 20}</span>
-                                <button onclick="event.stopPropagation(); addProductToCart('${sector.name}', '${item}', ${Math.floor(Math.random() * 200) + 20}, 'High-quality ${item.toLowerCase()} from verified suppliers', '${localSrc}')" style="margin-top:8px;width:100%;padding:8px;background:#0abf53;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">Add to Cart</button>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                section.innerHTML = `
-                    <div class="category-header">
-                        <h3>${sector.name}</h3>
-                        <a href="featured.html?cat=${sector.id}" class="view-all">Browse all</a>
-                    </div>
-                    <div class="sub-category-grid">
-                        ${subItemsHTML}
-                    </div>
-                `;
-                display.appendChild(section);
-            });
-        });
-    </script>
-
-    <!-- Delivery Form Modal -->
-    <div class="modal-overlay" id="deliveryModal">
-        <div class="modal-content">
+    <!-- Quick View Modal (kept for fallback) -->
+    <div class="modal-overlay" id="deliveryModal" style="display: none;">
+        <div class="modal-content" style="max-width: 450px;">
             <div class="modal-header">
-                <h3>Complete Your Order</h3>
+                <h3><ion-icon name="information-circle-outline"></ion-icon> Product Details</h3>
                 <button class="modal-close" onclick="closeDeliveryForm()">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="modal-product-info">
-                    <img src="" alt="Product" class="modal-product-img" id="modalProductImg">
-                    <div class="modal-product-details">
-                        <h4 id="modalProductTitle">Product Title</h4>
-                        <div class="price" id="modalProductPrice">GHS 0.00</div>
-                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 5px;" id="modalProductDesc">
-                            Description</p>
+                <div style="display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
+                    <img id="modalProductImg" src="" alt="Product" style="width: 100px; height: 100px; object-fit: cover; border-radius: 10px;">
+                    <div>
+                        <h4 id="modalProductTitle" style="font-size: 16px; margin-bottom: 8px;">Product Title</h4>
+                        <div id="modalProductPrice" style="font-size: 22px; font-weight: 700; color: #FF6B35; margin-bottom: 8px;">GHS 0.00</div>
+                        <p id="modalProductDesc" style="font-size: 13px; color: #666;">Description</p>
                     </div>
                 </div>
-                <form id="deliveryForm">
+                <button class="btn btn-primary" style="width: 100%;" onclick="addCurrentProductToCart()">
+                    <ion-icon name="cart-outline"></ion-icon> Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal with Delivery Form -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-content" style="max-width: 550px;">
+            <div class="modal-header">
+                <h3><ion-icon name="cart-outline"></ion-icon> Checkout</h3>
+                <button class="modal-close" onclick="closeCheckout()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="max-height: 150px; overflow-y: auto; margin-bottom: 16px; border: 1px solid #eee; border-radius: 8px; padding: 10px;">
+                    <div id="checkoutCartItems"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 12px; background: #FFF5F2; border-radius: 8px; margin-bottom: 20px;">
+                    <span style="font-weight: 600;">Total:</span>
+                    <span id="checkoutTotalAmount" style="font-size: 20px; font-weight: 700; color: #FF6B35;">GHS 0.00</span>
+                </div>
+                <form id="checkoutDeliveryForm" class="delivery-form">
+                    <h4 style="margin-bottom: 16px; font-size: 16px;"><ion-icon name="location-outline"></ion-icon> Delivery Information</h4>
                     <div class="form-row">
                         <div class="form-group">
                             <label>Full Name *</label>
-                            <input type="text" id="fullName" required placeholder="Your full name">
+                            <input type="text" id="checkoutFullName" required placeholder="Enter your full name">
                         </div>
                         <div class="form-group">
                             <label>Phone Number *</label>
-                            <input type="tel" id="phoneNumber" required placeholder="0500000000">
+                            <input type="tel" id="checkoutPhone" required placeholder="e.g., 0241234567">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>WhatsApp Number (Optional)</label>
-                        <input type="tel" id="whatsappNumber" placeholder="WhatsApp number">
+                        <input type="tel" id="checkoutWhatsapp" placeholder="e.g., 0241234567">
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>Region *</label>
-                            <select id="region" required>
+                            <select id="checkoutRegion" required>
                                 <option value="">Select Region</option>
                                 <option value="Greater Accra">Greater Accra</option>
                                 <option value="Ashanti">Ashanti</option>
@@ -795,264 +415,461 @@
                                 <option value="Western">Western</option>
                                 <option value="Volta">Volta</option>
                                 <option value="Northern">Northern</option>
-                                <option value="Upper East">Upper East</option>
-                                <option value="Upper West">Upper West</option>
-                                <option value="Bono">Bono</option>
-                                <option value="Bono East">Bono East</option>
-                                <option value="Ahafo">Ahafo</option>
-                                <option value="Savannah">Savannah</option>
-                                <option value="North East">North East</option>
-                                <option value="Oti">Oti</option>
-                                <option value="Western North">Western North</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>City/Town *</label>
-                            <input type="text" id="city" required placeholder="Accra">
+                            <input type="text" id="checkoutCity" required placeholder="Enter city or town">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Delivery Address *</label>
-                        <textarea id="address" required placeholder="Street name, landmark" rows="2"></textarea>
+                        <textarea id="checkoutAddress" required placeholder="Enter detailed delivery address or nearest landmark" style="height: 80px;"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label>Quantity</label>
-                        <input type="number" id="quantity" value="1" min="1" style="width: 100px;">
-                    </div>
+                    <button type="button" class="form-submit-btn" onclick="processCheckout()">
+                        <ion-icon name="lock-closed-outline"></ion-icon> Pay Now with Paystack
+                    </button>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button class="payment-btn" onclick="processPayment()">Pay Now</button>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>About ALFRED</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="categories.html">All Categories</a></li>
+                        <li><a href="featured.html">Featured Products</a></li>
+                        <li><a href="suppliers.html">Suppliers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><a href="messages.html">Messages</a></li>
+                        <li><a href="#">WhatsApp: +233 000 000000</a></li>
+                        <li><a href="#">Email: support@alfred.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024-2026 Alfred Products. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Current product for payment
+        // Image mapping for categories - with fallback images
+        const categoryImages = {
+            bags: [
+                'images/BAG1.jpg', 'images/BAG2.jpg', 'images/BAG3.jpg', 'images/BAG4.jpg', 
+                'images/BAG5.jpg', 'images/BAG6.jpg', 'images/BAG7.jpg', 'images/BAG8.jpg', 
+                'images/BAG9.jpg', 'images/BAG10.jpg', 'images/BAG11.jpg', 'images/BAG12.jpg',
+                'images/BAGS26.jpg', 'images/BAGS27.jpg', 'images/BAGS28.jpg'
+            ],
+            shoes: [
+                'images/SHOE1.jpg', 'images/SHOE2.jpg', 'images/SHOE3.jpg', 'images/SHOE 4.jpg', 
+                'images/SHOE5.jpg', 'images/SHOE6.jpg', 'images/SHOE7.jpg', 'images/SHOE8.jpg', 
+                'images/SHOE9.jpg', 'images/SHOE10.jpg', 'images/SHOE11.jpg', 'images/SHOE12.jpg',
+                'images/SHOE13.jpg', 'images/SHOE14.jpg', 'images/SHOE15.jpg'
+            ],
+            electronics: [
+                'images/SMART1.jpg', 'images/SMART2.jpg', 'images/SMART3.jpg', 'images/SMAR4.jpg', 
+                'images/SMART5.jpg', 'images/SMART6.jpg', 'images/SMART7.jpg', 'images/SMART8.jpg', 
+                'images/SMART9.jpg', 'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg'
+            ],
+            beauty: [
+                'images/SPRAY1.jpg', 'images/SPRAY2.jpg', 'images/SPRAY3.jpg', 'images/image1.jpg', 
+                'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg', 
+                'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg', 'images/image9.jpg'
+            ],
+            apparel: [
+                'images/banners/apparel.jpg', 'images/image8.jpg', 'images/image9.jpg', 
+                'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg', 'images/image13.jpg',
+                'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg'
+            ],
+            industrial: [
+                'images/banners/industrial.jpg', 'images/factory.png', 'images/image1.jpg', 
+                'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg',
+                'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg'
+            ],
+            home: [
+                'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 
+                'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg',
+                'images/image9.jpg', 'images/image10.jpg', 'images/image11.jpg', 'images/image12.jpg'
+            ],
+            gifts: [
+                'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 
+                'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg'
+            ],
+            sports: [
+                'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 
+                'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg'
+            ],
+            jewelry: [
+                'images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 
+                'images/image5.jpg', 'images/image6.jpg', 'images/image7.jpg', 'images/image8.jpg'
+            ]
+        };
+
+        // Default fallback image
+        const DEFAULT_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZTIeMmUzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZmlsbD0iIzk5OSI+SW1hZ2U8L3RleHQ+PC9zdmc+';
+
+        // Category data - clean item names
+        const sectors = [
+            { id: "bags", name: "Luggage, Bags & Cases", items: ["Beauty Case", "College Bag", "Cosmetic Case", "Shoulder Bag", "Backpack", "Wine Bag", "Luggage", "Travel Bag", "Tote Bag", "Clutch Bag", "Wallet", "Messenger Bag"] },
+            { id: "shoes", name: "Shoes & Accessories", items: ["Running Shoes", "Casual Sneakers", "Formal Shoes", "High Heels", "Loafers", "Sandals", "Boots", "Slippers", "Canvas Shoes", "Sports Shoes", "Kids Shoes", "Work Shoes"] },
+            { id: "beauty", name: "Beauty", items: ["Perfume Set", "Skincare Set", "Makeup Palette", "Lipstick", "Face Mask", "Hair Care", "Nail Polish", "Eye Cream", "Body Lotion", "Facial Cleanser", "Foundation", "Mascara"] },
+            { id: "electronics", name: "Consumer Electronics", items: ["Smart Watch", "Wireless Earbuds", "Bluetooth Speaker", "Power Bank", "Phone Charger", "USB Hub", "Phone Case", "Screen Protector", "Car Mount", "Smart Band", "Tablet", "Gadgets"] },
+            { id: "apparel", name: "Apparel & Accessories", items: ["Designer Dress", "T-Shirt", "Jeans", "Hoodie", "Formal Shirt", "Summer Dress", "Winter Jacket", "Skirt", "Sweater", "Shorts", "Jacket", "Coat"] },
+            { id: "industrial", name: "Industrial Machinery", items: ["Power Drill", "Safety Helmet", "Work Gloves", "Tool Box", "Measuring Tape", "Welding Equipment", "Safety Goggles", "Hand Saw", "Ladder", "Pneumatic Tools", "Industrial Supplies", "Tools"] },
+            { id: "home", name: "Home & Garden", items: ["Home Decor", "Furniture", "Kitchen", "Bedding", "Lighting", "Curtains", "Rugs", "Storage", "Garden Tools", "Home Accessories", "Organization", "Decor"] },
+            { id: "gifts", name: "Gifts & Crafts", items: ["Gift Sets", "Key Chain", "Promotional Gifts", "Craft Supplies", "Party Decoration", "Souvenirs", "Collectibles", "Handmade", "Custom Gifts", "Seasonal", "Box Set", "Accessories"] },
+            { id: "sports", name: "Sports & Entertainment", items: ["Camping Gear", "Fitness Equipment", "Sportswear", "Outdoor Gear", "Yoga Mat", "Dumbbells", "Bicycle", "Sports Accessories", "Swimming", "Team Sports", "Cycling", "Hiking"] },
+            { id: "jewelry", name: "Jewelry & Watches", items: ["Necklace", "Earrings", "Bracelet", "Ring", "Watch", "Jewelry Set", "Fashion Jewelry", "Gold Jewelry", "Silver Jewelry", "Pearl", "Diamond", "Accessories"] }
+        ];
+
         let currentProduct = null;
 
-        // Open delivery form modal
-        function openDeliveryForm(category, title, price, desc, image) {
-            let p = typeof price === 'string' ? parseFloat(price.replace(/[^0-9.]/g, '')) : price;
-            let d = typeof desc !== 'undefined' ? desc : '';
-            currentProduct = { title, price: p, category, desc: d, image };
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartBadge();
+            updateCartSummary();
+            // Delay slightly to ensure all functions are loaded
+            setTimeout(() => {
+                try {
+                    renderCategories();
+                } catch (e) {
+                    console.error('Error loading categories:', e);
+                    // Fallback: show static content
+                    const display = document.getElementById('categoryDisplay');
+                    if (display) {
+                        display.innerHTML = '<div class="category-section"><h3>Categories</h3><p>Loading...</p></div>';
+                    }
+                }
+            }, 100);
+        });
+
+        function renderCategories() {
+            const display = document.getElementById('categoryDisplay');
+            const navList = document.getElementById('categoryNavList');
             
-            // Show modal instead of redirecting (since this page has a built-in modal)
-            document.getElementById('modalProductImg').src = image;
-            document.getElementById('modalProductTitle').textContent = title;
-            document.getElementById('modalProductPrice').textContent = 'GHS ' + p.toFixed(2);
-            document.getElementById('modalProductDesc').textContent = d;
+            if (!display || !navList) {
+                console.error('Category display elements not found');
+                return;
+            }
             
-            document.getElementById('deliveryModal').classList.add('active');
+            let navHTML = '';
+            let displayHTML = '';
+
+            sectors.forEach((sector, index) => {
+                // Navigation link
+                navHTML += `<li><a href="#${sector.id}" class="${index === 0 ? 'active' : ''}" onclick="scrollToCategory('${sector.id}', event)">${sector.name}</a></li>`;
+
+                // Category section
+                const images = categoryImages[sector.id] || categoryImages['home'] || [DEFAULT_IMAGE];
+                
+                let subItemsHTML = '';
+                sector.items.forEach((item, i) => {
+                    const price = Math.floor(Math.random() * 400) + 50;
+                    const localSrc = images[i % images.length] || DEFAULT_IMAGE;
+                    const desc = 'High-quality ' + item.toLowerCase() + ' from verified suppliers. Premium materials and excellent craftsmanship.';
+                    
+                    subItemsHTML += `
+                        <div class="sub-category-card" onclick="openDeliveryForm('${escapeHtml(sector.name)}', '${escapeHtml(item)}', ${price}, '${escapeHtml(desc)}', '${escapeHtml(localSrc)}')">
+                            <div class="sub-category-img">
+                                <img src="${localSrc}" alt="${item}" onerror="this.src='${DEFAULT_IMAGE}'">
+                            </div>
+                            <div class="sub-category-name">${item}</div>
+                        </div>
+                    `;
+                });
+
+                displayHTML += `
+                    <section class="category-section" id="${sector.id}">
+                        <div class="category-header">
+                            <h3>${sector.name}</h3>
+                        </div>
+                        <div class="sub-category-grid">
+                            ${subItemsHTML}
+                        </div>
+                    </section>
+                `;
+            });
+
+            navList.innerHTML = navHTML;
+            display.innerHTML = displayHTML;
         }
 
-        // Close delivery form modal
+        // Helper function to escape HTML
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text.replace(/'/g, "\\'").replace(/"/g, '\\"');
+        }
+        
+        // Open Delivery Form - redirect to product page
+        function openDeliveryForm(category, title, price, description, image) {
+            let p = typeof price === 'string' ? parseFloat(price.replace(/[^0-9.]/g, '')) : price;
+            window.location.href = 'product.html?title=' + encodeURIComponent(title) + '&price=' + p + '&desc=' + encodeURIComponent(description || '') + '&image=' + encodeURIComponent(image || '') + '&category=' + encodeURIComponent(category);
+        }
+
+        function scrollToCategory(id, evt) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+            if (evt && evt.target) {
+                document.querySelectorAll('.category-nav a').forEach(a => a.classList.remove('active'));
+                evt.target.classList.add('active');
+            }
+        }
+
+        // Cart functions
+        function toggleFloatingMenu() {
+            document.getElementById('floatingMenu').classList.toggle('active');
+        }
+
+        function updateCartBadge() {
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            const badge = document.getElementById('cartBadge');
+            if (badge) {
+                badge.textContent = cart.length;
+                badge.style.display = cart.length > 0 ? 'inline-block' : 'none';
+            }
+        }
+
+        function updateCartSummary() {
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            const summaryContainer = document.getElementById('cartSummaryContainer');
+            const emptyMsg = document.getElementById('emptyCartMsg');
+            
+            if (cart.length === 0) {
+                if (summaryContainer) summaryContainer.style.display = 'none';
+                if (emptyMsg) emptyMsg.style.display = 'block';
+                return;
+            }
+            
+            if (summaryContainer) summaryContainer.style.display = 'block';
+            if (emptyMsg) emptyMsg.style.display = 'none';
+            
+            let total = 0;
+            cart.forEach(item => {
+                const price = parseFloat(item.price.replace('GHS', '').replace(/,/g, '').trim());
+                total += price * item.quantity;
+            });
+            
+            document.getElementById('cartItemCount').textContent = cart.length + ' item(s)';
+            document.getElementById('cartTotalAmount').textContent = 'GHS ' + total.toFixed(2);
+        }
+
+        function addProductToCart(category, title, price, desc, image) {
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            const priceStr = 'GHS ' + parseFloat(price).toFixed(2);
+            cart.push({ category, title, price: priceStr, description: desc, image, quantity: 1 });
+            localStorage.setItem('alfredCart', JSON.stringify(cart));
+            updateCartBadge();
+            updateCartSummary();
+            alert('Product added to cart!');
+        }
+
+        // Using redirect to product.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        function closeProductDetail() {
+            document.getElementById('productDetailPage').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            currentProduct = null;
+        }
+        
+        function detailChangeQty(delta) {
+            const input = document.getElementById('detailQuantity');
+            let val = parseInt(input.value) + delta;
+            if (val < 1) val = 1;
+            input.value = val;
+        }
+        
+        function addFromDetail() {
+            if (currentProduct) {
+                const qty = parseInt(document.getElementById('detailQuantity').value) || 1;
+                for (let i = 0; i < qty; i++) {
+                    addProductToCart(currentProduct.category, currentProduct.title, currentProduct.price, currentProduct.desc, currentProduct.image);
+                }
+                alert('Added to cart!');
+            }
+        }
+        
+        function buyFromDetail() {
+            if (currentProduct) {
+                const qty = parseInt(document.getElementById('detailQuantity').value) || 1;
+                localStorage.setItem('alfredCart', JSON.stringify([]));
+                for (let i = 0; i < qty; i++) {
+                    addProductToCart(currentProduct.category, currentProduct.title, currentProduct.price, currentProduct.desc, currentProduct.image);
+                }
+                window.location.href = 'cart.html';
+            }
+        }
+
         function closeDeliveryForm() {
             document.getElementById('deliveryModal').classList.remove('active');
             currentProduct = null;
         }
 
-        // Process payment with Paystack
-        function processPayment() {
-            const fullName = document.getElementById('fullName').value;
-            const phone = document.getElementById('phoneNumber').value;
-            const region = document.getElementById('region').value;
-            const city = document.getElementById('city').value;
-            const address = document.getElementById('address').value;
-            const quantity = document.getElementById('quantity').value;
-
-            // Validate form
-            if (!fullName || !phone || !region || !city || !address) {
-                alert('Please fill in all required fields');
-                return;
-            }
-
-            if (!currentProduct) {
-                alert('No product selected');
-                return;
-            }
-
-            const totalAmount = currentProduct.price * quantity;
-
-            // Paystack payment integration
-            const paystack = new PaystackPop();
-            paystack.newTransaction({
-                key: 'pk_live_f89c4456a0860888a7fe1b1451f2808c32493',
-                amount: totalAmount * 100,
-                email: 'customer@alfredproducts.com',
-                currency: 'GHS',
-                callback: function (response) {
-                    alert('Payment successful! Transaction reference: ' + response.reference);
-                    saveOrderToFirestore(fullName, phone, region, city, address, quantity, response.reference);
-                    closeDeliveryForm();
-                },
-                onClose: function () {
-                    alert('Payment cancelled');
-                }
-            });
-        }
-
-        // Save order to Firestore
-        function saveOrderToFirestore(fullName, phone, region, city, address, quantity, reference) {
-            console.log('saveOrderToFirestore called in categories.html');
-            
-            if (typeof firebase === 'undefined') {
-                console.error('Firebase SDK not loaded!');
-                alert('Error: Firebase not loaded. Order saved locally only.');
-                saveOrderLocally({fullName, phone, region, city, address, quantity, reference});
-                return;
-            }
-            
-            try {
-                const db = firebase.firestore();
-                const auth = firebase.auth();
-                const user = auth.currentUser;
-                const uid = user ? user.uid : 'GUEST_' + Date.now();
-                
-                console.log('Saving order with userId:', uid);
-                
-                const orderData = {
-                    items: [{
-                        title: currentProduct.title,
-                        price: currentProduct.price,
-                        quantity: parseInt(quantity),
-                        image: currentProduct.image || ''
-                    }],
-                    total: currentProduct.price * quantity,
-                    customerName: fullName,
-                    phone: phone,
-                    region: region,
-                    city: city,
-                    address: address,
-                    status: 'Paid',
-                    userId: uid,
-                    userEmail: user ? user.email : 'guest@alfredproducts.com',
-                    userName: fullName || 'Guest Customer',
-                    reference: reference || 'N/A',
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                };
-
-                db.collection('orders').add(orderData).then((docRef) => {
-                    console.log('Order saved successfully! Doc ID:', docRef.id);
-                    alert('Order saved to database!');
-                    // Also save locally for immediate display
-                    saveOrderLocally({...orderData, id: docRef.id});
-                }).catch((error) => {
-                    console.error('Error saving order: ', error);
-                    alert('Error saving order: ' + error.message + '. Order saved locally.');
-                    saveOrderLocally({fullName, phone, region, city, address, quantity, reference});
-                });
-            } catch (error) {
-                console.error('Exception in saveOrderToFirestore:', error);
-                alert('Error: ' + error.message + '. Order saved locally.');
-                saveOrderLocally({fullName, phone, region, city, address, quantity});
-            }
-        }
-        
-        // Backup function to save orders locally
-        function saveOrderLocally(orderData) {
-            const localOrders = JSON.parse(localStorage.getItem('alfredOrders') || '[]');
-            localOrders.unshift({
-                ...orderData,
-                status: orderData.status || 'Paid',
-                userId: orderData.userId || 'GUEST_' + Date.now(),
-                timestamp: orderData.timestamp ? new Date().toISOString() : new Date().toISOString()
-            });
-            localStorage.setItem('alfredOrders', JSON.stringify(localOrders));
-            console.log('Order saved to localStorage');
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('deliveryModal').addEventListener('click', function (e) {
-            if (e.target === this) {
+        function addCurrentProductToCart() {
+            if (currentProduct) {
+                addProductToCart(currentProduct.category, currentProduct.title, currentProduct.price, currentProduct.desc, currentProduct.image);
                 closeDeliveryForm();
             }
-        });
-    </script>
-
-
-    
-    <script>
-        // Floating Menu Functions
-        function toggleFloatingMenu() {
-            const menu = document.getElementById('floatingMenu');
-            menu.classList.toggle('active');
         }
-        
-        function toggleOrdersSection() {
-            const section = document.getElementById('floatingOrdersSection');
-            const chevron = section.previousElementSibling.querySelector('.orders-chevron');
-            section.classList.toggle('active');
-            chevron.classList.toggle('rotated');
+
+        function openCheckout() {
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
             
-            // Load orders if logged in
-            if (typeof firebase !== 'undefined' && firebase.auth()) {
-                firebase.auth().onAuthStateChanged((user) => {
-                    if (user) {
-                        loadFloatingOrders(user.uid);
+            const cartItemsContainer = document.getElementById('checkoutCartItems');
+            let total = 0;
+            cartItemsContainer.innerHTML = '';
+            
+            cart.forEach((item) => {
+                const price = parseFloat(item.price.replace('GHS', '').replace(/,/g, '').trim());
+                total += price * item.quantity;
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.style.cssText = 'display: flex; align-items: center; gap: 12px; padding: 10px; border-bottom: 1px solid #eee;';
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">
+                    <div style="flex: 1;">
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">${item.title}</p>
+                        <p style="margin: 0; font-size: 12px; color: #666;">${item.price} x ${item.quantity}</p>
+                    </div>
+                    <p style="margin: 0; font-weight: 700; color: #FF6B35;">GHS ${(price * item.quantity).toFixed(2)}</p>
+                `;
+                cartItemsContainer.appendChild(itemDiv);
+            });
+            
+            document.getElementById('checkoutTotalAmount').textContent = 'GHS ' + total.toFixed(2);
+            localStorage.setItem('cartTotal', total.toFixed(2));
+            
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.remove('active');
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (searchTerm) {
+                // Scroll to first matching category
+                const sectors = document.querySelectorAll('.category-section');
+                for (let sector of sectors) {
+                    const name = sector.querySelector('h3').textContent.toLowerCase();
+                    if (name.includes(searchTerm)) {
+                        sector.scrollIntoView({ behavior: 'smooth' });
+                        return;
+                    }
+                    // Check individual items
+                    const items = sector.querySelectorAll('.sub-category-name');
+                    for (let item of items) {
+                        if (item.textContent.toLowerCase().includes(searchTerm)) {
+                            sector.scrollIntoView({ behavior: 'smooth' });
+                            return;
+                        }
+                    }
+                }
+                alert('No products found for "' + searchTerm + '". Try a different search term.');
+            }
+        }
+
+        // Add enter key support for search
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        performSearch();
                     }
                 });
             }
-        }
-        
-        function loadFloatingOrders(uid) {
-            const container = document.getElementById('floatingOrdersList');
-            if (typeof db !== 'undefined') {
-                db.collection("orders").where("userId", "==", uid).orderBy("timestamp", "desc").limit(5).get()
-                    .then((querySnapshot) => {
-                        if (querySnapshot.empty) {
-                            container.innerHTML = `
-                                <div style="padding: 15px; text-align: center; color: #999; font-size: 13px;">
-                                    <ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>
-                                    No Order
-                                </div>
-                            `;
-                            return;
-                        }
-                        
-                        let ordersHTML = '';
-                        querySnapshot.forEach((doc) => {
-                            const order = doc.data();
-                            const firstItem = order.items[0];
-                            ordersHTML += `
-                                <a href="orders.html" class="floating-order-item">
-                                    <img src="${firstItem.image || 'new_logo.png'}" alt="Product" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">
-                                    <div style="flex: 1; overflow: hidden;">
-                                        <p style="font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${firstItem.title}</p>
-                                        <p style="font-size: 11px; color: #999;">${order.items.length} item(s) • GHS ${parseFloat(order.total).toFixed(2)}</p>
-                                    </div>
-                                </a>
-                            `;
-                        });
-                        container.innerHTML = ordersHTML;
-                    })
-                    .catch((error) => {
-                        console.error("Error loading orders: ", error);
-                        container.innerHTML = `
-                            <div style="padding: 15px; text-align: center; color: #999; font-size: 13px;">
-                                <ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>
-                                No Order
-                            </div>
-                        `;
-                    });
-            } else {
-                container.innerHTML = `
-                    <div style="padding: 15px; text-align: center; color: #999; font-size: 13px;">
-                        <ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon><br>
-                        No Order
-                    </div>
-                `;
-            }
-        }
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            const menuContainer = document.querySelector('.floating-menu-container');
-            const menu = document.getElementById('floatingMenu');
-            if (menuContainer && !menuContainer.contains(e.target)) {
-                menu.classList.remove('active');
-            }
         });
+
+        function processCheckout() {
+            const form = document.getElementById('checkoutDeliveryForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            const deliveryInfo = {
+                fullName: document.getElementById('checkoutFullName').value,
+                phoneNumber: document.getElementById('checkoutPhone').value,
+                whatsappNumber: document.getElementById('checkoutWhatsapp').value || 'N/A',
+                region: document.getElementById('checkoutRegion').value,
+                city: document.getElementById('checkoutCity').value,
+                address: document.getElementById('checkoutAddress').value
+            };
+            
+            let cart = JSON.parse(localStorage.getItem('alfredCart')) || [];
+            let total = parseFloat(localStorage.getItem('cartTotal')) || 0;
+            
+            const paystack = PaystackPop;
+            paystack.newTransaction({
+                key: 'pk_live_6b9968065dc0bd4842c97ffa138e49127c862888',
+                amount: total * 100,
+                email: deliveryInfo.phoneNumber + '@alfred.com',
+                currency: 'GHS',
+                reference: 'ALFRED-' + Date.now(),
+                metadata: {
+                    deliveryInfo: deliveryInfo,
+                    cartItems: cart,
+                    total: total
+                },
+                onSuccess: function(transaction) {
+                    alert('Payment successful! Reference: ' + transaction.reference);
+                    localStorage.removeItem('alfredCart');
+                    updateCartBadge();
+                    updateCartSummary();
+                    closeCheckout();
+                },
+                onCancel: function() {
+                    alert('Payment cancelled. You can try again.');
+                }
+            });
+        }
     </script>
 </body>
 
