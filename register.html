@@ -307,7 +307,12 @@
                         displayName: name
                     }).then(() => {
                         saveUserToFirestore(user, name);
-                        window.location.href = 'index.html';
+                        // Check if admin email and redirect accordingly
+                        if (email.toLowerCase() === 'narhsnazzisco@gmail.com') {
+                            window.location.href = 'ecommerce-admin.html';
+                        } else {
+                            window.location.href = 'profile.html';
+                        }
                     });
                 })
                 .catch((error) => {
@@ -321,7 +326,12 @@
                 .then((result) => {
                     const user = result.user;
                     saveUserToFirestore(user, user.displayName);
-                    window.location.href = 'index.html';
+                    // Check if admin email and redirect accordingly
+                    if (user.email.toLowerCase() === 'narhsnazzisco@gmail.com') {
+                        window.location.href = 'ecommerce-admin.html';
+                    } else {
+                        window.location.href = 'profile.html';
+                    }
                 })
                 .catch((error) => {
                     alert('Google sign-up failed: ' + error.message);
