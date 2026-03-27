@@ -284,9 +284,9 @@
                     saveUserToFirestore(user);
                     // Check if admin email and redirect accordingly
                     if (email.toLowerCase() === 'narhsnazzisco@gmail.com') {
-                        window.location.href = 'ecommerce-admin.html';
+                        window.location.href = 'admin-dashboard/admin-dashboard.html';
                     } else {
-                        // Regular users always go to profile page
+                        // Regular users go to profile page
                         window.location.href = 'profile.html';
                     }
                 })
@@ -303,9 +303,9 @@
                     saveUserToFirestore(user);
                     // Check if admin email and redirect accordingly
                     if (user.email.toLowerCase() === 'narhsnazzisco@gmail.com') {
-                        window.location.href = 'ecommerce-admin.html';
+                        window.location.href = 'admin-dashboard/admin-dashboard.html';
                     } else {
-                        // Regular users always go to profile page
+                        // Regular users go to profile page
                         window.location.href = 'profile.html';
                     }
                 })
@@ -316,11 +316,13 @@
 
         function saveUserToFirestore(user) {
             if (typeof db !== 'undefined') {
+                const isAdmin = user.email.toLowerCase() === 'narhsnazzisco@gmail.com';
                 db.collection('users').doc(user.uid).set({
                     email: user.email,
                     displayName: user.displayName || user.email.split('@')[0],
                     photoURL: user.photoURL,
                     phoneNumber: user.phoneNumber,
+                    isAdmin: isAdmin,
                     createdAt: new Date(),
                     lastLogin: new Date()
                 }, { merge: true });
