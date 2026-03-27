@@ -1012,6 +1012,48 @@ footer {
     letter-spacing: 1px;
 }
 
+/* Floating User Profile Styles */
+.floating-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #FF6B35 0%, #FF477E 100%);
+    border-radius: 12px;
+    margin: 8px 12px;
+}
+
+.floating-user-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.floating-user-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.floating-user-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.floating-user-email {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .floating-menu-dropdown {
     max-height: 70vh;
     overflow-y: auto;
