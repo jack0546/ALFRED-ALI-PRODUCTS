@@ -282,7 +282,13 @@
                 .then((userCredential) => {
                     const user = userCredential.user;
                     saveUserToFirestore(user);
-                    window.location.href = redirectUrl;
+                    // Check if admin email and redirect accordingly
+                    if (email.toLowerCase() === 'narhsnazzisco@gmail.com') {
+                        window.location.href = 'ecommerce-admin.html';
+                    } else {
+                        // Regular users always go to profile page
+                        window.location.href = 'profile.html';
+                    }
                 })
                 .catch((error) => {
                     alert('Login failed: ' + error.message);
@@ -295,7 +301,13 @@
                 .then((result) => {
                     const user = result.user;
                     saveUserToFirestore(user);
-                    window.location.href = redirectUrl;
+                    // Check if admin email and redirect accordingly
+                    if (user.email.toLowerCase() === 'narhsnazzisco@gmail.com') {
+                        window.location.href = 'ecommerce-admin.html';
+                    } else {
+                        // Regular users always go to profile page
+                        window.location.href = 'profile.html';
+                    }
                 })
                 .catch((error) => {
                     alert('Google sign-in failed: ' + error.message);
