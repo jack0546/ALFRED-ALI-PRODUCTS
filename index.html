@@ -12,6 +12,11 @@
     <link rel="apple-touch-icon" href="new_logo.png">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="script.js"></script>
     <style>
@@ -297,7 +302,7 @@
                         </div>
                         <div class="sales">856 sold</div>
                     </div>
-                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Running Sports Shoes', 280.00, 'Lightweight running shoes', 'n shoe1.png')">
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Running Sports Shoes', 280.00, 'Lightweight running shoes', 'images/SHOE5.jpg')">
                         <ion-icon name="cart-outline"></ion-icon> Add to Cart
                     </button>
                 </div>
@@ -376,7 +381,7 @@
                         </div>
                         <div class="sales">234 sold</div>
                     </div>
-                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Casual Sneakers', 195.00, 'Comfortable sneakers', 'n shoe2.webp')">
+                    <button class="add-btn" onclick="event.stopPropagation(); addProductToCart('Shoes', 'Casual Sneakers', 195.00, 'Comfortable sneakers', 'images/SHOE1.jpg')">
                         <ion-icon name="cart-outline"></ion-icon> Add to Cart
                     </button>
                 </div>
@@ -525,6 +530,14 @@
             <ion-icon name="menu-outline"></ion-icon>
         </button>
         <div class="floating-menu-dropdown" id="floatingMenu">
+            <!-- User Profile Section (shown when logged in) -->
+            <div id="floating-user-profile" class="floating-user-profile" style="display: none;">
+                <img id="floating-user-photo" src="" alt="User" class="floating-user-photo">
+                <div class="floating-user-info">
+                    <span id="floating-user-name" class="floating-user-name">User Name</span>
+                    <span id="floating-user-email" class="floating-user-email">user@email.com</span>
+                </div>
+            </div>
             <!-- Install App -->
             <a href="#" class="floating-menu-item" onclick="installApp()">
                 <ion-icon name="download-outline"></ion-icon>
@@ -537,6 +550,11 @@
             <a href="orders.html" class="floating-menu-item">
                 <ion-icon name="bag-handle-outline"></ion-icon>
                 <span>Orders</span>
+            </a>
+            <!-- Admin Hub (shown for admin) -->
+            <a id="admin-hub-link" href="admin-dashboard/admin-dashboard.html" class="floating-menu-item" style="display: none;">
+                <ion-icon name="settings-outline"></ion-icon>
+                <span>Admin Hub</span>
             </a>
             <!-- Settings Section -->
             <div class="floating-menu-divider"></div>
@@ -827,6 +845,68 @@
             const menu = document.getElementById('floatingMenu');
             menu.classList.toggle('active');
         }
+
+        // Update floating menu with user profile
+        function updateFloatingMenuUser() {
+            const userProfileDiv = document.getElementById('floating-user-profile');
+            const adminHubLink = document.getElementById('admin-hub-link');
+            
+            if (typeof firebase !== 'undefined' && firebase.auth().currentUser) {
+                const user = firebase.auth().currentUser;
+                
+                // Fetch user data from Firestore to check isAdmin
+                if (typeof db !== 'undefined') {
+                    db.collection('users').doc(user.uid).get().then(doc => {
+                        if (doc.exists) {
+                            const userData = doc.data();
+                            const isAdmin = userData.isAdmin === true;
+                            
+                            // Show user profile
+                            if (userProfileDiv) {
+                                userProfileDiv.style.display = 'flex';
+                                document.getElementById('floating-user-photo').src = user.photoURL || 'new_logo.png';
+                                document.getElementById('floating-user-name').textContent = user.displayName || user.email.split('@')[0];
+                                document.getElementById('floating-user-email').textContent = user.email;
+                            }
+                            
+                            // Show Admin Hub link for admin users
+                            if (adminHubLink) {
+                                adminHubLink.style.display = isAdmin ? 'flex' : 'none';
+                            }
+                        }
+                    }).catch(err => {
+                        console.log('Error fetching user data:', err);
+                        // Still show basic profile info
+                        if (userProfileDiv) {
+                            userProfileDiv.style.display = 'flex';
+                            document.getElementById('floating-user-photo').src = user.photoURL || 'new_logo.png';
+                            document.getElementById('floating-user-name').textContent = user.displayName || user.email.split('@')[0];
+                            document.getElementById('floating-user-email').textContent = user.email;
+                        }
+                    });
+                }
+            } else {
+                // Hide user profile when not logged in
+                if (userProfileDiv) {
+                    userProfileDiv.style.display = 'none';
+                }
+                if (adminHubLink) {
+                    adminHubLink.style.display = 'none';
+                }
+            }
+        }
+
+        // Initialize floating menu user on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateFloatingMenuUser();
+            
+            // Listen for auth changes
+            if (typeof firebase !== 'undefined') {
+                firebase.auth().onAuthStateChanged(function(user) {
+                    updateFloatingMenuUser();
+                });
+            }
+        });
 
         // Install App function
         function installApp() {
